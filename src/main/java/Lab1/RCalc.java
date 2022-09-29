@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class RCalc extends Calculations implements Operation {
 
-    int convertRomanToInt(String s) {
+    int romanToInt(String s) {
         Map<Character, Integer> map = new HashMap<>();
         map.put('I',1);
         map.put('V',5);
@@ -40,29 +40,29 @@ public class RCalc extends Calculations implements Operation {
 
     @Override
     String add(String s) {
-        int a = convertRomanToInt(s.substring(0, s.indexOf("+")));
-        int b = convertRomanToInt(s.substring(s.indexOf("+")));
+        int a = romanToInt(s.substring(0, s.indexOf("+")));
+        int b = romanToInt(s.substring(s.indexOf("+") + 1));
         return intToRoman(a + b);
     }
 
     @Override
     String sub(String s) {
-        int a = convertRomanToInt(s.substring(0, s.indexOf("-")));
-        int b = convertRomanToInt(s.substring(s.indexOf("-")));
+        int a = romanToInt(s.substring(0, s.indexOf("-")));
+        int b = romanToInt(s.substring(s.indexOf("-") + 1));
         return (a - b) < 0 ? "Non-positive result" : intToRoman(a - b);
     }
 
     @Override
     String mul(String s) {
-        int a = convertRomanToInt(s.substring(0, s.indexOf("*")));
-        int b = convertRomanToInt(s.substring(s.indexOf("*") + 1));
+        int a = romanToInt(s.substring(0, s.indexOf("*")));
+        int b = romanToInt(s.substring(s.indexOf("*") + 1));
         return intToRoman(a * b);
     }
 
     @Override
     String div(String s) {
-        int a = convertRomanToInt(s.substring(0, s.indexOf("/")));
-        int b = convertRomanToInt(s.substring(s.indexOf("/")));
+        int a = romanToInt(s.substring(0, s.indexOf("/")));
+        int b = romanToInt(s.substring(s.indexOf("/") + 1));
         return intToRoman(a / b);
     }
 }
