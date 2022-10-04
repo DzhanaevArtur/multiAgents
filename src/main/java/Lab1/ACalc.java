@@ -28,6 +28,6 @@ public class ACalc extends Calculations implements Operation {
     String div(String s) {
         int a = Integer.parseInt(s.substring(0, s.indexOf("/")));
         int b = Integer.parseInt(s.substring(s.indexOf("/") + 1));
-        return String.valueOf(a / b);
+        return String.valueOf((int) Math.ceil(a * 1.0f / b));
     }
 }

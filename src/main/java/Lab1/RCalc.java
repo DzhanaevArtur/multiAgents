@@ -63,6 +63,6 @@ public class RCalc extends Calculations implements Operation {
     String div(String s) {
         int a = romanToInt(s.substring(0, s.indexOf("/")));
         int b = romanToInt(s.substring(s.indexOf("/") + 1));
-        return intToRoman(a / b);
+        return intToRoman((int) Math.ceil(1.0 * a / b));
     }
 }

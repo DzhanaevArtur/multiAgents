@@ -20,7 +20,7 @@ class CalcTest {
     void test3() { assertEquals(Integer.parseInt(aCalc.mul("5*6")), 30); }
 
     @Test
-    void test4() { assertEquals(Integer.parseInt(aCalc.div("8/2")), 4); }
+    void test4() { assertEquals(Integer.parseInt(aCalc.div("8/3")), 3); }
 
     @Test
     void test5() { assertEquals(rCalc.add("X+VI"), rCalc.intToRoman(16)); }
