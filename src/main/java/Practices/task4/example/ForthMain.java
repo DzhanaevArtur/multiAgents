@@ -1,23 +1,27 @@
 package Practices.task4.example;
 
+import java.util.Arrays;
+
 public class ForthMain {
 
     public static void main(String[] args) {
-        MyLinkedList<Integer> list = new MyLinkedList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(7);
-        System.out.println(list.get(2));
-        System.out.println(list.size());
-        printList(list);
-        list.remove(0);
-        System.out.println();
-        printList(list);
-    }
 
-    public static void printList(MyLinkedList<Integer> list) {
-        for (int i = 0; i < list.size(); i++) System.out.print(list.get(i) + " ");
-        System.out.println();
+        MyLinkedList<int[]> listArt = new MyLinkedList<>();
+        int[] arr1 = {1, 2, 3, 4, 5};
+        int[] arr2 = {2, 3, 4, 5, 1};
+        int[] arr3 = {3, 4, 5, 1, 2};
+        int[] arr4 = {4, 5, 1, 2, 3};
+        int[] arr5 = {5, 1, 2, 3, 4};
+        listArt.add(arr1);
+//        listArt.add(arr2);
+//        listArt.add(arr3);
+//        listArt.add(arr4);
+//        listArt.add(arr5);
+
+        listArt
+                .stream()
+                .map(Arrays::toString)
+                .limit(listArt.size())
+                .forEach(System.out::println);
     }
 }

@@ -10,8 +10,7 @@ public class SelfPart {
 
     public static void main(String[] args) throws IOException {
 
-        File file = new File("src/main/java/Practices/task3/self/thirdTaskSelfPart.txt");
-        Scanner scanner = new Scanner(file);
+        Scanner scanner = new Scanner(new File("src/main/java/Practices/task3/self/thirdTaskSelfPart.txt"));
         int target = Integer.parseInt(scanner.nextLine().trim());
         int size = Integer.parseInt(scanner.nextLine().trim());
         int[] array = new int[size];
@@ -29,13 +28,7 @@ public class SelfPart {
         System.out.println("Array from text file: " + Arrays.toString(array));
 
         FileWriter fileWriter = new FileWriter("src/main/java/Practices/task3/self/outputForThird.txt");
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (array[i] + array[j] == target) {
-                    fileWriter.write(array[j] + ", " + array[i] + "\n");
-                }
-            }
-        }
+        for (int i = 0; i < array.length; i++) for (int j = 0; j < i; j++) if (array[i] + array[j] == target) fileWriter.write(array[j] + ", " + array[i] + "\n");
         fileWriter.close();
     }
 }

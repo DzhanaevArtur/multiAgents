@@ -1,5 +1,7 @@
 package Lab1;
 
+import laboratoryWorks.Lab1.ACalc;
+import laboratoryWorks.Lab1.RCalc;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
