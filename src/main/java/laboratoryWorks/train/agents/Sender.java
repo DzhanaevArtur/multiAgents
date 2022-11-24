@@ -1,7 +1,7 @@
-package laboratoryWorks.train.tikiTaka.agents;
+package laboratoryWorks.train.agents;
 
 import jade.core.Agent;
-import laboratoryWorks.train.tikiTaka.behs.SenderBeh;
+import laboratoryWorks.train.behs.SenderBeh;
 
 public class Sender extends Agent {
 

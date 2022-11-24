@@ -1,4 +1,4 @@
-package laboratoryWorks.train.tikiTaka.behs;
+package laboratoryWorks.train.behs;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -18,7 +18,7 @@ public class SenderBeh extends TickerBehaviour {
     protected void onTick() {
         ACLMessage aclMessage = new ACLMessage(ACLMessage.REQUEST);
         aclMessage.addReceiver(new AID("Receiver", false));
-        aclMessage.setContent(String.format("Привет от %s", agent.getLocalName()));
+        aclMessage.setContent(String.format("Hello from %s", agent.getLocalName()));
         agent.send(aclMessage);
     }
 }
