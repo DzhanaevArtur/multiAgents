@@ -1,10 +1,7 @@
 package ideas.Artur.assignment1.task2.behaviours;
 
-import ideas.Artur.assignment1.task2.HelloAgent;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
-import jade.lang.acl.ACLMessage;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -14,19 +11,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SendSalam extends Behaviour {
 
-    private int count = 0;
-    private final Agent agent;
-    public SendSalam(Agent agent) { this.agent = agent; }
+    private int count = 1;
+    private final int number;
+    private final Agent myAgent;
+    Class<? extends Agent> receiverAgent;
+    public SendSalam(Agent myAgent, int number, Class<? extends Agent> receiverAgent) {
+        super(myAgent);
+        this.myAgent = myAgent;
+        this.number = number;
+        this.receiverAgent = receiverAgent;
+    }
 
-    @Override public void onStart() { log.warn("{} started", this.getClass().getSimpleName()); }
+    @Override public void onStart() { log.info("{} started", this.getClass().getSimpleName()); }
 
     @Override public void action() {
-        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
-        aclMessage.setContent(String.format("Salam from agent %s", agent.getLocalName()));
-        aclMessage.addReceiver(new AID(String.format("%s", HelloAgent.class.getSimpleName()), false));
+        ideas.Artur.assignment1.task3.behaviours.SendSalam.businessLogic(receiverAgent, myAgent, log);
         count++;
     }
 
-    @Override public boolean done() { return count > 10; }
-    @Override public int onEnd() { log.warn("{} finished", this.getClass().getSimpleName()); return super.onEnd(); }
+    @Override public boolean done() { return count > number; }
+    @Override public int onEnd() { log.info("{} finished", this.getClass().getSimpleName()); return super.onEnd(); }
 }

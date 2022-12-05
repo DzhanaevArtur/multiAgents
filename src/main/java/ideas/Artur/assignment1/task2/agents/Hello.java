@@ -1,4 +1,4 @@
-package ideas.Artur.assignment1.task2;
+package ideas.Artur.assignment1.task2.agents;
 
 import ideas.Artur.assignment1.task2.behaviours.ReceiveSalam;
 import ideas.Artur.assignment1.task2.behaviours.SendHello;
@@ -10,4 +10,10 @@ import lombok.extern.slf4j.Slf4j;
  * @created 05.12.2022
  */
 @Slf4j
-public class HelloAgent extends Agent { @Override protected void setup() { addBehaviour(new SendHello(this)); addBehaviour(new ReceiveSalam(this));} }
+public class Hello extends Agent {
+
+    @Override protected void setup() {
+        addBehaviour(new SendHello(this, 1, Salam.class));
+        addBehaviour(new ReceiveSalam(this, 1));
+    }
+}
