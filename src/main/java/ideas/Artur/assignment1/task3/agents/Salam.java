@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Salam extends Agent {
 
     @Override protected void setup() {
-        addBehaviour(new SendSalam(this, 1_000L, Hello.class));
+        addBehaviour(new SendSalam(this, 3_000L, Hello.class));
         addBehaviour(new ReceiveHello(this));
     }
 }

@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class ReceiveSalam extends Behaviour {
+
+    private int count = 0;
     private final Agent myAgent;
     public ReceiveSalam(Agent myAgent) { super(myAgent); this.myAgent = myAgent; }
 
@@ -20,6 +22,8 @@ public class ReceiveSalam extends Behaviour {
         ACLMessage aclMessage = myAgent.receive();
         if (aclMessage != null) log.info("\"{}\" was received from {} to {}", aclMessage.getContent(), aclMessage.getSender().getLocalName(), myAgent.getLocalName());
         else block();
+        count++;
+        if (count > 10) System.exit(0);
     }
 
     @Override public boolean done() { return false; }

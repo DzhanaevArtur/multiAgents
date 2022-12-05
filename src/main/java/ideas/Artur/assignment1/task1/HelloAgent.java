@@ -10,5 +10,5 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HelloAgent extends Agent {
 
-    @Override protected void setup() { log.warn("Hello from agent {}", getLocalName()); }
+    @Override protected void setup() { log.info("Hello from agent {}", getLocalName()); }
 }
