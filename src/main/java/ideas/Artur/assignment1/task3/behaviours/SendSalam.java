@@ -13,8 +13,10 @@ import org.slf4j.Logger;
  */
 @Slf4j
 public class SendSalam extends TickerBehaviour {
+
     private final Agent myAgent;
-    Class<? extends Agent> receiverAgent;
+    private final Class<? extends Agent> receiverAgent;
+
     public SendSalam(Agent myAgent, long period, Class<? extends Agent> receiverAgent) {
         super(myAgent, period);
         this.myAgent = myAgent;

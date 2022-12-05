@@ -14,7 +14,7 @@ public class SendSalam extends Behaviour {
     private int count = 1;
     private final int number;
     private final Agent myAgent;
-    Class<? extends Agent> receiverAgent;
+    private final Class<? extends Agent> receiverAgent;
     public SendSalam(Agent myAgent, int number, Class<? extends Agent> receiverAgent) {
         super(myAgent);
         this.myAgent = myAgent;
