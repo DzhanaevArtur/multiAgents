@@ -1,12 +1,12 @@
-package laboratoryWorks.Lab2;
+package laboratoryWorks.Lab2.schmo;
 
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import laboratoryWorks.Lab2.Behaviours.Consumer;
-import laboratoryWorks.Lab2.Behaviours.ReceiveInitiation;
-import laboratoryWorks.Lab2.Behaviours.ReceiveRequest;
+import laboratoryWorks.Lab2.schmo.Behaviours.Consumer;
+import laboratoryWorks.Lab2.schmo.Behaviours.ReceiveInitiation;
+import laboratoryWorks.Lab2.schmo.Behaviours.ReceiveRequest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -22,21 +22,21 @@ import java.util.Random;
 @Getter @Setter
 public class FunctionAgent extends Agent {
 
-    private double max = 5, min = -5, x, delta = 1, epsilon = 0.01;
+    private double x, delta = 1, epsilon = 0.01;
     private Operation operation;
     private List<Operation> functions = Arrays.asList(d -> Math.exp(0.2 * x), d -> Math.pow(2, -x), Math::cos);
 
     @SneakyThrows
     protected void setup() {
 
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.setName(this.getAID());
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType("Agent");
-        sd.setName(this.getLocalName());
-        dfd.addServices(sd);
-        DFService.register(this, dfd);
-        x = new Random().doubles(min, max).findFirst().orElse(0);
+        DFAgentDescription dfAgentDescription = new DFAgentDescription();
+        dfAgentDescription.setName(this.getAID());
+        ServiceDescription serviceDescription = new ServiceDescription();
+        serviceDescription.setType("Agent");
+        serviceDescription.setName(this.getLocalName());
+        dfAgentDescription.addServices(serviceDescription);
+        DFService.register(this, dfAgentDescription);
+        x = new Random().doubles(- 5, 5).findFirst().orElse(0);
 
         addBehaviour(new ReceiveRequest(this));
         addBehaviour(new ReceiveInitiation(this));

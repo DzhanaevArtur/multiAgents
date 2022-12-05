@@ -1,4 +1,4 @@
-package laboratoryWorks.Lab2.Behaviours;
+package laboratoryWorks.Lab2.schmo.Behaviours;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -8,7 +8,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import laboratoryWorks.Lab2.FunctionAgent;
+import laboratoryWorks.Lab2.schmo.FunctionAgent;
 import lombok.SneakyThrows;
 
 import java.util.Arrays;
@@ -33,23 +33,23 @@ public class SendRequest extends Behaviour {
     @Override
     public void onStart() {
 
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType("Agent");
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.addServices(sd);
-        DFAgentDescription[] result = DFService.search(getAgent(), dfd);
-        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-        for (AID agent : Arrays.stream(result).map(DFAgentDescription::getName).toList()) msg.addReceiver(agent);
-        msg.setContent(((FunctionAgent) getAgent()).getX() + "," + ((FunctionAgent) getAgent()).getDelta());
-        getAgent().send(msg);
+        ServiceDescription serviceDescription = new ServiceDescription();
+        serviceDescription.setType("Agent");
+        DFAgentDescription dfAgentDescription = new DFAgentDescription();
+        dfAgentDescription.addServices(serviceDescription);
+        DFAgentDescription[] result = DFService.search(getAgent(), dfAgentDescription);
+        ACLMessage aclMessage = new ACLMessage(ACLMessage.REQUEST);
+        for (AID agent : Arrays.stream(result).map(DFAgentDescription::getName).toList()) aclMessage.addReceiver(agent);
+        aclMessage.setContent(((FunctionAgent) getAgent()).getX() + "," + ((FunctionAgent) getAgent()).getDelta());
+        getAgent().send(aclMessage);
     }
 
     @Override
     public void action() {
 
-        ACLMessage msgReply = getAgent().receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
-        if (msgReply != null && count < 3) {
-            responses[count] = Arrays.stream(msgReply.getContent().split(",")).mapToDouble(Double::parseDouble).toArray();
+        ACLMessage aclMessage = getAgent().receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+        if (aclMessage != null && count < 3) {
+            responses[count] = Arrays.stream(aclMessage.getContent().split(",")).mapToDouble(Double::parseDouble).toArray();
             count++;
         } else if (!collect && count == 3) {
             for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) sum[i] += responses[j][i];
