@@ -19,8 +19,9 @@ public class PongReceive extends Behaviour {
     @Override public void onStart() { log.info("{} started", this.getClass().getSimpleName()); }
 
     @Override public void action() {
-        ACLMessage aclMessage = myAgent.receive(); // MessageTemplate.MatchInReplyTo("Pong")
+        ACLMessage aclMessage = myAgent.receive();
         if (aclMessage != null) log.info("\"{}\" received", aclMessage.getContent());
+        else block();
     }
 
     @Override public int onEnd() { log.info("{} finished", this.getClass().getSimpleName()); return super.onEnd(); }

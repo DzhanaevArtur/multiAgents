@@ -20,11 +20,11 @@ public class PingReceive extends Behaviour {
     @Override public void onStart() { log.info("{} started", this.getClass().getSimpleName()); }
 
     @Override public void action() {
-        ACLMessage aclMessage = myAgent.receive(); // MessageTemplate.MatchInReplyTo("Ping")
+        ACLMessage aclMessage = myAgent.receive();
         if (aclMessage != null) {
             log.info("\"{}\" received", aclMessage.getContent());
             myAgent.addBehaviour(new PongSend(myAgent, Ping.class));
-        }
+        } else block();
     }
 
     @Override public int onEnd() { log.info("{} finished", this.getClass().getSimpleName()); return super.onEnd(); }
