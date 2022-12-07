@@ -1,5 +1,6 @@
 package Practices.task5.self.behaviours;
 
+import Practices.task5.self.agents.Boss;
 import jade.core.Agent;
 import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -21,7 +22,7 @@ public class NewCostsRec extends WakerBehaviour {
     }
 
     @Override protected void onWake() {
-        int max = 999, count = 0;
+        int max = Boss.FIRST_PRICE - 1, count = 0;
         ACLMessage aclMessage;
         while (count < 2) {
             aclMessage = myAgent.receive();
