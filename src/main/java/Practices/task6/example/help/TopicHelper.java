@@ -14,11 +14,15 @@ import lombok.extern.slf4j.Slf4j;
 public class TopicHelper {
 
     public static AID createTopic(Agent agent, String topicName) {
+        TopicManagementHelper topicHelper;
+        AID jadeTopic = null;
         try {
-            TopicManagementHelper topicManagementHelper = (TopicManagementHelper) agent.getHelper(TopicManagementHelper.SERVICE_NAME);
-            AID aid = topicManagementHelper.createTopic(topicName);
-            topicManagementHelper.register(aid);
-            return aid;
-        } catch (ServiceException e) { return null; }
+            topicHelper = (TopicManagementHelper) agent.getHelper(TopicManagementHelper.SERVICE_NAME);
+            jadeTopic = topicHelper.createTopic(topicName);
+            topicHelper.register(jadeTopic);
+        }
+        catch (ServiceException e) { e.printStackTrace(); }
+        return jadeTopic;
     }
 }
+

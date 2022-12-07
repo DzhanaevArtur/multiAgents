@@ -20,9 +20,9 @@ public class ReceiveAnswers extends Behaviour {
     public ReceiveAnswers(Data data) { this.data = data; }
 
     @Override public void action() {
-        ACLMessage receive = getAgent().receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchProtocol("price")));
-        if (receive != null) {
-            data.getAgentPrices().add(new AgentPrice(Integer.parseInt(receive.getContent()), receive.getSender().getLocalName()));
+        ACLMessage aclMessage = getAgent().receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchProtocol("price")));
+        if (aclMessage != null) {
+            data.getAgentPrices().add(new AgentPrice(Integer.parseInt(aclMessage.getContent()), aclMessage.getSender().getLocalName()));
             count++;
         }
     }

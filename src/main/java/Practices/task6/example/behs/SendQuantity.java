@@ -19,7 +19,7 @@ public class SendQuantity extends WakerBehaviour {
 
     @Override protected void onWake() {
         ACLMessage aclMessage = new ACLMessage(ACLMessage.PROPOSE);
-        aclMessage.setContent("20");
+        aclMessage.setContent("69");
         aclMessage.setProtocol("quantity");
         aclMessage.addReceiver(data.getTopic());
         getAgent().send(aclMessage);

@@ -13,12 +13,13 @@ public class ConsumerFSM extends FSMBehaviour {
 
     public ConsumerFSM() {
         Data data = new Data();
-        registerFirstState(new SendTopicName(data), "firstState");
-        registerState(new SendQuantity(getAgent(),1000, data), "secondState");
-        registerState(new ReceiveParallelBeh(getAgent(), data), "thirdState");
-        registerLastState(new WinnerBeh(data), "lastState");
-        registerDefaultTransition("firstState", "secondState");
-        registerDefaultTransition("secondState", "thirdState");
-        registerDefaultTransition("thirdState", "lastState");
+        String one = "firstState", two = "secondState", thr = "thirdState", lst = "lastState";
+        registerFirstState(new SendTopicName(data), one);
+        registerState(new SendQuantity(getAgent(),1000, data), two);
+        registerState(new ReceiveParallelBeh(getAgent(), data), thr);
+        registerLastState(new WinnerBeh(data), lst);
+        registerDefaultTransition(one, two);
+        registerDefaultTransition(two, thr);
+        registerDefaultTransition(thr, lst);
     }
 }

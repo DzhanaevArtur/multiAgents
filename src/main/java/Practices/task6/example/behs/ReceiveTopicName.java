@@ -18,10 +18,10 @@ public class ReceiveTopicName extends Behaviour {
     public ReceiveTopicName(CfgClass cfg) { this.cfg = cfg; }
 
     @Override public void action() {
-        ACLMessage receive = getAgent().receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchProtocol("topic name")));
-        if (receive != null) {
-            log.info("{} {}", getAgent().getLocalName(), receive.getContent());
-            getAgent().addBehaviour(new SendPrice(receive.getContent(), cfg));
+        ACLMessage aclMessage = getAgent().receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchProtocol("topic name")));
+        if (aclMessage != null) {
+            log.info("{} {}", getAgent().getLocalName(), aclMessage.getContent());
+            getAgent().addBehaviour(new SendPrice(aclMessage.getContent(), cfg));
         } else block();
     }
 

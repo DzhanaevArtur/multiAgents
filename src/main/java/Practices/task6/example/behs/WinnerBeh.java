@@ -18,8 +18,8 @@ public class WinnerBeh extends OneShotBehaviour {
     @Override public void action() {
         int price1 = data.getAgentPrices().get(0).getPrice();
         int price2 = data.getAgentPrices().get(1).getPrice();
-        if (price1 == price2) log.info("The prices are the same: {}", price1);
-        else if (price1 < price2) log.info("Winner: {}", data.getAgentPrices().get(0).getAgentName());
-        else log.info("Winner: {}", data.getAgentPrices().get(1).getAgentName());
+        if (price1 == price2) log.info("Prices are same: {}", price1);
+        else if (price1 < price2) log.info("Winner is: {}", data.getAgentPrices().get(0).getAgentName());
+        else log.info("Winner is: {}", data.getAgentPrices().get(1).getAgentName());
     }
 }

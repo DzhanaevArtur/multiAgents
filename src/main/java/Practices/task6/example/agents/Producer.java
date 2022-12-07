@@ -34,6 +34,7 @@ public class Producer extends Agent {
             catch (JAXBException e) { e.printStackTrace(); }
         }
     }
+
     public void registration(){
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.setName(getAID());

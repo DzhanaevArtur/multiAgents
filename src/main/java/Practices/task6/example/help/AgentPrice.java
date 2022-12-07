@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 public class AgentPrice  {
 
     @Getter @Setter private int price;
-
     @Getter @Setter private String agentName;
 
     public AgentPrice(int price, String agentName) { this.price = price; this.agentName = agentName; }

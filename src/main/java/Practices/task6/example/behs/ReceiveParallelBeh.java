@@ -18,9 +18,10 @@ public class ReceiveParallelBeh extends ParallelBehaviour {
     public ReceiveParallelBeh (Agent a, Data data) {
         super(a, WHEN_ANY);
         this.data = data;
+
         addSubBehaviour(new ReceiveAnswers(data));
         addSubBehaviour(new WakerBehaviour(getAgent(), 2000) {
-            @Override protected void onWake() { log.info("Replies timed out"); }
+            @Override protected void onWake() { log.info("Replies time out"); }
         });
     }
 }

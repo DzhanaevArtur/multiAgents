@@ -5,7 +5,6 @@ import Practices.task6.example.help.TopicHelper;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,18 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 public class SendPrice extends Behaviour {
 
     String topicName, content;
-
     AID topic;
-
     CfgClass cfg;
-
     boolean finish;
 
     public SendPrice(String topicName, CfgClass cfg) { this.topicName = topicName; this.cfg = cfg; }
 
     @Override public void action() {
         topic = TopicHelper.createTopic(getAgent(), topicName);
-        ACLMessage receive = getAgent().receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPOSE), MessageTemplate.MatchProtocol("quantity")));
+//        ACLMessage receive = getAgent().receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPOSE), MessageTemplate.MatchProtocol("quantity")));
+        ACLMessage receive = getAgent().receive();
         if (receive != null) {
             log.info("{} {}", getAgent().getLocalName(), receive.getContent());
             content = receive.getContent();

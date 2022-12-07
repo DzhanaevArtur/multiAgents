@@ -40,10 +40,10 @@ public class SendTopicName extends OneShotBehaviour {
 
     @Override public void action() {
         data.setTopic(TopicHelper.createTopic(getAgent(), "topic"));
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.setProtocol("topicName");
-        for (AID agent : agents) msg.addReceiver(agent);
-        msg.setContent("topic");
-        getAgent().send(msg);
+        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
+        aclMessage.setProtocol("topicName");
+        for (AID agent : agents) aclMessage.addReceiver(agent);
+        aclMessage.setContent("topic");
+        getAgent().send(aclMessage);
     }
 }

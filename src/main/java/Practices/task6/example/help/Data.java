@@ -16,8 +16,6 @@ import java.util.List;
 public class Data  {
 
     @Getter @Setter private AID topic;
-
     @Getter @Setter private int numberOfProducers;
-
     @Getter @Setter private List<AgentPrice> agentPrices = new ArrayList<>();
 }
