@@ -23,8 +23,6 @@ public class NewCostGen extends OneShotBehaviour implements CostCount {
         this.receiverAgent = receiverAgent;
     }
 
-    @Override public void onStart() { log.info("Started"); }
-
     @Override public void action() {
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
         int i = randomCost(Boss.FIRST_PRICE);
@@ -33,6 +31,4 @@ public class NewCostGen extends OneShotBehaviour implements CostCount {
         myAgent.send(aclMessage);
         log.info("\"{}\" sent to {}", aclMessage.getContent(), receiverAgent.getSimpleName());
     }
-
-    @Override public int onEnd() { log.info("Finished"); return super.onEnd(); }
 }

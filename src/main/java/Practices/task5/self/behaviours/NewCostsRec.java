@@ -20,23 +20,21 @@ public class NewCostsRec extends WakerBehaviour {
         this.myAgent = myAgent;
     }
 
-    @Override public void onStart() { log.info("Started"); }
-
     @Override protected void onWake() {
-        int receivedCost = 999, count = 0;
-        ACLMessage aclMessage = myAgent.receive();
-        if (aclMessage != null) {
-            while (count < 3) {
-                if (Integer.parseInt(aclMessage.getContent()) > receivedCost) {
-                    receivedCost = Integer.parseInt(aclMessage.getContent());
+        int max = 999, count = 0;
+        ACLMessage aclMessage;
+        while (count < 2) {
+            aclMessage = myAgent.receive();
+            if (aclMessage != null) {
+                int actual = Integer.parseInt(aclMessage.getContent());
+                log.info("\"{}\" received", actual);
+                if (actual > max) {
+                    max = actual;
                     finalAgent = aclMessage.getSender().getLocalName();
+                    count++;
                 }
-                count++;
-            }
-            log.info("\"{}\" received", aclMessage.getContent());
-            myAgent.addBehaviour(new ToWinner(myAgent, finalAgent, receivedCost));
-        } else block();
+            } else block();
+        }
+        myAgent.addBehaviour(new ToWinner(myAgent, finalAgent, max));
     }
-
-    @Override public int onEnd() { log.info("Finished"); return super.onEnd(); }
 }

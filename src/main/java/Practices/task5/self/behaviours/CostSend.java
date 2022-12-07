@@ -17,7 +17,11 @@ public class CostSend extends OneShotBehaviour {
     private final Agent myAgent;
     private final Class<? extends Agent> receiverAgent1, receiverAgent2, receiverAgent3;
 
-    public CostSend(Agent myAgent, Class<? extends Agent> receiverAgent1, Class<? extends Agent> receiverAgent2, Class<? extends Agent> receiverAgent3, int firstPrice) {
+    public CostSend(Agent myAgent,
+                    Class<? extends Agent> receiverAgent1,
+                    Class<? extends Agent> receiverAgent2,
+                    Class<? extends Agent> receiverAgent3,
+                    int firstPrice) {
         super(myAgent);
         this.myAgent = myAgent;
         this.receiverAgent1 = receiverAgent1;
@@ -25,8 +29,6 @@ public class CostSend extends OneShotBehaviour {
         this.receiverAgent3 = receiverAgent3;
         this.firstPrice = firstPrice;
     }
-
-    @Override public void onStart() { log.info("Started"); }
 
     @Override public void action() {
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
@@ -37,6 +39,4 @@ public class CostSend extends OneShotBehaviour {
         myAgent.send(aclMessage);
         log.info("\"{}\" was sent to {}, {} and {}", aclMessage.getContent(), receiverAgent1.getSimpleName(), receiverAgent2.getSimpleName(), receiverAgent3.getSimpleName());
     }
-
-    @Override public int onEnd() { log.info("Finished"); return super.onEnd(); }
 }

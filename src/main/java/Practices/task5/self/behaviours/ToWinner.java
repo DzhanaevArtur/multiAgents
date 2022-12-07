@@ -24,8 +24,6 @@ public class ToWinner extends OneShotBehaviour {
         this.receivedCost = receivedCost;
     }
 
-    @Override public void onStart() { log.info("Started"); }
-
     @Override public void action() {
 
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
@@ -34,6 +32,4 @@ public class ToWinner extends OneShotBehaviour {
         myAgent.send(aclMessage);
         log.info("Congratulations, {} You won with offered price {}", receiverAgent, receivedCost);
     }
-
-    @Override public int onEnd() { log.info("Finished"); return super.onEnd(); }
 }

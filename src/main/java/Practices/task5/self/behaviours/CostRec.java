@@ -20,8 +20,6 @@ public class CostRec extends WakerBehaviour {
         this.myAgent = myAgent;
     }
 
-    @Override public void onStart() { log.info("Started"); }
-
     @Override public void onWake() {
         ACLMessage aclMessage = myAgent.receive();
         if (aclMessage != null) {
@@ -29,6 +27,4 @@ public class CostRec extends WakerBehaviour {
             myAgent.addBehaviour(new NewCostGen(myAgent, Boss.class));
         } else block();
     }
-
-    @Override public int onEnd() { log.info("Finished"); return super.onEnd(); }
 }

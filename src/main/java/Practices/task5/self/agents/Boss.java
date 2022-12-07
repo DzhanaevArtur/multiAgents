@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Boss extends Agent {
 
-    public final static int FIRST_PRICE = 1000;
+    public final static int FIRST_PRICE = 100;
 
     @Override protected void setup() {
         addBehaviour(new CostSend(this, Member1.class, Member2.class, Member3.class, FIRST_PRICE));
