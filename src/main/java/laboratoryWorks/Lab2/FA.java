@@ -1,13 +1,13 @@
-package laboratoryWorks.Lab2.schmo;
+package laboratoryWorks.Lab2.yeah;
 
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
-import laboratoryWorks.Lab2.schmo.Behaviours.Consumer;
-import laboratoryWorks.Lab2.schmo.Behaviours.ReceiveInitiation;
-import laboratoryWorks.Lab2.schmo.Behaviours.ReceiveRequest;
+import laboratoryWorks.Lab2.yeah.Behaviours.Consumer;
+import laboratoryWorks.Lab2.yeah.Behaviours.ReceiveI;
+import laboratoryWorks.Lab2.yeah.Behaviours.ReceiveR;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +39,8 @@ public class FA extends Agent {
         catch (FIPAException e) { throw new RuntimeException(e); }
         x = new Random().doubles(min, max).findFirst().orElse(0);
 
-        addBehaviour(new ReceiveRequest(this));
-        addBehaviour(new ReceiveInitiation(this));
+        addBehaviour(new ReceiveR(this));
+        addBehaviour(new ReceiveI(this));
 
         if (this.getLocalName().equals("first")) { this.operation = functions.get(0); addBehaviour(new Consumer(this)); }
         if (this.getLocalName().equals("second"))  this.operation = functions.get(1);
@@ -49,8 +49,8 @@ public class FA extends Agent {
 
     public String getOperation() {
         double count0 = operation.count(x - d), count1 = operation.count(x), count2 = operation.count(x + d);
-        String output = count0 + "," + count1 + "," + count2;
-        log.info(String.format("\t\t\t\t\t\t\t\t%-1.3f;\t%-1.3f;\t%-1.3f\t sent", count0, count1, count2));
-        return output;
+        if (this.getAID().getLocalName().equals("second")) log.info(String.format("\t\t\t\t\tSent %.3f;\t%.3f;\t%.3f\t", count0, count1, count2));
+        else log.info(String.format("\t\t\t\t\tSent %.3f;\t%.3f;\t%.3f\t", count0, count1, count2));
+        return count0 + "," + count1 + "," + count2;
     }
 }

@@ -1,4 +1,4 @@
-package laboratoryWorks.Lab2.schmo.Behaviours;
+package laboratoryWorks.Lab2.yeah.Behaviours;
 
 import jade.core.Agent;
 import jade.core.behaviours.FSMBehaviour;
@@ -13,8 +13,8 @@ public class Consumer extends FSMBehaviour {
 
     public Consumer(Agent myAgent) {
         super(myAgent);
-        registerFirstState(new SendRequest(myAgent), "first");
-        registerLastState(new SendInitiative(myAgent), "second");
+        registerFirstState(new SendR(myAgent), "first");
+        registerLastState(new SendI(myAgent), "second");
         registerDefaultTransition("first", "second");
     }
 }

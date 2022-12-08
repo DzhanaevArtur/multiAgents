@@ -1,9 +1,9 @@
-package laboratoryWorks.Lab2.schmo.Behaviours;
+package laboratoryWorks.Lab2.yeah.Behaviours;
 
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import laboratoryWorks.Lab2.schmo.FA;
+import laboratoryWorks.Lab2.yeah.FA;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -11,9 +11,9 @@ import lombok.extern.slf4j.Slf4j;
  * @created 24.11.2022
  */
 @Slf4j
-public class ReceiveRequest extends Behaviour {
+public class ReceiveR extends Behaviour {
 
-    public ReceiveRequest(FA myAgent) { super(myAgent); }
+    public ReceiveR(FA myAgent) { super(myAgent); }
 
     @Override public void action() {
         ACLMessage aclMessage = getAgent().receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
@@ -24,7 +24,7 @@ public class ReceiveRequest extends Behaviour {
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent(((FA) getAgent()).getOperation());
             getAgent().send(reply);
-            log.info("\t\t{} sent", reply.getContent());
+            log.info("\tSent {}", reply.getContent());
         } else block();
     }
 

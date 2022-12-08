@@ -1,4 +1,4 @@
-package laboratoryWorks.Lab2.schmo.Behaviours;
+package laboratoryWorks.Lab2.yeah.Behaviours;
 
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -7,7 +7,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
-import laboratoryWorks.Lab2.schmo.FA;
+import laboratoryWorks.Lab2.yeah.FA;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -18,12 +18,12 @@ import java.util.Random;
  * @created 24.11.2022
  */
 @Slf4j
-public class SendInitiative extends OneShotBehaviour {
+public class SendI extends OneShotBehaviour {
 
-    public SendInitiative(Agent myAgent) { super(myAgent); }
+    public SendI(Agent myAgent) { super(myAgent); }
 
     @Override public void action() {
-        if (((FA) getAgent()).getD() < ((FA) getAgent()).getE()) log.error("\t\tFinal result: {}", ((FA) getAgent()).getX());
+        if (((FA) getAgent()).getD() < ((FA) getAgent()).getE()) log.error("\tFinal result: {}", ((FA) getAgent()).getX());
         else {
             ServiceDescription serviceDescription = new ServiceDescription();
             serviceDescription.setType("Agent");
@@ -41,7 +41,7 @@ public class SendInitiative extends OneShotBehaviour {
                 );
             } catch (FIPAException e) { throw new RuntimeException(e); }
             getAgent().send(aclMessage);
-            log.info("\t\t{} sent", aclMessage.getContent());
+            log.info("\t\tSent {}", aclMessage.getContent());
         }
     }
 }

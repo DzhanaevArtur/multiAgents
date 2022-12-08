@@ -1,4 +1,4 @@
-package laboratoryWorks.Lab2.schmo.Behaviours;
+package laboratoryWorks.Lab2.yeah.Behaviours;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -9,7 +9,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import laboratoryWorks.Lab2.schmo.FA;
+import laboratoryWorks.Lab2.yeah.FA;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -24,14 +24,14 @@ import static java.util.Comparator.comparingDouble;
  * @created 24.11.2022
  */
 @Slf4j
-public class SendRequest extends Behaviour {
+public class SendR extends Behaviour {
 
     private int count;
     private boolean collect;
     private final double[][] responses = new double[3][];
     private final double[] sum = new double[3];
 
-    public SendRequest(Agent myAgent) { super(myAgent); }
+    public SendR(Agent myAgent) { super(myAgent); }
 
     @Override public void onStart() {
         ServiceDescription serviceDescription = new ServiceDescription();
@@ -48,7 +48,8 @@ public class SendRequest extends Behaviour {
         catch (FIPAException e) { throw new RuntimeException(e); }
         aclMessage.setContent(((FA) getAgent()).getX() + "," + ((FA) getAgent()).getD());
         getAgent().send(aclMessage);
-        log.info("\t\t\t{} sent", aclMessage.getContent());
+        if (getAgent().getLocalName().equals("second")) log.debug("\tSent {}", aclMessage.getContent());
+        else log.debug("\t\tSent {}", aclMessage.getContent());
     }
 
     @Override public void action() {
