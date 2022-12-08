@@ -1,13 +1,13 @@
-package laboratoryWorks.Lab2.yeah;
+package laboratoryWorks.Lab2;
 
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
-import laboratoryWorks.Lab2.yeah.Behaviours.Consumer;
-import laboratoryWorks.Lab2.yeah.Behaviours.ReceiveI;
-import laboratoryWorks.Lab2.yeah.Behaviours.ReceiveR;
+import laboratoryWorks.Lab2.Behaviours.Consumer;
+import laboratoryWorks.Lab2.Behaviours.ReceiveI;
+import laboratoryWorks.Lab2.Behaviours.ReceiveR;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

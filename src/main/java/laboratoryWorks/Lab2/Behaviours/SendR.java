@@ -1,4 +1,4 @@
-package laboratoryWorks.Lab2.yeah.Behaviours;
+package laboratoryWorks.Lab2.Behaviours;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -9,7 +9,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import laboratoryWorks.Lab2.yeah.FA;
+import laboratoryWorks.Lab2.FA;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -53,6 +53,7 @@ public class SendR extends Behaviour {
     }
 
     @Override public void action() {
+        double x = ((FA) getAgent()).getX(), d = ((FA) getAgent()).getD();
         ACLMessage aclMessage = getAgent().receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
         if (aclMessage != null && count < 3) {
             responses[count] = Arrays.stream(aclMessage.getContent().split(",")).mapToDouble(Double::parseDouble).toArray();
@@ -60,9 +61,9 @@ public class SendR extends Behaviour {
         } else if (!collect && count == 3) {
             for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) sum[i] += responses[j][i];
             switch (IntStream.range(0, sum.length).boxed().min(comparingDouble(value -> sum[value])).orElse(0)) {
-                case (0) -> ((FA) getAgent()).setX(((FA) getAgent()).getX() - ((FA) getAgent()).getD());
-                case (1) -> ((FA) getAgent()).setD(((FA) getAgent()).getD() / 2);
-                case (2) -> ((FA) getAgent()).setX(((FA) getAgent()).getX() + ((FA) getAgent()).getD());
+                case (0) -> ((FA) getAgent()).setX(x - d);
+                case (1) -> ((FA) getAgent()).setD(d / 2);
+                case (2) -> ((FA) getAgent()).setX(x + d);
             }
             collect = true;
         } else block();

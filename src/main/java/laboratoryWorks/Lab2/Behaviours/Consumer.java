@@ -1,4 +1,4 @@
-package laboratoryWorks.Lab2.yeah.Behaviours;
+package laboratoryWorks.Lab2.Behaviours;
 
 import jade.core.Agent;
 import jade.core.behaviours.FSMBehaviour;

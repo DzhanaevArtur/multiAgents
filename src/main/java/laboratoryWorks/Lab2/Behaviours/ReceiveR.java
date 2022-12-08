@@ -1,9 +1,9 @@
-package laboratoryWorks.Lab2.yeah.Behaviours;
+package laboratoryWorks.Lab2.Behaviours;
 
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import laboratoryWorks.Lab2.yeah.FA;
+import laboratoryWorks.Lab2.FA;
 import lombok.extern.slf4j.Slf4j;
 
 /**
