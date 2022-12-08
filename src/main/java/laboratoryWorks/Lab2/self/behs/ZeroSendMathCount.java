@@ -7,6 +7,8 @@ import jade.lang.acl.ACLMessage;
 import jade.util.leap.Iterator;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Locale;
+
 /**
  * @author Artur Dzhanaev
  * @created 07.12.2022
@@ -23,7 +25,7 @@ public class ZeroSendMathCount extends OneShotBehaviour {
         this.myAgent = myAgent;
         this.receiverAgent1 = receiverAgent1;
         this.receiverAgent2 = receiverAgent2;
-        X = x;
+        this.X = x;
         this.delta = delta;
     }
 
@@ -31,9 +33,12 @@ public class ZeroSendMathCount extends OneShotBehaviour {
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
         aclMessage.addReceiver(new AID(String.format("%s", receiverAgent1.getSimpleName()), false));
         aclMessage.addReceiver(new AID(String.format("%s", receiverAgent2.getSimpleName()), false));
-        aclMessage.setContent(String.format("%f,%f", X, delta));
+        aclMessage.setContent(String.format(Locale.US, "%.3f;%.3f", X, delta));
         myAgent.send(aclMessage);
         Iterator allReceiver = aclMessage.getAllReceiver();
-        while (allReceiver.hasNext()) log.info("\"{}\" sent to {}", aclMessage.getContent(), allReceiver.next());
+        while (allReceiver.hasNext()) {
+            String receiver = allReceiver.next().toString();
+            log.info("\"{}\" sent to {}", aclMessage.getContent(), receiver.substring(receiver.indexOf(":") + 6, receiver.indexOf("@")));
+        }
     }
 }

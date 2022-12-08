@@ -1,6 +1,7 @@
 package laboratoryWorks.Lab2.self.agents;
 
 import jade.core.Agent;
+import laboratoryWorks.Lab2.self.behs.FirstReceiveOfMathRequest;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -9,4 +10,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Agent3 extends Agent {
+
+    @Override protected void setup() { addBehaviour(new FirstReceiveOfMathRequest(this, 1_000L)); }
 }

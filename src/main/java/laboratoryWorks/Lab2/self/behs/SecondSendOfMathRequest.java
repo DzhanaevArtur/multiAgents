@@ -10,13 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SecondSendOfMathRequest extends Behaviour {
 
-    @Override
-    public void action() {
+    @Override public void action() {
 
     }
 
-    @Override
-    public boolean done() {
-        return false;
-    }
+    @Override public boolean done() { return false; }
 }

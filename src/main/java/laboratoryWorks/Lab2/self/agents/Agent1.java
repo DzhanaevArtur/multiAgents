@@ -11,11 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Agent1 extends Agent {
 
-    private final static double X = 69;
+    public final static double X = 69;
     public static double delta = 5;
 
     @Override
-    protected void setup() {
-        addBehaviour(new ZeroSendMathCount(this, Agent2.class, Agent3.class, X, delta));
-    }
+    protected void setup() { addBehaviour(new ZeroSendMathCount(this, Agent2.class, Agent3.class, X, delta)); }
 }
