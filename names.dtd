@@ -1,0 +1,10 @@
+<!ELEMENT Lab3 (Agent)>
+<!ELEMENT Agent (Neighbor)>
+<!ELEMENT Neighbor (length)>
+<!ELEMENT length (#PCDATA)>
+
+<!ATTLIST Agent id CDATA #REQUIRED>
+<!ATTLIST Neighbor id CDATA #REQUIRED>
+
+<!ENTITY lost "Lost in the depths of time.">
+<!ENTITY eacute "&#233;">
