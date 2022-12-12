@@ -19,53 +19,108 @@ import java.util.stream.Collectors;
 @Slf4j
 public class Parser {
 
-    public static String start = "Node1", finish = "Node12";
-    public static int counter = choose(start).values().stream().toList().get(0);
+    public static String start, finish;
 
+    static {
+        try {
+            start = firstInfoGet(nodeListCreation()).get(0);
+            finish = firstInfoGet(nodeListCreation()).get(1);
+        }
+        catch (ParserConfigurationException | SAXException | IOException e) { throw new RuntimeException(e); }
+    }
+
+    /**
+     * Получение исходных данных
+     * @param nodeList Объектная модель конфигурационного файла
+     * @return список агента-инициатора и целевого агента
+     */
+    private static List<String> firstInfoGet(NodeList nodeList) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            NamedNodeMap namedNodeMap = nodeList.item(i).getAttributes();
+            if (Boolean.parseBoolean(namedNodeMap.item(2).getNodeValue())) {
+                return List.of(namedNodeMap.item(1).getNodeValue(), namedNodeMap.item(0).getNodeValue());
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    /**
+     * Определение пары: агент-получатель: длинна до него
+     * @param agentName Название обрабатываемого агента
+     * @return Карта агент: длинна
+     */
     public static Map<String, Integer> choose(String agentName) {
-        Iterator<Map.Entry<String, Integer>> iterator;
-        try { iterator = parse(agentName); }
-        catch (ParserConfigurationException | IOException | SAXException e) { throw new RuntimeException(e); }
+        Iterator<Map.Entry<String, Integer>> iterator = mapSort(agentName);
         Map.Entry<String, Integer> first = iterator.next(), second = iterator.next();
 
         String receiver; int length;
-        if (!agentName.equals(first.getKey())) { receiver = first.getKey(); length = first.getValue(); }
-        else { receiver = second.getKey(); length = second.getValue(); }
+        if (!agentName.equals("Node4") && !agentName.equals("Node9") && !agentName.equals(first.getKey())) {
+            receiver = first.getKey();
+            length = first.getValue();
+        }
+        else {
+            receiver = second.getKey();
+            length = second.getValue();
+        }
         return Map.of(receiver, length);
     }
 
-    private static Iterator<Map.Entry<String, Integer>> parse(String agentName) throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        documentBuilderFactory.setValidating(false);
-        documentBuilderFactory.setIgnoringElementContentWhitespace(true);
-        NodeList nodeList = documentBuilderFactory
-                .newDocumentBuilder()
-                .parse(new File("config.xml"))
-                .getChildNodes()
-                .item(1)
-                .getChildNodes();
-        Map<String, Integer> map = new HashMap<>(); // карта, в которую добавляем отфильтрованные по расстояниям между агентами пары {имя агента: расстояние до него}
-        for (int i = 0; i < nodeList.getLength(); i++) { // проходимся по всем тегам <Agent></Agent>
-            Node agent = nodeList.item(i); // получаем всю начинку тега <Agent></Agent>
-            NamedNodeMap namedNodeMap = agent.getAttributes(); // получаем группу параметров тега <Agent>: {final, id, initiator}
-            if (agentName.equals(namedNodeMap.item(1).getNodeValue())) { // проверка на чтение агентом своей части конфига
-                if (Boolean.parseBoolean(namedNodeMap.item(2).getNodeValue())) { // проверка на инициатора
-                    start = namedNodeMap.item(1).getNodeValue(); // получаем лидера
-                    finish = namedNodeMap.item(0).getNodeValue(); // получаем "пункт назначения"
-                }
-                NodeList neighbours = agent.getChildNodes(); // получаем список из агентов, с которыми есть связь
-                for (int j = 0; j < neighbours.getLength(); j++) {
-                    Node node = neighbours.item(j); // получаем всю начинку тега <Neighbor></Neighbor>
-                    map.put(node.getAttributes().item(0).getNodeValue(), Integer.valueOf(node.getTextContent()));
-                }
-            }
-        }
-        return map
+    /**
+     * Сортировка данных по возрастанию расстояний между агентами
+     * @param agentName Название обрабатываемого агента
+     * @return Преобразованная в итератор отсортированная карта
+     */
+    private static Iterator<Map.Entry<String, Integer>> mapSort(String agentName) {
+        return unmarshalCfgFile(agentName)
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
                 .entrySet()
                 .iterator();
+    }
+
+    /**
+     * Обработка содержимого конфигурационного файла
+     * @param agentName Название обрабатываемого агента
+     * @return Карта, где ключ - название обрабатываемого агента, значение - расстояние до него от текущего агента
+     */
+    private static Map<String, Integer> unmarshalCfgFile(String agentName) {
+        NodeList nodeList;
+        try { nodeList = nodeListCreation(); }
+        catch (ParserConfigurationException | IOException | SAXException e) { throw new RuntimeException(e); }
+
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < nodeList.getLength(); i++) {                      // проходимся по всем тегам <Agent></Agent>
+            Node agent = nodeList.item(i);                                    // получаем всю начинку тега <Agent></Agent>
+            NamedNodeMap namedNodeMap = agent.getAttributes();                // получаем группу параметров тега <Agent>: {final, id, initiator}
+            if (agentName.equals(namedNodeMap.item(1).getNodeValue())) { // проверка на чтение агентом своей части конфига
+                NodeList neighbours = agent.getChildNodes();                  // получаем список из агентов, с которыми есть связь
+                for (int j = 0; j < neighbours.getLength(); j++) {
+                    Node node = neighbours.item(j);                           // получаем всю начинку тега <Neighbor></Neighbor>
+                    map.put(node.getAttributes().item(0).getNodeValue(), Integer.valueOf(node.getTextContent()));
+                }
+            }
+        }
+        return map;
+    }
+
+    /**
+     * Преобразование конфигурационного файла в Java-модель
+     * @return Объектная модель содержимого файла
+     * @throws ParserConfigurationException Если невозможно создать DocumentBuilder, удовлетворяющий запрошенной конфигурации
+     * @throws IOException Если возникают какие-либо ошибки ввода-вывода
+     * @throws SAXException Если возникают какие-либо ошибки синтаксического анализа
+     */
+    private static NodeList nodeListCreation() throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setValidating(false);
+        documentBuilderFactory.setIgnoringElementContentWhitespace(true);
+        return documentBuilderFactory
+                .newDocumentBuilder()
+                .parse(new File("config.xml"))
+                .getChildNodes()
+                .item(1)
+                .getChildNodes();
     }
 }

@@ -10,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
  * @created 10.12.2022
  */
 @Slf4j
-public class FirstRec extends WakerBehaviour {
+public class FirstR extends WakerBehaviour {
 
     private final Agent myAgent;
 
-    public FirstRec(Agent myAgent, long timeout) { super(myAgent, timeout); this.myAgent = myAgent; }
+    public FirstR(Agent myAgent, long timeout) { super(myAgent, timeout); this.myAgent = myAgent; }
 
     @Override protected void onWake() {
         ACLMessage aclMessage = myAgent.receive();

@@ -11,13 +11,13 @@ import lombok.extern.slf4j.Slf4j;
  * @created 10.12.2022
  */
 @Slf4j
-public class FirstSend extends OneShotBehaviour {
+public class FirstS extends OneShotBehaviour {
 
     private final Agent myAgent;
     private final String receiverAgent;
     private final Integer length;
 
-    public FirstSend(Agent myAgent, String receiverAgent, Integer length) {
+    public FirstS(Agent myAgent, String receiverAgent, Integer length) {
         super(myAgent);
         this.myAgent = myAgent;
         this.receiverAgent = receiverAgent;
