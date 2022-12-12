@@ -13,44 +13,38 @@ import lombok.extern.slf4j.Slf4j;
 public class Node extends Agent {
 
     @Override protected void setup() {
-        log.info("\tBorn");
+
         String agentName = this.getLocalName();
-        if (agentName.equals(Parser.start)) {
-            addBehaviour(new FirstS(
-                    this,
-                    Parser.choose(agentName).keySet().stream().toList().get(0),
-                    Parser.choose(agentName).values().stream().toList().get(0))
-            );
+        String start = Parser.start;
+        String receiverAgent = Parser.choose(agentName).keySet().stream().toList().get(0);
+
+        String firstNeighbour = Parser.choose(start).keySet().stream().toList().get(0);
+        String secondNeighbour = Parser.choose(firstNeighbour).keySet().stream().toList().get(0);
+        String thirdNeighbour = Parser.choose(secondNeighbour).keySet().stream().toList().get(0);
+        String fourthNeighbour = Parser.choose(thirdNeighbour).keySet().stream().toList().get(0);
+
+        Integer firstLen = Parser.choose(agentName).values().stream().toList().get(0);
+        Integer secondLen = Parser.choose(start).values().stream().toList().get(0);
+        Integer thirdLen = Parser.choose(firstNeighbour).values().stream().toList().get(0);
+        Integer fourthLen = Parser.choose(secondNeighbour).values().stream().toList().get(0);
+
+        if (agentName.equals(start)) {
+            addBehaviour(new Sender  (this, 0L, receiverAgent, firstLen));
         }
-        if (agentName.equals(Parser.choose(Parser.start).keySet().stream().toList().get(0))) {
-            addBehaviour(new FirstR(this, 500L));
-            addBehaviour(new SecondS(
-                    this,
-                    1000L,
-                    Parser.choose(agentName).keySet().stream().toList().get(0),
-                    Parser.choose(agentName).values().stream().toList().get(0) + Parser.choose(Parser.start).values().stream().toList().get(0)
-            ));
+        if (agentName.equals(firstNeighbour)) {
+            addBehaviour(new Receive(this, 500L));
+            addBehaviour(new Sender (this, 1_000L, receiverAgent, firstLen + secondLen));
         }
-        if (agentName.equals(Parser.choose(Parser.choose(Parser.start).keySet().stream().toList().get(0)).keySet().stream().toList().get(0))) {
-            addBehaviour(new SecondR(this, 1500L));
-            addBehaviour(new ThirdS(
-                    this,
-                    2000L,
-                    Parser.choose(agentName).keySet().stream().toList().get(0),
-                    Parser.choose(agentName).values().stream().toList().get(0) + Parser.choose(Parser.choose(Parser.start).keySet().stream().toList().get(0)).values().stream().toList().get(0) + Parser.choose(Parser.start).values().stream().toList().get(0)
-            ));
+        if (agentName.equals(secondNeighbour)) {
+            addBehaviour(new Receive(this, 1_500L));
+            addBehaviour(new Sender (this, 2_000L, receiverAgent, firstLen + secondLen + thirdLen));
         }
-        if (agentName.equals(Parser.choose(Parser.choose(Parser.choose(Parser.start).keySet().stream().toList().get(0)).keySet().stream().toList().get(0)).keySet().stream().toList().get(0))) {
-            addBehaviour(new ThirdR(this, 2500L));
-            addBehaviour(new FourthS(
-                    this,
-                    3000L,
-                    Parser.choose(agentName).keySet().stream().toList().get(0),
-                    Parser.choose(agentName).values().stream().toList().get(0) + Parser.choose(Parser.choose(Parser.start).keySet().stream().toList().get(0)).values().stream().toList().get(0) + Parser.choose(Parser.choose(Parser.choose(Parser.start).keySet().stream().toList().get(0)).keySet().stream().toList().get(0)).values().stream().toList().get(0) + Parser.choose(Parser.start).values().stream().toList().get(0)
-            ));
+        if (agentName.equals(thirdNeighbour)) {
+            addBehaviour(new Receive(this, 2_500L));
+            addBehaviour(new Sender (this, 3_000L, receiverAgent, firstLen + secondLen + thirdLen + fourthLen));
         }
-        if (agentName.equals(Parser.choose(Parser.choose(Parser.choose(Parser.choose(Parser.start).keySet().stream().toList().get(0)).keySet().stream().toList().get(0)).keySet().stream().toList().get(0)).keySet().stream().toList().get(0))) {
-            addBehaviour(new FourthR(this, 3500L));
+        if (agentName.equals(fourthNeighbour)) {
+            addBehaviour(new Receive(this, 3_500L));
         }
     }
 }

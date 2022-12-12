@@ -7,19 +7,22 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Artur Dzhanaev
- * @created 10.12.2022
+ * @created 12.12.2022
  */
 @Slf4j
-public class FirstR extends WakerBehaviour {
+public class Receive extends WakerBehaviour {
 
     private final Agent myAgent;
 
-    public FirstR(Agent myAgent, long timeout) { super(myAgent, timeout); this.myAgent = myAgent; }
+    public Receive(Agent myAgent, long timeout) { super(myAgent, timeout); this.myAgent = myAgent; }
 
     @Override protected void onWake() {
         ACLMessage aclMessage = myAgent.receive();
         if (aclMessage != null) {
             log.info("\t\"{}\" was received", aclMessage.getContent());
+            if (myAgent.getLocalName().equals("Node12")) {
+                log.warn("\tCongratulations! Total length equals {}", aclMessage.getContent());
+            }
         } else block();
     }
 }
