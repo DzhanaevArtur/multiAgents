@@ -20,24 +20,15 @@ public class Node extends Agent {
             addBehaviour(new Sender     (this, 0, destination, lengths(0)));
         }
         else if (!localName.equals(Parser.finish)) {
-            if (localName.equals(neighbours(1))) {
-                addBehaviour(new Receive(this, 500L));
-                addBehaviour(new Sender (this, 1_000L, destination, lengths(1)));
-            }
-            if (localName.equals(neighbours(2))) {
-                addBehaviour(new Receive(this, 1_500L));
-                addBehaviour(new Sender (this, 2_000L, destination, lengths(2)));
-            }
-            if (localName.equals(neighbours(3))) {
-                addBehaviour(new Receive(this, 2_500L));
-                addBehaviour(new Sender (this, 3_000L, destination, lengths(3)));
-            }
-            if (localName.equals(neighbours(4))) {
-                addBehaviour(new Receive(this, 3_500L));
-                addBehaviour(new Sender (this, 4_000L, destination, lengths(4)));
+            for (int i = 0; i < 10; i++) {
+                if (localName.equals(neighbours(i))) {
+                    addBehaviour(new Receive(this, 1000L * i + 500L));
+                    addBehaviour(new Sender (this, 1000L * i + 1_000L, destination, lengths(i)));
+                    if (destination.equals(Parser.finish)) break;
+                }
             }
         }
-        else { addBehaviour(new Receive(this, 4_500L)); }
+        else { addBehaviour(new Receive(this, 5_500L)); }
     }
 
     private String neighbours(int count) {
