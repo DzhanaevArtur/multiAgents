@@ -13,38 +13,38 @@ import lombok.extern.slf4j.Slf4j;
 public class Node extends Agent {
 
     @Override protected void setup() {
+        String localName = this.getLocalName();
+        String destination = Parser.choose(localName).keySet().stream().toList().get(0);
 
-        String agentName = this.getLocalName();
-        String start = Parser.start;
-        String receiverAgent = Parser.choose(agentName).keySet().stream().toList().get(0);
+        if (localName.equals(Parser.start)) {
+            addBehaviour(new Sender     (this, 0, destination, lengths(0)));
+        }
+        else if (!localName.equals(Parser.finish)) {
+            if (localName.equals(neighbours(1))) {
+                addBehaviour(new Receive(this, 500L));
+                addBehaviour(new Sender (this, 1_000L, destination, lengths(1)));
+            }
+            if (localName.equals(neighbours(2))) {
+                addBehaviour(new Receive(this, 1_500L));
+                addBehaviour(new Sender (this, 2_000L, destination, lengths(2)));
+            }
+            if (localName.equals(neighbours(3))) {
+                addBehaviour(new Receive(this, 2_500L));
+                addBehaviour(new Sender (this, 3_000L, destination, lengths(3)));
+            }
+            if (localName.equals(neighbours(4))) {
+                addBehaviour(new Receive(this, 3_500L));
+                addBehaviour(new Sender (this, 4_000L, destination, lengths(4)));
+            }
+        }
+        else { addBehaviour(new Receive(this, 4_500L)); }
+    }
 
-        String firstNeighbour = Parser.choose(start).keySet().stream().toList().get(0);
-        String secondNeighbour = Parser.choose(firstNeighbour).keySet().stream().toList().get(0);
-        String thirdNeighbour = Parser.choose(secondNeighbour).keySet().stream().toList().get(0);
-        String fourthNeighbour = Parser.choose(thirdNeighbour).keySet().stream().toList().get(0);
+    private String neighbours(int count) {
+        return count == 0 ? Parser.start : count == 1 ? Parser.choose(Parser.start).keySet().stream().toList().get(0) : Parser.choose(neighbours(count - 1)).keySet().stream().toList().get(0);
+    }
 
-        Integer firstLen = Parser.choose(agentName).values().stream().toList().get(0);
-        Integer secondLen = Parser.choose(start).values().stream().toList().get(0);
-        Integer thirdLen = Parser.choose(firstNeighbour).values().stream().toList().get(0);
-        Integer fourthLen = Parser.choose(secondNeighbour).values().stream().toList().get(0);
-
-        if (agentName.equals(start)) {
-            addBehaviour(new Sender  (this, 0L, receiverAgent, firstLen));
-        }
-        if (agentName.equals(firstNeighbour)) {
-            addBehaviour(new Receive(this, 500L));
-            addBehaviour(new Sender (this, 1_000L, receiverAgent, firstLen + secondLen));
-        }
-        if (agentName.equals(secondNeighbour)) {
-            addBehaviour(new Receive(this, 1_500L));
-            addBehaviour(new Sender (this, 2_000L, receiverAgent, firstLen + secondLen + thirdLen));
-        }
-        if (agentName.equals(thirdNeighbour)) {
-            addBehaviour(new Receive(this, 2_500L));
-            addBehaviour(new Sender (this, 3_000L, receiverAgent, firstLen + secondLen + thirdLen + fourthLen));
-        }
-        if (agentName.equals(fourthNeighbour)) {
-            addBehaviour(new Receive(this, 3_500L));
-        }
+    private int lengths(int count) {
+        return count == 0 ? Parser.choose(this.getLocalName()).values().stream().toList().get(0) : count == 1 ? Parser.choose(neighbours(0)).values().stream().toList().get(0) + lengths(0) : Parser.choose(neighbours(count - 1)).values().stream().toList().get(0) + lengths(count - 1);
     }
 }
