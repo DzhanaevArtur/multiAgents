@@ -13,9 +13,7 @@ import laboratoryWorks.Lab2.FA;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.util.Comparator.comparingDouble;
 
@@ -39,12 +37,7 @@ public class SendR extends Behaviour {
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription);
         ACLMessage aclMessage = new ACLMessage(ACLMessage.REQUEST);
-        try {
-            DFAgentDescription[] search = DFService.search(getAgent(), dfAgentDescription);
-            Stream<AID> aidStream = Arrays.stream(search).map(DFAgentDescription::getName);
-            List<AID> aid1 = aidStream.toList();
-            for (AID aid : aid1) aclMessage.addReceiver(aid);
-        }
+        try { for (AID aid : Arrays.stream(DFService.search(getAgent(), dfAgentDescription)).map(DFAgentDescription::getName).toList()) aclMessage.addReceiver(aid); }
         catch (FIPAException e) { throw new RuntimeException(e); }
         aclMessage.setContent(((FA) getAgent()).getX() + "," + ((FA) getAgent()).getD());
         getAgent().send(aclMessage);
