@@ -3,6 +3,7 @@ package Practices.task6.example.behs;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -10,15 +11,15 @@ import lombok.extern.slf4j.Slf4j;
  * @created 13.12.2022
  */
 @Slf4j
-public class MessageReceiver extends Behaviour {
+public class MsgSecondReceive extends Behaviour {
 
     private final Agent myAgent;
 
-    public MessageReceiver(Agent myAgent) { super(myAgent); this.myAgent = myAgent; }
+    public MsgSecondReceive(Agent myAgent) { super(myAgent); this.myAgent = myAgent; }
 
     @Override public void action() {
-        ACLMessage aclMessage = myAgent.receive();
-        if (aclMessage != null) log.warn("\t\"{}\" was received", aclMessage.getContent());
+        ACLMessage aclMessage = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+        if (aclMessage != null) log.info("\"{}\" was received", aclMessage.getContent());
         else block();
     }
 
