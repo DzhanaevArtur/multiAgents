@@ -1,6 +1,6 @@
 package Practices.task6.example.agents;
 
-import Practices.task6.example.behs.MsgFirstSend;
+import Practices.task6.example.behs.BuyerFirst;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -11,7 +11,9 @@ import laboratoryWorks.lab3.common.AutoRunnableAgent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Artur Dzhanaev
@@ -21,15 +23,16 @@ import java.util.List;
 @AutoRunnableAgent(name = "Buyer", copy = 1)
 public class Buyer extends Agent {
 
-    protected void setup() {
-        log.info("Born");
+    public static Integer count = 0;
+    public static Map<AID, Integer> costs = new HashMap<>();
 
+    protected void setup() {
+        log.info("\t\tBorn");
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         ServiceDescription serviceDescription = new ServiceDescription();
         serviceDescription.setType("Seller");
         serviceDescription.setName("Book Seller");
         dfAgentDescription.addServices(serviceDescription);
-
         List<AID> list;
         try {
             list = Arrays.stream(DFService.search(this, dfAgentDescription))
@@ -37,6 +40,7 @@ public class Buyer extends Agent {
                     .filter(aid -> !aid.getLocalName().equals(this.getLocalName()))
                     .toList();
         } catch (FIPAException e) { throw new RuntimeException(e); }
-        addBehaviour(new MsgFirstSend(this, list));
+
+        addBehaviour(new BuyerFirst(this, list));
     }
 }
