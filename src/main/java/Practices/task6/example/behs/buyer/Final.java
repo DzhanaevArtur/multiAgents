@@ -1,4 +1,4 @@
-package Practices.task6.example.behs;
+package Practices.task6.example.behs.buyer;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -13,12 +13,12 @@ import java.util.Map;
  * @created 14.12.2022
  */
 @Slf4j
-public class BuyerFinalSend extends OneShotBehaviour {
+public class Final extends OneShotBehaviour {
 
     private final Agent myAgent;
     private final Map.Entry<AID, Integer> entrySet;
 
-    public BuyerFinalSend(Agent myAgent, Map.Entry <AID, Integer> entrySet) {
+    public Final(Agent myAgent, Map.Entry <AID, Integer> entrySet) {
         super(myAgent);
         this.myAgent = myAgent;
         this.entrySet = entrySet;
@@ -26,9 +26,11 @@ public class BuyerFinalSend extends OneShotBehaviour {
 
 
     @Override public void action() {
-        ACLMessage aclMessage = new ACLMessage(ACLMessage.AGREE);
-        aclMessage.addReceiver(entrySet.getKey());
+        ACLMessage aclMessage = new ACLMessage(ACLMessage.CONFIRM);
+        AID winner = entrySet.getKey();
+        aclMessage.addReceiver(winner);
         aclMessage.setContent(String.valueOf(entrySet.getValue()));
         myAgent.send(aclMessage);
+        log.info("\t\tCongratulations to {}", winner.getLocalName());
     }
 }

@@ -1,4 +1,4 @@
-package Practices.task6.example.behs;
+package Practices.task6.example.behs.seller;
 
 import Practices.task6.example.agents.Seller;
 import jade.core.AID;
@@ -12,13 +12,13 @@ import lombok.extern.slf4j.Slf4j;
  * @created 14.12.2022
  */
 @Slf4j
-public class SellerCostSend extends OneShotBehaviour {
+public class Middle extends OneShotBehaviour {
 
     private final Agent myAgent;
     private final AID aid;
     private final Integer bookNumber;
 
-    public SellerCostSend(Agent myAgent, AID aid, Integer bookNumber) {
+    public Middle(Agent myAgent, AID aid, Integer bookNumber) {
         super(myAgent);
         this.myAgent = myAgent;
         this.aid = aid;
@@ -26,12 +26,12 @@ public class SellerCostSend extends OneShotBehaviour {
     }
 
     @Override public void action() {
-        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
+        ACLMessage aclMessage = new ACLMessage(ACLMessage.CFP);
         if (myAgent.getLocalName().equals("Seller1")) aclMessage.setContent(String.valueOf(bookNumber * Seller.A1 + Seller.B1));
         else aclMessage.setContent(String.valueOf(bookNumber * Seller.A2 + Seller.B2));
         aclMessage.addReceiver(aid);
         myAgent.send(aclMessage);
-        log.info("\t\"{}\" was sent to {}", aclMessage.getContent(), aid.getLocalName());
-        myAgent.addBehaviour(new SellerFinalReceive(myAgent));
+        log.info("\t\"{}\" sent to {}", aclMessage.getContent(), aid.getLocalName());
+        myAgent.addBehaviour(new Final(myAgent));
     }
 }

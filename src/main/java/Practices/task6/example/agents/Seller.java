@@ -1,6 +1,6 @@
 package Practices.task6.example.agents;
 
-import Practices.task6.example.behs.SellerFirst;
+import Practices.task6.example.behs.seller.First;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -20,7 +20,7 @@ public class Seller extends Agent {
     public final static int A1 = 100, B1 = 500, A2 = 10, B2 = 60;
 
     protected void setup() {
-        log.info("\tBorn");
+        log.info("\t\tBorn");
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         ServiceDescription serviceDescription = new ServiceDescription();
@@ -30,6 +30,6 @@ public class Seller extends Agent {
         try { DFService.register(this, dfAgentDescription); }
         catch (FIPAException e) { throw new RuntimeException(e); }
 
-        addBehaviour(new SellerFirst(this));
+        addBehaviour(new First(this));
     }
 }

@@ -1,6 +1,6 @@
 package Practices.task6.example.agents;
 
-import Practices.task6.example.behs.BuyerFirst;
+import Practices.task6.example.behs.buyer.First;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,20 +26,20 @@ public class Buyer extends Agent {
     public static Map<AID, Integer> costs = new HashMap<>();
 
     protected void setup() {
-        log.info("\t\tBorn");
+        log.info("\t\t\tBorn");
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         ServiceDescription serviceDescription = new ServiceDescription();
         serviceDescription.setType("Seller");
         serviceDescription.setName("Book Seller");
         dfAgentDescription.addServices(serviceDescription);
-        List<AID> list;
         try {
-            list = Arrays.stream(DFService.search(this, dfAgentDescription))
-                    .map(DFAgentDescription::getName)
-                    .filter(aid -> !aid.getLocalName().equals(this.getLocalName()))
-                    .toList();
+            addBehaviour(new First(
+                    this,
+                    Arrays.stream(DFService.search(this, dfAgentDescription))
+                            .map(DFAgentDescription::getName)
+                            .filter(aid -> !aid.getLocalName().equals(this.getLocalName()))
+                            .toList()
+            ));
         } catch (FIPAException e) { throw new RuntimeException(e); }
-
-        addBehaviour(new BuyerFirst(this, list));
     }
 }

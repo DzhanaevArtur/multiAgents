@@ -1,4 +1,4 @@
-package Practices.task6.example.behs;
+package Practices.task6.example.behs.buyer;
 
 import Practices.task6.example.agents.Buyer;
 import jade.core.Agent;
@@ -16,31 +16,33 @@ import java.util.stream.Collectors;
  * @created 14.12.2022
  */
 @Slf4j
-public class BuyerCostReceive extends Behaviour {
+public class Middle extends Behaviour {
 
     private final Agent myAgent;
 
-    public BuyerCostReceive(Agent myAgent) {
+    public Middle(Agent myAgent) {
         super(myAgent);
         this.myAgent = myAgent;
     }
 
 
     @Override public void action() {
-        ACLMessage aclMessage = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+        ACLMessage aclMessage = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.CFP));
         if (aclMessage != null) {
             Integer cost = Integer.valueOf(aclMessage.getContent());
-            log.info("\t\"{}\" was received", cost);
+            log.info("\t\t\"{}\" received", cost);
             Buyer.costs.put(aclMessage.getSender(), cost);
             Buyer.count++;
-            if (Buyer.count == 2) {
-                myAgent.addBehaviour(new BuyerFinalSend(myAgent, Buyer.costs.entrySet()
-                        .stream()
-                        .sorted(Map.Entry.comparingByValue())
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
-                        .entrySet()
-                        .iterator()
-                        .next()
+            if (Buyer.count > 1) {
+                myAgent.addBehaviour(new Final(
+                        myAgent,
+                        Buyer.costs.entrySet()
+                                .stream()
+                                .sorted(Map.Entry.comparingByValue())
+                                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
+                                .entrySet()
+                                .iterator()
+                                .next()
                 ));
             }
         } else block();
