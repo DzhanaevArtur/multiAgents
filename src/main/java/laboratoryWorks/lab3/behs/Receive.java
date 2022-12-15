@@ -3,7 +3,7 @@ package laboratoryWorks.lab3.behs;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
-import laboratoryWorks.lab3.common.Parser;
+import Practices.Parser;
 import lombok.extern.slf4j.Slf4j;
 
 /**

@@ -1,4 +1,4 @@
-package laboratoryWorks.lab3.common;
+package Practices;
 
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.*;
@@ -19,12 +19,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class Parser {
 
-    public static String start, finish;
+    private static final File file = new File("names.xml");
+    public static final String start, finish;
 
     static {
         try {
-            start = firstInfoGet(nodeListCreation()).get(0);
-            finish = firstInfoGet(nodeListCreation()).get(1);
+            start = firstInfoGet(nodeListCreation(file)).get(0);
+            finish = firstInfoGet(nodeListCreation(file)).get(1);
         }
         catch (ParserConfigurationException | SAXException | IOException e) { throw new RuntimeException(e); }
     }
@@ -87,7 +88,7 @@ public class Parser {
      */
     private static Map<String, Integer> unmarshalCfgFile(String agentName) {
         NodeList nodeList;
-        try { nodeList = nodeListCreation(); }
+        try { nodeList = nodeListCreation(file); }
         catch (ParserConfigurationException | IOException | SAXException e) { throw new RuntimeException(e); }
 
         Map<String, Integer> map = new HashMap<>();
@@ -112,13 +113,13 @@ public class Parser {
      * @throws IOException Если возникают какие-либо ошибки ввода-вывода
      * @throws SAXException Если возникают какие-либо ошибки синтаксического анализа
      */
-    private static NodeList nodeListCreation() throws ParserConfigurationException, IOException, SAXException {
+    public static NodeList nodeListCreation(File file) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         documentBuilderFactory.setValidating(false);
         documentBuilderFactory.setIgnoringElementContentWhitespace(true);
         return documentBuilderFactory
                 .newDocumentBuilder()
-                .parse(new File("config.xml"))
+                .parse(file)
                 .getChildNodes()
                 .item(1)
                 .getChildNodes();

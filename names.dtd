@@ -7,6 +7,3 @@
 <!ATTLIST Agent initiator CDATA #REQUIRED>
 <!ATTLIST Agent final CDATA #REQUIRED>
 <!ATTLIST Neighbor id CDATA #REQUIRED>
-
-<!ENTITY lost "Lost in the depths of time.">
-<!ENTITY eacute "&#233;">

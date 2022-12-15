@@ -1,5 +1,6 @@
 package laboratoryWorks.lab3.common;
 
+import Practices.Parser;
 import jade.core.Agent;
 import laboratoryWorks.lab3.behs.*;
 import lombok.extern.slf4j.Slf4j;

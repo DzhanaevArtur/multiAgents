@@ -14,6 +14,6 @@ public class Main {
     public static void main(String[] args) {
         Runtime runtime = Runtime.instance();
         runtime.setCloseVM(true);
-        runtime.createMainContainer(AgentFounder.founder());
+        runtime.createMainContainer(AgentFounder.founder(Node.class));
     }
 }

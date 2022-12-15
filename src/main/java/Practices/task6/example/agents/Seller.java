@@ -17,8 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @AutoRunnableAgent(name = "Seller", copy = 2)
 public class Seller extends Agent {
 
-    public final static int A1 = 100, B1 = 500, A2 = 10, B2 = 60;
-
     protected void setup() {
         log.info("\t\tBorn");
 

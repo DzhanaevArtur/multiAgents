@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CalcTest {
 
-    ACalc aCalc = new ACalc();
+    final ACalc aCalc = new ACalc();
 
-    RCalc rCalc = new RCalc();
+    final RCalc rCalc = new RCalc();
 
     @Test
     void test1() { assertEquals(Integer.parseInt(aCalc.add("5+6")), 11); }
