@@ -3,7 +3,7 @@ package Practices;
 import jade.core.Agent;
 import jade.core.ProfileImpl;
 import jade.util.leap.Properties;
-import laboratoryWorks.lab3.common.AutoRunnableAgent;
+import LaboratoryWorks.lab3.common.AutoRunnableAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

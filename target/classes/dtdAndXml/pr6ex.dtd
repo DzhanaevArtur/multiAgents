@@ -1,6 +1,0 @@
-<!ELEMENT pr6ex (Seller, Seller)>
-<!ELEMENT Seller (A, B)>
-<!ELEMENT A (#PCDATA)>
-<!ELEMENT B (#PCDATA)>
-
-<!ATTLIST Seller name CDATA #REQUIRED>

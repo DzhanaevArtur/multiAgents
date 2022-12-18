@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pr6ex>
+    <Seller name="Seller1">
+        <A>111</A>
+        <B>222</B>
+    </Seller>
+    <Seller name="Seller2">
+        <A>333</A>
+        <B>444</B>
+    </Seller>
+</pr6ex>
