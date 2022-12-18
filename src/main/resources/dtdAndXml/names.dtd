@@ -1,0 +1,9 @@
+<!ELEMENT Lab3 (Agent)>
+<!ELEMENT Agent (Neighbor)>
+<!ELEMENT Neighbor (length)>
+<!ELEMENT length (#PCDATA)>
+
+<!ATTLIST Agent id CDATA #REQUIRED>
+<!ATTLIST Agent initiator CDATA #REQUIRED>
+<!ATTLIST Agent final CDATA #REQUIRED>
+<!ATTLIST Neighbor id CDATA #REQUIRED>

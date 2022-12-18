@@ -27,6 +27,7 @@ public class AgentFounder {
         Properties properties = new Properties();
         properties.setProperty("gui", "true");
         properties.setProperty("agents", stringBuilder.toString());
+        properties.setProperty("services", "jade.core.event.NotificationService;jade.core.messaging.TopicManagementService");
         return properties;
     }
 

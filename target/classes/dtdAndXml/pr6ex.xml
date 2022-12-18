@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE pr6ex SYSTEM "pr6ex.dtd">
+<!DOCTYPE pr6ex SYSTEM "C:\Users\Artur Dzhanaev\Desktop\study\Java\MultiAgents\src\main\resources\dtd & xml\pr6ex.dtd">
 <pr6ex>
     <Seller name="Seller1">
         <A>111</A>

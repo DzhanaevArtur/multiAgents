@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Lab3 SYSTEM "names.dtd">
+<Lab3>
+    <Agent id="Node1" initiator="true" final="Node12">
+        <Neighbor id="Node2"><length>12</length></Neighbor>
+        <Neighbor id="Node3"><length>22</length></Neighbor>
+        <Neighbor id="Node4"><length>1</length></Neighbor>
+        <Neighbor id="Node5"><length>2</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node2" initiator="false" final="">
+        <Neighbor id="Node1"><length>12</length></Neighbor>
+        <Neighbor id="Node3"><length>20</length></Neighbor>
+        <Neighbor id="Node4"><length>24</length></Neighbor>
+        <Neighbor id="Node5"><length>17</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node3" initiator="false" final="">
+        <Neighbor id="Node1"><length>22</length></Neighbor>
+        <Neighbor id="Node2"><length>20</length></Neighbor>
+        <Neighbor id="Node4"><length>3</length></Neighbor>
+        <Neighbor id="Node5"><length>14</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node4" initiator="false" final="">
+        <Neighbor id="Node1"><length>1</length></Neighbor>
+        <Neighbor id="Node2"><length>24</length></Neighbor>
+        <Neighbor id="Node3"><length>3</length></Neighbor>
+        <Neighbor id="Node5"><length>16</length></Neighbor>
+        <Neighbor id="Node6"><length>23</length></Neighbor>
+        <Neighbor id="Node7"><length>1</length></Neighbor>
+        <Neighbor id="Node8"><length>25</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node5" initiator="false" final="">
+        <Neighbor id="Node1"><length>2</length></Neighbor>
+        <Neighbor id="Node2"><length>17</length></Neighbor>
+        <Neighbor id="Node3"><length>14</length></Neighbor>
+        <Neighbor id="Node4"><length>16</length></Neighbor>
+        <Neighbor id="Node6"><length>22</length></Neighbor>
+        <Neighbor id="Node7"><length>24</length></Neighbor>
+        <Neighbor id="Node8"><length>25</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node6" initiator="false" final="">
+        <Neighbor id="Node4"><length>23</length></Neighbor>
+        <Neighbor id="Node5"><length>22</length></Neighbor>
+        <Neighbor id="Node7"><length>1</length></Neighbor>
+        <Neighbor id="Node8"><length>12</length></Neighbor>
+        <Neighbor id="Node9"><length>23</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node7" initiator="false" final="">
+        <Neighbor id="Node4"><length>1</length></Neighbor>
+        <Neighbor id="Node5"><length>24</length></Neighbor>
+        <Neighbor id="Node6"><length>1</length></Neighbor>
+        <Neighbor id="Node8"><length>12</length></Neighbor>
+        <Neighbor id="Node9"><length>1</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node8" initiator="false" final="">
+        <Neighbor id="Node4"><length>25</length></Neighbor>
+        <Neighbor id="Node5"><length>25</length></Neighbor>
+        <Neighbor id="Node6"><length>12</length></Neighbor>
+        <Neighbor id="Node7"><length>12</length></Neighbor>
+        <Neighbor id="Node9"><length>18</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node9" initiator="false" final="">
+        <Neighbor id="Node6"><length>23</length></Neighbor>
+        <Neighbor id="Node7"><length>1</length></Neighbor>
+        <Neighbor id="Node8"><length>18</length></Neighbor>
+        <Neighbor id="Node10"><length>24</length></Neighbor>
+        <Neighbor id="Node11"><length>17</length></Neighbor>
+        <Neighbor id="Node12"><length>2</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node10" initiator="false" final="">
+        <Neighbor id="Node9"><length>24</length></Neighbor>
+        <Neighbor id="Node11"><length>10</length></Neighbor>
+        <Neighbor id="Node12"><length>11</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node11" initiator="false" final="">
+        <Neighbor id="Node9"><length>17</length></Neighbor>
+        <Neighbor id="Node10"><length>10</length></Neighbor>
+        <Neighbor id="Node12"><length>17</length></Neighbor>
+    </Agent>
+
+    <Agent id="Node12" initiator="false" final="">
+        <Neighbor id="Node9"><length>2</length></Neighbor>
+        <Neighbor id="Node10"><length>11</length></Neighbor>
+        <Neighbor id="Node11"><length>17</length></Neighbor>
+    </Agent>
+</Lab3>

@@ -49,7 +49,9 @@ public class P1 extends Behaviour {
         Iterator iterator = aclMessage.getAllReceiver();
         while (iterator.hasNext()) log.info("\t\t\t\"{}\" sent to {}", aclMessage.getContent(), ((AID) iterator.next()).getLocalName());
         myAgent.send(aclMessage);
+
+//        myAgent.addBehaviour(new P2());
     }
 
-    @Override public boolean done() { return false; }
+    @Override public boolean done() { return true; }
 }

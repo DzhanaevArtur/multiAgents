@@ -1,0 +1,9 @@
+<!ELEMENT pr6ex (Professors, Students)>
+<!ELEMENT Professors (Professor*)>
+<!ELEMENT Professor (Time)>
+<!ELEMENT Students (Student*)>
+<!ELEMENT Student (Time)>
+<!ELEMENT Time (#PCDATA)>
+
+<!ATTLIST Professor name CDATA #REQUIRED>
+<!ATTLIST Student name CDATA #REQUIRED>
