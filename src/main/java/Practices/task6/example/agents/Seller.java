@@ -8,6 +8,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import laboratoryWorks.lab3.common.AutoRunnableAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.reflections.Reflections;
 
 /**
  * @author Artur Dzhanaev
@@ -16,6 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AutoRunnableAgent(name = "Seller", copy = 2)
 public class Seller extends Agent {
+
+    public final static int sellersNumber = new Reflections(Seller.class)
+            .getTypesAnnotatedWith(AutoRunnableAgent.class)
+            .iterator()
+            .next()
+            .getAnnotation(AutoRunnableAgent.class)
+            .copy();
 
     protected void setup() {
         log.info("\t\tBorn");

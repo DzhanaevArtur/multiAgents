@@ -1,6 +1,7 @@
 package Practices.task6.example.behs.buyer;
 
 import Practices.task6.example.agents.Buyer;
+import Practices.task6.example.agents.Seller;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -33,7 +34,7 @@ public class Middle extends Behaviour {
             log.info("\t\t\"{}\" received", cost);
             Buyer.costs.put(aclMessage.getSender(), cost);
             Buyer.count++;
-            if (Buyer.count > 1) {
+            if (Buyer.count == Seller.sellersNumber) {
                 myAgent.addBehaviour(new Final(
                         myAgent,
                         Buyer.costs.entrySet()

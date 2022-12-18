@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pr6ex SYSTEM "pr6self.dtd">
+<pr6ex>
+    <Professors>
+        <Professor name="Professor">
+            <Time>17</Time>
+        </Professor>
+    </Professors>
+    <Students>
+        <Student name="Student1">
+            <Time>17</Time>
+        </Student>
+        <Student name="Student2">
+            <Time>17</Time>
+        </Student>
+        <Student name="Student3">
+            <Time>17</Time>
+        </Student>
+        <Student name="Student4">
+            <Time>17</Time>
+        </Student>
+    </Students>
+</pr6ex>

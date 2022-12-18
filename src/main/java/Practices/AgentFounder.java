@@ -5,6 +5,8 @@ import jade.core.ProfileImpl;
 import jade.util.leap.Properties;
 import laboratoryWorks.lab3.common.AutoRunnableAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
 import java.util.HashMap;
@@ -17,7 +19,7 @@ import java.util.Map;
 @Slf4j
 public class AgentFounder {
 
-    private static Properties createProperties(Map<String, String> map) {
+    private static @NotNull Properties createProps(@NotNull Map<String, String> map) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             stringBuilder.append(entry.getKey()).append(':').append(entry.getValue()).append(';');
@@ -29,26 +31,20 @@ public class AgentFounder {
     }
 
     @SafeVarargs
-    private static Map<String, String> findAgents(Class<? extends Agent> ... classes) {
+    private static @NotNull Map<String, String> findAgents(Class<? extends Agent> @NotNull ... classes) {
         Map<String, String> map = new HashMap<>();
         for (Class<? extends Agent> value : classes) {
             for (Class<?> aClass : new Reflections(value).getTypesAnnotatedWith(AutoRunnableAgent.class)) {
-                AutoRunnableAgent autoRunnableAgent = aClass.getAnnotation(AutoRunnableAgent.class);
-                int copy = autoRunnableAgent.copy();
-                if (copy == 1) map.put(autoRunnableAgent.name(), aClass.getName());
-                else {
-                    for (int j = 0; j < copy; j++) {
-                        int count = j + 1;
-                        map.put(autoRunnableAgent.name() + count, aClass.getName());
-                    }
-                }
+                AutoRunnableAgent a = aClass.getAnnotation(AutoRunnableAgent.class);
+                int copy = a.copy();
+                if (copy == 1)                      map.put(a.name(), aClass.getName());
+                else for (int j = 0; j < copy; j++) map.put(String.format("%s_%d", a.name(), j + 1), aClass.getName());
             }
         }
         return map;
     }
 
+    @Contract("_ -> new")
     @SafeVarargs
-    public static ProfileImpl founder(Class<? extends Agent> ... classes){
-        return new ProfileImpl(createProperties(findAgents(classes)));
-    }
+    public static @NotNull ProfileImpl founder(Class<? extends Agent> ... c) { return new ProfileImpl(createProps(findAgents(c))); }
 }
