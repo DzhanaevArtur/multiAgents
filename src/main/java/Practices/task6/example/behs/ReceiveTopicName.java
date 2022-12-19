@@ -24,7 +24,7 @@ public class ReceiveTopicName extends Behaviour {
     }
 
     @Override public void action() {
-        ACLMessage aclMessage = getAgent().receive(MessageTemplate.and(
+        ACLMessage aclMessage = myAgent.receive(MessageTemplate.and(
                 MessageTemplate.MatchPerformative(ACLMessage.INFORM),
                 MessageTemplate.MatchProtocol("topicName")));
         if (aclMessage != null) {

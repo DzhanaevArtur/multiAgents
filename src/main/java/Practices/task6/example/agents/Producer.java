@@ -25,7 +25,7 @@ public class Producer extends Agent {
 
     @Override protected void setup() {
         registration();
-        String start = "src/main/resources/dtdAndXml/pr6example";
+        String start = "src/main/resources/dtdAndXml/Practices/6/Example/cfg";
         String cfgName = switch (getLocalName()) {
             case "Producer_1" -> start + "1.xml";
             case "Producer_2" -> start + "2.xml";
