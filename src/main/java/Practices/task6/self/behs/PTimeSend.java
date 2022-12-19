@@ -27,12 +27,18 @@ public class PTimeSend extends WakerBehaviour {
         this.cfgTimes = cfgTimes;
     }
 
+    /**
+     * Отправка профессором своего расписания
+     */
     @Override protected void onWake() {
+        int a = cfgTimes.getA(), b = cfgTimes.getB();
+        for (int i = a; i < b; i++) information.availableTime.put(i, "");
+
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
         aclMessage.addReceiver(information.getTopic());
-        aclMessage.setProtocol(Professor.sss);
-        aclMessage.setContent(String.format("%d,%d", cfgTimes.getA(), cfgTimes.getB()));
+        aclMessage.setProtocol(Professor.protocol);
+        aclMessage.setContent(String.format("%d,%d", a, b));
         myAgent.send(aclMessage);
-        log.info("\t\t\"{}\" sent to \"{}\"", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
+        log.info("\t\t\"{}\" sent to chat with name \"{}\"", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
     }
 }

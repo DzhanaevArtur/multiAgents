@@ -23,9 +23,9 @@ import java.util.List;
  */
 @Slf4j
 public class PChatCreation extends OneShotBehaviour {
-    
-    private final Information information;
+
     private List<AID> agents;
+    private final Information information;
     private final Agent myAgent;
 
     public PChatCreation(Agent myAgent, Information information) {
@@ -39,28 +39,32 @@ public class PChatCreation extends OneShotBehaviour {
      */
     @Override public void onStart() {
         ServiceDescription serviceDescription = new ServiceDescription();
-        serviceDescription.setType(Professor.sss);
-        serviceDescription.setName(Professor.sss);
+        serviceDescription.setType(Professor.protocol);
+        serviceDescription.setName(Professor.protocol);
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription);
         agents = new ArrayList<>();
-        try { for (DFAgentDescription x : DFService.search(myAgent, dfAgentDescription)) agents.add(x.getName()); }
-        catch (FIPAException e) { e.printStackTrace(); }
-        information.setStudentsNumber(agents.size());
+        try {
+            for (DFAgentDescription x : DFService.search(myAgent, dfAgentDescription)) {
+                AID aid = x.getName();
+                agents.add(aid);
+                information.students.add(aid.getLocalName());
+            }
+        } catch (FIPAException e) { e.printStackTrace(); }
     }
 
     /**
      * Отправляем название чата
      */
     @Override public void action() {
-        information.setTopic(TopicHelper.createTopic(myAgent, Professor.sss));
+        information.setTopic(TopicHelper.createTopic(myAgent, Professor.protocol));
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
-        aclMessage.setProtocol(Professor.sss);
+        aclMessage.setProtocol(Professor.protocol);
         for (AID agent : agents) aclMessage.addReceiver(agent);
-        aclMessage.setContent(Professor.sss);
+        aclMessage.setContent(Professor.protocol);
         myAgent.send(aclMessage);
         Iterator iterator = aclMessage.getAllReceiver();
-        while (iterator.hasNext()) log.info("\t\"{}\" chat name sent to {}", aclMessage.getContent(), ((AID) iterator.next()).getLocalName());
+        while (iterator.hasNext()) log.info("\tChat name \"{}\" sent to {}", aclMessage.getContent(), ((AID) iterator.next()).getLocalName());
     }
 }

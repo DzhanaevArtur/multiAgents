@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.*;
+
 /**
  * @author Artur Dzhanaev
  * @created 18.12.2022
@@ -13,7 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 public class Information {
 
     @Getter @Setter private AID topic;
-    @Getter @Setter private int studentsNumber;
+    public List<String> students = new ArrayList<>();
+    public Map<Integer, String> availableTime = new TreeMap<>();
     private static Information information;
 
     public static synchronized Information getInformation() {

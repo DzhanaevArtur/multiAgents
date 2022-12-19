@@ -29,9 +29,7 @@ public class Main {
             cfgTimes = (CfgTimes) JAXBContext.newInstance(CfgTimes.class)
                     .createUnmarshaller()
                     .unmarshal(new File(String.format(
-                            "src/main/resources/dtdAndXml/Practices/6/Self/%s.xml",
-                            Thread.currentThread().getName())
-                    ));
+                            "src/main/resources/dtdAndXml/Practices/6/Self/%s.xml", Thread.currentThread().getName())));
         } catch (JAXBException e) { throw new RuntimeException(e); }
         return cfgTimes;
     }

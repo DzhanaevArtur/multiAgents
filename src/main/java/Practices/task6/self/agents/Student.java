@@ -5,6 +5,10 @@ import Practices.task6.self.common.Information;
 import Practices.task6.self.common.Main;
 import jade.core.Agent;
 import LaboratoryWorks.lab3.common.AutoRunnableAgent;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -15,10 +19,20 @@ import lombok.extern.slf4j.Slf4j;
 @AutoRunnableAgent(name = "Student", copy = 4)
 public class Student extends Agent {
 
-    public final static String sss = "Student free time";
+    public static final String protocol = "Student's schedule";
 
     @Override protected void setup() {
         log.info("\t\tBorn");
+
+        ServiceDescription serviceDescription = new ServiceDescription();
+        serviceDescription.setType("Professor's schedule");
+        serviceDescription.setName("Professor's schedule");
+
+        DFAgentDescription dfAgentDescription = new DFAgentDescription();
+        dfAgentDescription.addServices(serviceDescription);
+        try { DFService.register(this, dfAgentDescription); }
+        catch (FIPAException e) { e.printStackTrace(); }
+
         addBehaviour(new SChatConnection(this, Information.getInformation(), Main.parser()));
     }
 }
