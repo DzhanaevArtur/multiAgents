@@ -10,7 +10,6 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import lombok.extern.slf4j.Slf4j;
-import org.reflections.Reflections;
 
 /**
  * @author Artur Dzhanaev
@@ -20,13 +19,7 @@ import org.reflections.Reflections;
 @AutoRunnableAgent(name = "Student", copy = 4)
 public class Student extends Agent {
 
-    public final static int COPY = new Reflections(Student.class)
-            .getTypesAnnotatedWith(AutoRunnableAgent.class)
-            .stream()
-            .iterator()
-            .next()
-            .getAnnotation(AutoRunnableAgent.class)
-            .copy();
+    public final static int COPY = 4;
 
     @Override protected void setup() {
         log.info("\t\tBorn");
