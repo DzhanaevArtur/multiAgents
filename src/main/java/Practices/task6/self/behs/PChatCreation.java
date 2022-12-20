@@ -39,8 +39,8 @@ public class PChatCreation extends OneShotBehaviour {
      */
     @Override public void onStart() {
         ServiceDescription serviceDescription = new ServiceDescription();
-        serviceDescription.setType(Professor.protocol);
-        serviceDescription.setName(Professor.protocol);
+        serviceDescription.setType(Professor.CHAT_NAME);
+        serviceDescription.setName(Professor.CHAT_NAME);
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription);
@@ -58,11 +58,11 @@ public class PChatCreation extends OneShotBehaviour {
      * Отправляем название чата
      */
     @Override public void action() {
-        information.setTopic(TopicHelper.createTopic(myAgent, Professor.protocol));
+        information.setTopic(TopicHelper.createTopic(myAgent, Professor.CHAT_NAME));
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
-        aclMessage.setProtocol(Professor.protocol);
+        aclMessage.setProtocol(Professor.CHAT_NAME);
         for (AID agent : agents) aclMessage.addReceiver(agent);
-        aclMessage.setContent(Professor.protocol);
+        aclMessage.setContent(Professor.CHAT_NAME);
         myAgent.send(aclMessage);
         Iterator iterator = aclMessage.getAllReceiver();
         while (iterator.hasNext()) log.info("\tChat name \"{}\" sent to {}", aclMessage.getContent(), ((AID) iterator.next()).getLocalName());

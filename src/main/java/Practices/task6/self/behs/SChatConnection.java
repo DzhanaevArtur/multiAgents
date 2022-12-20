@@ -1,5 +1,6 @@
 package Practices.task6.self.behs;
 
+import Practices.task6.self.agents.Professor;
 import Practices.task6.self.common.CfgTimes;
 import Practices.task6.self.common.Information;
 import jade.core.Agent;
@@ -33,7 +34,7 @@ public class SChatConnection extends Behaviour {
     @Override public void action() {
         ACLMessage aclMessage = myAgent.receive(MessageTemplate.and(
                 MessageTemplate.MatchPerformative(ACLMessage.INFORM),
-                MessageTemplate.MatchProtocol("Professor's schedule")));
+                MessageTemplate.MatchProtocol(Professor.CHAT_NAME)));
         if (aclMessage != null) {
             log.info("\tChat name received");
             myAgent.addBehaviour(new SScheduleReceive(myAgent, information, cfgTimes));

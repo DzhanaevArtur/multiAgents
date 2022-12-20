@@ -31,12 +31,12 @@ public class PTimeSend extends WakerBehaviour {
      * Отправка профессором своего расписания
      */
     @Override protected void onWake() {
-        int a = cfgTimes.getA(), b = cfgTimes.getB();
-        for (int i = a; i < b; i++) information.availableTime.put(i, "");
+        final int a = cfgTimes.getA(), b = cfgTimes.getB();
+        for (int i = a; i < b; i++) information.availableTime.put(i, Professor.CHAT_NAME);
 
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
         aclMessage.addReceiver(information.getTopic());
-        aclMessage.setProtocol(Professor.protocol);
+        aclMessage.setProtocol(Professor.CHAT_NAME);
         aclMessage.setContent(String.format("%d,%d", a, b));
         myAgent.send(aclMessage);
         log.info("\t\t\"{}\" sent to chat with name \"{}\"", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());

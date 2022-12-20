@@ -10,6 +10,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import lombok.extern.slf4j.Slf4j;
+import org.reflections.Reflections;
 
 /**
  * @author Artur Dzhanaev
@@ -19,14 +20,20 @@ import lombok.extern.slf4j.Slf4j;
 @AutoRunnableAgent(name = "Student", copy = 4)
 public class Student extends Agent {
 
-    public static final String protocol = "Student's schedule";
+    public final static int COPY = new Reflections(Student.class)
+            .getTypesAnnotatedWith(AutoRunnableAgent.class)
+            .stream()
+            .iterator()
+            .next()
+            .getAnnotation(AutoRunnableAgent.class)
+            .copy();
 
     @Override protected void setup() {
         log.info("\t\tBorn");
 
         ServiceDescription serviceDescription = new ServiceDescription();
-        serviceDescription.setType("Professor's schedule");
-        serviceDescription.setName("Professor's schedule");
+        serviceDescription.setType(Professor.CHAT_NAME);
+        serviceDescription.setName(Professor.CHAT_NAME);
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription);

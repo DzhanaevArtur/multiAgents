@@ -31,8 +31,7 @@ public class AgentFounder {
         return properties;
     }
 
-    @SafeVarargs
-    private static @NotNull Map<String, String> findAgents(Class<? extends Agent> @NotNull ... classes) {
+    @SafeVarargs private static @NotNull Map<String, String> findAgents(Class<? extends Agent> @NotNull ... classes) {
         Map<String, String> map = new HashMap<>();
         for (Class<? extends Agent> value : classes) {
             for (Class<?> aClass : new Reflections(value).getTypesAnnotatedWith(AutoRunnableAgent.class)) {
@@ -45,7 +44,5 @@ public class AgentFounder {
         return map;
     }
 
-    @Contract("_ -> new")
-    @SafeVarargs
-    public static @NotNull ProfileImpl founder(Class<? extends Agent> ... c) { return new ProfileImpl(createProps(findAgents(c))); }
+    @Contract("_ -> new") @SafeVarargs public static @NotNull ProfileImpl founder(Class<? extends Agent> ... c) { return new ProfileImpl(createProps(findAgents(c))); }
 }

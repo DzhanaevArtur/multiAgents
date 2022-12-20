@@ -17,13 +17,11 @@ public class PFSM extends FSMBehaviour {
         super(myAgent);
         Information information = Information.getInformation();
 
-        registerFirstState  (new PChatCreation(myAgent, information),                       "one");
-        registerState       (new PTimeSend(myAgent, information, cfgTimes, 3_000L),  "two");
-        registerState       (new PReceiveTime(myAgent, information),                        "three");
-        registerLastState   (new PFinalLog(information),                                    "four");
+        registerFirstState(new PChatCreation(myAgent, information),                      "one");
+        registerState     (new PTimeSend(myAgent, information, cfgTimes, 1_000L), "two");
+        registerLastState (new PReceiveTime(myAgent, information),                       "three");
 
-        registerDefaultTransition("one",    "two");
-        registerDefaultTransition("two",    "three");
-        registerDefaultTransition("three",  "four");
+        registerDefaultTransition("one", "two");
+        registerDefaultTransition("two", "three");
     }
 }

@@ -32,7 +32,7 @@ public class SScheduleReceive extends Behaviour {
     /**
      * Добавление студентов в чат
      */
-    @Override public void onStart() { TopicHelper.createTopic(myAgent, Professor.protocol); }
+    @Override public void onStart() { TopicHelper.createTopic(myAgent, Professor.CHAT_NAME); }
 
     /**
      * Получение расписания профессора
@@ -40,12 +40,10 @@ public class SScheduleReceive extends Behaviour {
     @Override public void action() {
         ACLMessage aclMessage = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchTopic(information.getTopic()),
                 MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
-                        MessageTemplate.MatchProtocol(Professor.protocol))));
+                        MessageTemplate.MatchProtocol(Professor.CHAT_NAME))));
         if (aclMessage != null) {
             String schedule = aclMessage.getContent();
-            Integer start = Integer.parseInt(schedule.substring(0, schedule.indexOf(',')));
-            Integer finish = Integer.parseInt(schedule.substring(schedule.indexOf(',') + 1));
-            log.info("\tProfessor's schedule received. He is available from {} to {}", start, finish);
+            log.info("\tProfessor's schedule received. He is available from {} to {}", Integer.parseInt(schedule.substring(0, schedule.indexOf(','))), Integer.parseInt(schedule.substring(schedule.indexOf(',') + 1)));
             myAgent.addBehaviour(new SChooseTime(myAgent, information, cfgTimes));
             trigger = true;
         } else block();

@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @AutoRunnableAgent(name = "Professor", copy = 1)
 public class Professor extends Agent {
 
-    public final static String protocol = "Professor's schedule";
+    public final static String CHAT_NAME = "FUCK";
 
     @Override protected void setup() {
         log.info("\t\tBorn");
