@@ -1,7 +1,7 @@
-package LaboratoryWorks.train.agents;
+package ideas.Artur.assignment1.train.agents;
 
 import jade.core.Agent;
-import LaboratoryWorks.train.behs.PeriodicPrintingBehaviour;
+import ideas.Artur.assignment1.train.behs.PeriodicPrintingBehaviour;
 
 public class Hello extends Agent {
 

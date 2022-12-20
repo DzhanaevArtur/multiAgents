@@ -12,17 +12,32 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConsumerFSM extends FSMBehaviour {
 
+    public final Data data = new Data();
+    public final WinnerBeh winnerBeh = new WinnerBeh(myAgent, data);
+
     public ConsumerFSM(Agent myAgent) {
         super(myAgent);
-        Data data = new Data();
 
-        registerFirstState(new SendTopicName(myAgent, data), "firstState");
-        registerState(new SendQuantity      (myAgent, data, 1_000L), "secondState");
-        registerState(new ReceiveParallel   (myAgent, data), "thirdState");
-        registerLastState(new WinnerBeh     (myAgent, data), "lastState");
+        registerFirstState(new SendTopicName(myAgent, data), "first");
+        registerState(new SendQuantity      (myAgent, data, 1_000L), "second");
+        registerState(new ReceiveParallel   (myAgent, data), "third");
+        registerLastState(winnerBeh, "last");
 
-        registerDefaultTransition("firstState", "secondState");
-        registerDefaultTransition("secondState", "thirdState");
-        registerDefaultTransition("thirdState", "lastState");
+        registerDefaultTransition("first", "second");
+        registerDefaultTransition("second", "third");
+        registerDefaultTransition("third", "last");
+    }
+
+    public ConsumerFSM() {
+        Agent myAgent = new Agent();
+
+        registerFirstState(new SendTopicName(myAgent, data), "first");
+        registerState(new SendQuantity      (myAgent, data, 1_000L), "second");
+        registerState(new ReceiveParallel   (myAgent, data), "third");
+        registerLastState(winnerBeh, "last");
+
+        registerDefaultTransition("first", "second");
+        registerDefaultTransition("second", "third");
+        registerDefaultTransition("third", "last");
     }
 }

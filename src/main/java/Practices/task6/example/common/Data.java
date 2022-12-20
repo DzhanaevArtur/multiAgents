@@ -20,4 +20,5 @@ public class Data {
     private AID topic;
     private int numberOfProducers;
     private List<AgentPrice> agentPrices = new ArrayList<>();
+    private boolean samePrice;
 }

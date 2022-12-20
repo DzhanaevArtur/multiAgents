@@ -1,4 +1,4 @@
-package LaboratoryWorks.train.behs;
+package ideas.Artur.assignment1.train.behs;
 
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
