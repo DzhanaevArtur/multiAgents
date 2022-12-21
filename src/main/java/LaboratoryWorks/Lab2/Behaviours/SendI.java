@@ -7,7 +7,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
-import LaboratoryWorks.Lab2.FA;
+import LaboratoryWorks.Lab2.common.FA;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -43,7 +43,9 @@ public class SendI extends OneShotBehaviour {
                 );
             } catch (FIPAException e) { throw new RuntimeException(e); }
             getAgent().send(aclMessage);
-            log.info("\t\tSent {}", aclMessage.getContent());
+            String[] s = aclMessage.getContent().split(",");
+            double a = Double.parseDouble(s[0]), b = Double.parseDouble(s[1]);
+            log.info(String.format("\t\tSent %.3f;\t%.3f;", a, b));
         }
     }
 }

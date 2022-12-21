@@ -9,7 +9,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import LaboratoryWorks.Lab2.FA;
+import LaboratoryWorks.Lab2.common.FA;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -41,8 +41,9 @@ public class SendR extends Behaviour {
         catch (FIPAException e) { throw new RuntimeException(e); }
         aclMessage.setContent(((FA) getAgent()).getX() + "," + ((FA) getAgent()).getD());
         getAgent().send(aclMessage);
-        if (getAgent().getLocalName().equals("second")) log.debug("\tSent {}", aclMessage.getContent());
-        else log.debug("\t\tSent {}", aclMessage.getContent());
+        String[] s = aclMessage.getContent().split(",");
+        double a = Double.parseDouble(s[0]), b = Double.parseDouble(s[1]);
+        log.info(String.format("\t\tSent %.3f;\t%.3f;", a, b));
     }
 
     @Override public void action() {

@@ -1,11 +1,12 @@
-package LaboratoryWorks.Lab2;
+package LaboratoryWorks.Lab2.common;
 
+import LaboratoryWorks.lab3.common.AutoRunnableAgent;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
-import LaboratoryWorks.Lab2.Behaviours.Consumer;
+import LaboratoryWorks.Lab2.Behaviours.CFSM;
 import LaboratoryWorks.Lab2.Behaviours.ReceiveI;
 import LaboratoryWorks.Lab2.Behaviours.ReceiveR;
 import lombok.Getter;
@@ -20,8 +21,10 @@ import java.util.Random;
  * @author Artur Dzhanaev
  * @created 24.11.2022
  */
-
-@Slf4j @Getter @Setter
+@Slf4j
+@Getter
+@Setter
+@AutoRunnableAgent(name = "FA", copy = 3)
 public class FA extends Agent {
 
     private double max = 15, min = 10, x, d = 1, e = 0.001;
@@ -42,15 +45,15 @@ public class FA extends Agent {
         addBehaviour(new ReceiveR(this));
         addBehaviour(new ReceiveI(this));
 
-        if (this.getLocalName().equals("first")) { this.operation = functions.get(0); addBehaviour(new Consumer(this)); }
-        if (this.getLocalName().equals("second"))  this.operation = functions.get(1);
-        if (this.getLocalName().equals("third"))   this.operation = functions.get(2);
+        if (this.getLocalName().equals("FA_1")) { this.operation = functions.get(0); addBehaviour(new CFSM(this)); }
+        if (this.getLocalName().equals("FA_2"))   this.operation = functions.get(1);
+        if (this.getLocalName().equals("FA_3"))   this.operation = functions.get(2);
     }
 
     public String getOperation() {
         double count0 = operation.count(x - d), count1 = operation.count(x), count2 = operation.count(x + d);
         if (this.getAID().getLocalName().equals("second")) log.info(String.format("\t\t\t\t\tSent %.3f;\t%.3f;\t%.3f\t", count0, count1, count2));
-        else log.info(String.format("\t\t\t\t\tSent %.3f;\t%.3f;\t%.3f\t", count0, count1, count2));
+        else log.info(String.format("\t\t\t\tSent %.3f;\t%.3f;\t%.3f", count0, count1, count2));
         return count0 + "," + count1 + "," + count2;
     }
 }

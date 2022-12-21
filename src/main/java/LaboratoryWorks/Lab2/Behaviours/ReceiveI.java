@@ -4,7 +4,7 @@ import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import LaboratoryWorks.Lab2.FA;
+import LaboratoryWorks.Lab2.common.FA;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -23,7 +23,7 @@ public class ReceiveI extends Behaviour {
             ((FA) getAgent()).setD(Double.parseDouble(aclMessage.getContent().split(",")[1]));
             if (getAgent().getLocalName().equals("second")) log.debug(" Initiator is {}", getAgent().getLocalName());
             else log.debug("\tInitiator is {}", getAgent().getLocalName());
-            getAgent().addBehaviour(new Consumer(getAgent()));
+            getAgent().addBehaviour(new CFSM(getAgent()));
         } else block();
     }
 

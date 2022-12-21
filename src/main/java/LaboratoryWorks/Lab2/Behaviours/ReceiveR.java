@@ -3,7 +3,7 @@ package LaboratoryWorks.Lab2.Behaviours;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import LaboratoryWorks.Lab2.FA;
+import LaboratoryWorks.Lab2.common.FA;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,7 +24,9 @@ public class ReceiveR extends Behaviour {
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent(((FA) getAgent()).getOperation());
             getAgent().send(reply);
-            log.info("\tSent {}", reply.getContent());
+            String[] s = reply.getContent().split(",");
+            double a = Double.parseDouble(s[0]), b = Double.parseDouble(s[1]), c = Double.parseDouble(s[2]);
+            log.info(String.format("\tSent %.3f;\t%.3f;\t%.3f", a, b, c));
         } else block();
     }
 

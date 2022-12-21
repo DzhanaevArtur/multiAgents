@@ -9,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
  * @created 24.11.2022
  */
 @Slf4j
-public class Consumer extends FSMBehaviour {
+public class CFSM extends FSMBehaviour {
 
-    public Consumer(Agent myAgent) {
+    public CFSM(Agent myAgent) {
         super(myAgent);
         registerFirstState(new SendR(myAgent), "first");
         registerLastState(new SendI(myAgent), "second");
