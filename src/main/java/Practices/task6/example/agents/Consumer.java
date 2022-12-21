@@ -2,7 +2,7 @@ package Practices.task6.example.agents;
 
 import Practices.task6.example.behs.ConsumerFSM;
 import jade.core.Agent;
-import LaboratoryWorks.lab3.common.AutoRunnableAgent;
+import Practices.AutoRunnableAgent;
 import lombok.extern.slf4j.Slf4j;
 
 /**

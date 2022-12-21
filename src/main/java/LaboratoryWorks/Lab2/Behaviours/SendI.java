@@ -23,9 +23,9 @@ public class SendI extends OneShotBehaviour {
     public SendI(Agent myAgent) { super(myAgent); }
 
     @Override public void action() {
-        FA agent = (FA) getAgent();
+        FA agent = (FA) myAgent;
         double x = agent.getX(), d = agent.getD();
-        if (d < agent.getE()) log.error("\t\tFinal result: {}", x);
+        if (d < agent.getE()) log.error("\t\tFinal result: {}", String.format("%.3f", x));
         else {
             ServiceDescription serviceDescription = new ServiceDescription();
             serviceDescription.setType("Agent");
@@ -35,17 +35,15 @@ public class SendI extends OneShotBehaviour {
             aclMessage.setContent(x + "," + d);
             try {
                 aclMessage.addReceiver(
-                        Arrays
-                                .stream(DFService.search(getAgent(), dfAgentDescription))
+                        Arrays.stream(DFService.search(myAgent, dfAgentDescription))
                                 .map(DFAgentDescription::getName)
-                                .filter(aid -> !aid.getLocalName().equals(getAgent().getLocalName())).toList()
+                                .filter(aid -> !aid.getLocalName().equals(myAgent.getLocalName())).toList()
                                 .get(new Random().nextInt(2))
                 );
             } catch (FIPAException e) { throw new RuntimeException(e); }
-            getAgent().send(aclMessage);
+            myAgent.send(aclMessage);
             String[] s = aclMessage.getContent().split(",");
-            double a = Double.parseDouble(s[0]), b = Double.parseDouble(s[1]);
-            log.info(String.format("\t\tSent %.3f;\t%.3f;", a, b));
+            log.info(String.format("\t\tSent %.3f;\t%.3f", Double.parseDouble(s[0]), Double.parseDouble(s[1])));
         }
     }
 }

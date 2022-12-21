@@ -1,6 +1,6 @@
 package LaboratoryWorks.lab4.agents;
 
-import LaboratoryWorks.lab3.common.AutoRunnableAgent;
+import Practices.AutoRunnableAgent;
 import LaboratoryWorks.lab4.behs.PFSM;
 import LaboratoryWorks.lab4.common.Main;
 import LaboratoryWorks.lab4.common.PParser;

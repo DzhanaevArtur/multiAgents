@@ -11,13 +11,13 @@ import lombok.extern.slf4j.Slf4j;
  * @created 12.12.2022
  */
 @Slf4j
-public class Sender extends Behaviour {
+public class Send extends Behaviour {
 
     private final Agent myAgent;
     private final String receiver;
     private final Integer length;
 
-    public Sender(Agent myAgent, String receiver, Integer length) {
+    public Send(Agent myAgent, String receiver, Integer length) {
         super(myAgent);
         this.myAgent = myAgent;
         this.receiver = receiver;

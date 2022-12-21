@@ -3,7 +3,7 @@ package Practices.task6.self.agents;
 import Practices.task6.self.behs.PFSM;
 import Practices.task6.self.common.Main;
 import jade.core.Agent;
-import LaboratoryWorks.lab3.common.AutoRunnableAgent;
+import Practices.AutoRunnableAgent;
 import lombok.extern.slf4j.Slf4j;
 
 /**

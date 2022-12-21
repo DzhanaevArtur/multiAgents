@@ -14,16 +14,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReceiveI extends Behaviour {
 
-    public ReceiveI(Agent myAgent) { super(myAgent); }
+    private final Agent myAgent;
+
+    public ReceiveI(FA myAgent) { super(myAgent); this.myAgent = myAgent; }
 
     @Override public void action() {
-        ACLMessage aclMessage = getAgent().receive(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE));
+        ACLMessage aclMessage = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE));
         if (aclMessage != null) {
-            ((FA) getAgent()).setX(Double.parseDouble(aclMessage.getContent().split(",")[0]));
-            ((FA) getAgent()).setD(Double.parseDouble(aclMessage.getContent().split(",")[1]));
-            if (getAgent().getLocalName().equals("second")) log.debug(" Initiator is {}", getAgent().getLocalName());
-            else log.debug("\tInitiator is {}", getAgent().getLocalName());
-            getAgent().addBehaviour(new CFSM(getAgent()));
+            ((FA) myAgent).setX(Double.parseDouble(aclMessage.getContent().split(",")[0]));
+            ((FA) myAgent).setD(Double.parseDouble(aclMessage.getContent().split(",")[1]));
+            if (myAgent.getLocalName().equals("second")) log.debug(" Initiator is {}", myAgent.getLocalName());
+            else log.debug("\tInitiator is {}", myAgent.getLocalName());
+            myAgent.addBehaviour(new FSM(myAgent));
         } else block();
     }
 

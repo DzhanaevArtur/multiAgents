@@ -1,6 +1,6 @@
 package LaboratoryWorks.Lab1;
 
-public class ACalc extends Calculations implements Operation {
+public class ACalc extends Calculations {
 
     @Override
     public String add(String s) {

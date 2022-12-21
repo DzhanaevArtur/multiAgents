@@ -4,7 +4,7 @@ import Practices.task6.self.behs.SChatConnection;
 import Practices.task6.self.common.Information;
 import Practices.task6.self.common.Main;
 import jade.core.Agent;
-import LaboratoryWorks.lab3.common.AutoRunnableAgent;
+import Practices.AutoRunnableAgent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;

@@ -3,7 +3,7 @@ package LaboratoryWorks.Lab1;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RCalc extends Calculations implements Operation {
+public class RCalc extends Calculations {
 
     public int romanToInt(String s) {
         Map<Character, Integer> map = new HashMap<>();

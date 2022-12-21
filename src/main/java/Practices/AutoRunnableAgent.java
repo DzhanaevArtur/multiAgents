@@ -1,4 +1,4 @@
-package LaboratoryWorks.lab3.common;
+package Practices;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
