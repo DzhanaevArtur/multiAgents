@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Receive extends Behaviour {
 
-    private Boolean trigger = false;
-
     private final Agent myAgent;
 
     public Receive(Agent myAgent) { super(myAgent); this.myAgent = myAgent; }
@@ -25,17 +23,14 @@ public class Receive extends Behaviour {
         ACLMessage aclMessage = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchProtocol("RoadMap"),
                 MessageTemplate.MatchPerformative(ACLMessage.INFORM)));
         if (aclMessage != null) {
-            if (name.equals("Node_12")) {
-                myAgent.doWait(1_000L);
-                log.error("Total length is: {}", aclMessage.getContent());
-            }
+            myAgent.doWait(50L);
+            if (name.equals("Node_12")) log.error("Total length is: {}", aclMessage.getContent());
             else {
                 log.info("\"{}\" received", aclMessage.getContent());
                 myAgent.addBehaviour(new Send(myAgent, Main.res(name), Integer.parseInt(aclMessage.getContent())));
             }
-            trigger = true;
         } else block();
     }
 
-    @Override public boolean done() { return trigger; }
+    @Override public boolean done() { return false; }
 }

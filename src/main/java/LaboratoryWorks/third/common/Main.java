@@ -28,35 +28,31 @@ public class Main {
     }
 
     public static Config parser() {
-        Config cfgTimes;
+        Config config;
         try {
-            cfgTimes = (Config) JAXBContext.newInstance(Config.class)
+            config = (Config) JAXBContext.newInstance(Config.class)
                     .createUnmarshaller()
                     .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/3/names.xml"));
         } catch (JAXBException e) { throw new RuntimeException(e); }
-        return cfgTimes;
-    }
-
-    public static List<Neighbor> choose(@NotNull String name) {
-        return parser().getBros()
-                .stream()
-                .map(Bro::getNeighborList)
-                .toList()
-                .get(Integer.parseInt(name.split("_")[1]) - 1)
-                .stream()
-                .sorted(Comparator.comparingInt(Neighbor::getLength))
-                .toList();
+        return config;
     }
 
     public static Neighbor res(@NotNull String name) {
-        List<Neighbor> list = choose(name);
-        Neighbor output;
-        int n = 0;
-        for (int i = 0; i < list.size(); i++) if (list.get(i).getLength() == list.get(n).getLength()) n = i;
-        if (!PARTICIPANTS.contains(name)) {
-            if (name.equals("Node_9")) output = list.get(n + 1);
-            else output = list.get(n);
-        } else output = list.get(n + 2);
+        Neighbor output = null;
+        for (Bro bro : parser().getBros()) {
+            if (bro.getId().equals(name)) {
+                List<Neighbor> list = bro.getNeighborList().stream().sorted(Comparator.comparingInt(Neighbor::getLength)).toList();
+                for (Neighbor neighbor : list) {
+                    String id = neighbor.getId();
+                    if (id.equals(bro.getDest())) output = neighbor;
+                    else if (!PARTICIPANTS.contains(id)) output = neighbor;
+                    else for (Neighbor n : list) if (!PARTICIPANTS.contains(n.getId())) { output = n; break; }
+                    PARTICIPANTS.add(name);
+                    break;
+                }
+                break;
+            }
+        }
         return output;
     }
 }

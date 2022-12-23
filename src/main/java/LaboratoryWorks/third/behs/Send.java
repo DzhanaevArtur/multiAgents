@@ -1,6 +1,5 @@
 package LaboratoryWorks.third.behs;
 
-import LaboratoryWorks.third.common.Main;
 import LaboratoryWorks.third.common.Neighbor;
 import jade.core.AID;
 import jade.core.Agent;
@@ -33,7 +32,6 @@ public class Send extends Behaviour {
         aclMessage.setContent(String.valueOf(neighbor.getLength() + add));
         aclMessage.setProtocol("RoadMap");
         myAgent.send(aclMessage);
-        Main.PARTICIPANTS.add(myAgent.getLocalName());
         log.info("\t\"{}\" sent to {}", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
         trigger = true;
     }
