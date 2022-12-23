@@ -20,15 +20,12 @@ public class Receive extends Behaviour {
 
     @Override public void action() {
         String name = myAgent.getLocalName();
-        ACLMessage aclMessage = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchProtocol("RoadMap"),
-                MessageTemplate.MatchPerformative(ACLMessage.INFORM)));
+        ACLMessage aclMessage = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchProtocol("RoadMap"), MessageTemplate.MatchPerformative(ACLMessage.INFORM)));
         if (aclMessage != null) {
+            String content = aclMessage.getContent();
             myAgent.doWait(50L);
-            if (name.equals("Node_12")) log.error("Total length is: {}", aclMessage.getContent());
-            else {
-                log.info("\"{}\" received", aclMessage.getContent());
-                myAgent.addBehaviour(new Send(myAgent, Main.res(name), Integer.parseInt(aclMessage.getContent())));
-            }
+            if (name.equals("Node_12")) log.error("Total length is: {}", content);
+            else myAgent.addBehaviour(new Send(myAgent, Main.res(name), Integer.parseInt(content)));
         } else block();
     }
 

@@ -39,14 +39,23 @@ public class Main {
 
     public static Neighbor res(@NotNull String name) {
         Neighbor output = null;
+        List<Neighbor> another = new ArrayList<>();
         for (Bro bro : parser().getBros()) {
             if (bro.getId().equals(name)) {
-                List<Neighbor> list = bro.getNeighborList().stream().sorted(Comparator.comparingInt(Neighbor::getLength)).toList();
+                List<Neighbor> list = bro.getNeighborList()
+                        .stream()
+                        .sorted(Comparator.comparingInt(Neighbor::getLength))
+                        .toList();
                 for (Neighbor neighbor : list) {
                     String id = neighbor.getId();
                     if (id.equals(bro.getDest())) output = neighbor;
                     else if (!PARTICIPANTS.contains(id)) output = neighbor;
-                    else for (Neighbor n : list) if (!PARTICIPANTS.contains(n.getId())) { output = n; break; }
+                    else {
+                        for (Neighbor n : list) if (!PARTICIPANTS.contains(n.getId())) another.add(n);
+                        another = another.stream().filter(x -> x.getId().equals(bro.getDest()) ||
+                            (x.getLength() == list.stream().mapToInt(Neighbor::getLength).min().getAsInt())).toList();
+                        output = another.get(another.size() - 1);
+                    }
                     PARTICIPANTS.add(name);
                     break;
                 }
