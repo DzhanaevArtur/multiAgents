@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Main {
 
-    public static final String LAB = "LaboratoryWork4";
+    public static final String CHAT = "LW4";
 
     public static void main(String[] args) {
         Runtime instance = Runtime.instance();
@@ -32,8 +32,8 @@ public class Main {
      */
     public static void registration(Agent myAgent) {
         ServiceDescription serviceDescription = new ServiceDescription();
-        serviceDescription.setType(LAB);
-        serviceDescription.setName(LAB);
+        serviceDescription.setType(CHAT);
+        serviceDescription.setName(CHAT);
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription);

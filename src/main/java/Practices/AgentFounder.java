@@ -37,8 +37,7 @@ public class AgentFounder {
             for (Class<?> aClass : new Reflections(value).getTypesAnnotatedWith(AutoRunnableAgent.class)) {
                 AutoRunnableAgent a = aClass.getAnnotation(AutoRunnableAgent.class);
                 int copy = a.copy();
-                if (copy == 1)                      map.put(a.name(), aClass.getName());
-                else for (int j = 0; j < copy; j++) map.put(String.format("%s_%d", a.name(), j + 1), aClass.getName());
+                for (int j = 0; j < copy; j++) map.put(String.format("%s_%d", a.name(), j + 1), aClass.getName());
             }
         }
         return map;

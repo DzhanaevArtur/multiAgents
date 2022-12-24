@@ -1,8 +1,9 @@
 package LaboratoryWorks.lab4.agents;
 
 import Practices.AutoRunnableAgent;
-import LaboratoryWorks.lab4.behs.DFirst;
+import LaboratoryWorks.lab4.behs.DChatNameReceive;
 import LaboratoryWorks.lab4.common.Main;
+import Practices.TopicHelper;
 import jade.core.Agent;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,11 +14,12 @@ import lombok.extern.slf4j.Slf4j;
  * на один час в виде открытых аукционах для получения наиболее выгодного предложения у текущих производителей ЭЭ
  */
 @Slf4j
-@AutoRunnableAgent(name = "Provider", copy = 3)
+@AutoRunnableAgent(name = "Distributor", copy = 3)
 public class Distributor extends Agent {
 
     @Override protected void setup() {
         Main.registration(this);
-        addBehaviour(new DFirst(this));
+        TopicHelper.createTopic(this, Main.CHAT);
+        addBehaviour(new DChatNameReceive(this));
     }
 }
