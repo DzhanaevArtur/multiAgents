@@ -12,12 +12,12 @@ import lombok.extern.slf4j.Slf4j;
  * @created 20.12.2022
  */
 @Slf4j
-public class DChatNameReceive extends Behaviour {
+public class DChatName extends Behaviour {
 
     private Boolean trigger = false;
     private final Agent myAgent;
 
-    public DChatNameReceive(Agent myAgent) {
+    public DChatName(Agent myAgent) {
         super(myAgent);
         this.myAgent = myAgent;
     }
@@ -27,7 +27,8 @@ public class DChatNameReceive extends Behaviour {
                 MessageTemplate.MatchProtocol(Main.CHAT),
                 MessageTemplate.MatchPerformative(ACLMessage.INFORM)));
         if (chatNameReceive != null) {
-            log.info("Chat name received");
+            myAgent.doWait(50L);
+            log.info("\tChat name received");
             myAgent.addBehaviour(new DSecond(myAgent));
             trigger = true;
         } else block();

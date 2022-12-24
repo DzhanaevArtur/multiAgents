@@ -17,6 +17,9 @@ public class LW {
 
     @Getter @Setter private AID chat;
     @Getter @Setter private List<AID> pChatUsers = new ArrayList<>();
+    @Getter @Setter private List<Double> cPowerPerHour1 = new ArrayList<>();
+    @Getter @Setter private List<Double> cPowerPerHour2 = new ArrayList<>();
+    @Getter @Setter private List<Double> cPowerPerHour3 = new ArrayList<>();
     private static LW lw;
 
     public static synchronized LW getLW() {

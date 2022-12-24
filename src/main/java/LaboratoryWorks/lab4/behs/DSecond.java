@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DSecond extends Behaviour {
 
-    private Boolean trigger = false;
     private final Agent myAgent;
 
     public DSecond(Agent myAgent) {
@@ -26,10 +25,11 @@ public class DSecond extends Behaviour {
                 MessageTemplate.MatchProtocol("EnergyBuy"),
                 MessageTemplate.MatchPerformative(ACLMessage.INFORM)));
         if (aclMessage != null) {
-            log.info("\"{}\" received", aclMessage.getContent());
-            trigger = true;
+            myAgent.doWait(50L);
+            double value = Double.parseDouble(aclMessage.getContent());
+            log.info("\t\t\"{}\" received", value);
         } else block();
     }
 
-    @Override public boolean done() { return trigger; }
+    @Override public boolean done() { return false; }
 }

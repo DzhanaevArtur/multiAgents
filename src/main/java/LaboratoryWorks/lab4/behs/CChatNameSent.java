@@ -55,6 +55,7 @@ public class CChatNameSent extends OneShotBehaviour {
         aclMessage.setContent(Main.CHAT);
         myAgent.send(aclMessage);
         Iterator iterator = aclMessage.getAllReceiver();
-        while (iterator.hasNext()) log.info("\tChat name \"{}\" sent to {}", aclMessage.getContent(), ((AID) iterator.next()).getLocalName());
+        while (iterator.hasNext()) log.info("\tChat name \"{}\" sent to {}",
+                aclMessage.getContent(), ((AID) iterator.next()).getLocalName());
     }
 }
