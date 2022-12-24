@@ -14,7 +14,6 @@ public class PFSM extends FSMBehaviour {
 
     public PFSM(Agent myAgent, PParser pParser) {
         super(myAgent);
-        double a = pParser.getA();
 
         registerFirstState(new PFirst(myAgent),  "one");
         registerLastState (new PSecond(myAgent), "two");

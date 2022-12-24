@@ -22,9 +22,9 @@ import java.io.File;
 public class Producer extends Agent {
 
     @Override protected void setup() {
-        log.info("Born");
         Main.registration(this);
-        try { addBehaviour(new PFSM(this, (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller().unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")))); }
+        try { addBehaviour(new PFSM(this, (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()
+                .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")))); }
         catch (JAXBException e) { throw new RuntimeException(e); }
     }
 }

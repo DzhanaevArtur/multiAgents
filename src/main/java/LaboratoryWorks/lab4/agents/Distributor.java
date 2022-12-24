@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 public class Distributor extends Agent {
 
     @Override protected void setup() {
-        log.info("Born");
         Main.registration(this);
         addBehaviour(new DFirst(this));
     }

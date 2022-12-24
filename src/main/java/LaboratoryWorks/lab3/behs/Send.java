@@ -1,5 +1,6 @@
 package LaboratoryWorks.lab3.behs;
 
+import LaboratoryWorks.lab3.parsing.Neighbor;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -8,29 +9,32 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Artur Dzhanaev
- * @created 12.12.2022
+ * @created 22.12.2022
  */
 @Slf4j
 public class Send extends Behaviour {
 
+    private Boolean trigger = false;
+    private final Integer add;
+    private final Neighbor neighbor;
     private final Agent myAgent;
-    private final String receiver;
-    private final Integer length;
 
-    public Send(Agent myAgent, String receiver, Integer length) {
+    public Send(Agent myAgent, Neighbor neighbor, Integer add) {
         super(myAgent);
         this.myAgent = myAgent;
-        this.receiver = receiver;
-        this.length = length;
+        this.neighbor = neighbor;
+        this.add = add;
     }
 
     @Override public void action() {
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
-        aclMessage.addReceiver(new AID(receiver, false));
-        aclMessage.setContent(String.valueOf(length));
+        aclMessage.addReceiver(new AID(neighbor.getId(), false));
+        aclMessage.setContent(String.valueOf(neighbor.getLength() + add));
+        aclMessage.setProtocol("RoadMap");
         myAgent.send(aclMessage);
-        log.info("\t\"{}\" was sent to {}", aclMessage.getContent(), receiver);
+        log.info("\t{} sent to {}", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
+        trigger = true;
     }
 
-    @Override public boolean done() { return true; }
+    @Override public boolean done() { return trigger; }
 }

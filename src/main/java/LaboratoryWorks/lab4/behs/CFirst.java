@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CFirst extends Behaviour {
 
-    private static int count = 0;
     private final CParser cParser;
     private final Agent myAgent;
 
@@ -23,9 +22,8 @@ public class CFirst extends Behaviour {
     }
 
     @Override public void action() {
-        log.info("{}", cParser.getP0());
-        count++;
+
     }
 
-    @Override public boolean done() { return count == 3; }
+    @Override public boolean done() { return false; }
 }

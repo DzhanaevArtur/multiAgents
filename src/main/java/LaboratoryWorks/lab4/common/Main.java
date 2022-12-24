@@ -21,10 +21,6 @@ public class Main {
 
     public static final String LAB = "LaboratoryWork4";
 
-    /**
-     * Запуск программы
-     * @param args Условность
-     */
     public static void main(String[] args) {
         Runtime instance = Runtime.instance();
         instance.setCloseVM(true);

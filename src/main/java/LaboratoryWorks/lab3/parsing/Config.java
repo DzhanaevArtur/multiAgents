@@ -1,10 +1,11 @@
-package LaboratoryWorks.third.common;
+package LaboratoryWorks.lab3.parsing;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.bind.annotation.*;
+import java.util.List;
 
 /**
  * @author Artur Dzhanaev
@@ -13,10 +14,6 @@ import javax.xml.bind.annotation.*;
 @Slf4j
 @Getter
 @Setter
-@XmlRootElement
+@XmlRootElement(name = "Lab3")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Neighbor {
-
-    @XmlAttribute(name="id") private String id;
-    @XmlAttribute(name="length") private int length;
-}
+public class Config { @XmlElement(name="Bro") private List<Bro> bros; }

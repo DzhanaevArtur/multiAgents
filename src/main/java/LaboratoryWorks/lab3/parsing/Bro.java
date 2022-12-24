@@ -1,4 +1,4 @@
-package LaboratoryWorks.third.common;
+package LaboratoryWorks.lab3.parsing;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +18,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Bro {
 
-    @XmlAttribute(name = "id") private String id;
+    @XmlAttribute(name = "id")        private String id;
     @XmlAttribute(name = "initiator") private String initiator;
-    @XmlAttribute(name = "dest") private String dest;
-    @XmlElement(name = "Neighbor") private List<Neighbor> neighborList;
+    @XmlAttribute(name = "dest")      private String dest;
+    @XmlElement(name = "Neighbor")    private List<Neighbor> neighborList;
 }

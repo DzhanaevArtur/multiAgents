@@ -22,9 +22,13 @@ import java.io.File;
 public class Consumer extends Agent {
 
     @Override protected void setup() {
-        log.info("Born");
         Main.registration(this);
-        try { addBehaviour(new CFSM(this, (CParser) JAXBContext.newInstance(CParser.class).createUnmarshaller().unmarshal(new File(String.format("src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml", Thread.currentThread().getName()))))); }
+        try {
+            addBehaviour(new CFSM(this, (CParser) JAXBContext.newInstance(CParser.class).createUnmarshaller()
+                    .unmarshal(new File(String.format(
+                            "src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml",
+                            Thread.currentThread().getName())))));
+        }
         catch (JAXBException e) { throw new RuntimeException(e); }
     }
 }

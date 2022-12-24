@@ -26,7 +26,8 @@ public class AgentFounder {
         Properties properties = new Properties();
         properties.setProperty("gui", "true");
         properties.setProperty("agents", stringBuilder.toString());
-        properties.setProperty("services", "jade.core.event.NotificationService;jade.core.messaging.TopicManagementService");
+        properties.setProperty("services",
+                "jade.core.event.NotificationService;jade.core.messaging.TopicManagementService");
         return properties;
     }
 
@@ -43,5 +44,7 @@ public class AgentFounder {
         return map;
     }
 
-    @Contract("_ -> new") @SafeVarargs public static @NotNull ProfileImpl founder(Class<? extends Agent> ... c) { return new ProfileImpl(createProps(findAgents(c))); }
+    @Contract("_ -> new") @SafeVarargs public static @NotNull ProfileImpl founder(Class<? extends Agent> ... c) {
+        return new ProfileImpl(createProps(findAgents(c)));
+    }
 }
