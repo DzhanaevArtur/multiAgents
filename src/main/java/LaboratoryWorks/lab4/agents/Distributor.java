@@ -14,12 +14,12 @@ import lombok.extern.slf4j.Slf4j;
  * на один час в виде открытых аукционах для получения наиболее выгодного предложения у текущих производителей ЭЭ
  */
 @Slf4j
-@AutoRunnableAgent(name = "Distributor", copy = 1)
+@AutoRunnableAgent(name = "Distributor", copy = 3)
 public class Distributor extends Agent {
 
     @Override protected void setup() {
         Main.registration(this);
-        TopicHelper.createTopic(this, Main.CHAT);
+        TopicHelper.createTopic(this, Main.CHAT + this.getLocalName().split("_")[1]);
         addBehaviour(new DChatName(this));
     }
 }

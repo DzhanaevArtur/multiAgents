@@ -5,13 +5,12 @@ import LaboratoryWorks.lab4.common.Main;
 import Practices.TopicHelper;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
-import jade.util.leap.Iterator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,8 +18,9 @@ import lombok.extern.slf4j.Slf4j;
  * @created 20.12.2022
  */
 @Slf4j
-public class CChatNameSent extends OneShotBehaviour {
+public class CChatNameSent extends Behaviour {
 
+    private Boolean trigger = false;
     private final LW lw;
     private final Agent myAgent;
 
@@ -35,8 +35,8 @@ public class CChatNameSent extends OneShotBehaviour {
      */
     @Override public void onStart() {
         ServiceDescription serviceDescription = new ServiceDescription();
-        serviceDescription.setType(Main.CHAT);
-        serviceDescription.setName(Main.CHAT);
+        serviceDescription.setType(Main.CHAT + myAgent.getLocalName().split("_")[1]);
+        serviceDescription.setName(Main.CHAT + myAgent.getLocalName().split("_")[1]);
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription);
@@ -54,8 +54,10 @@ public class CChatNameSent extends OneShotBehaviour {
         for (AID agent : lw.getPChatUsers()) aclMessage.addReceiver(agent);
         aclMessage.setContent(Main.CHAT);
         myAgent.send(aclMessage);
-        Iterator iterator = aclMessage.getAllReceiver();
-        while (iterator.hasNext()) log.info("\tChat name \"{}\" sent to {}",
-                aclMessage.getContent(), ((AID) iterator.next()).getLocalName());
+        lw.getPChatUsers().clear();
+        log.info("\tChat name sent to {}", ((AID) aclMessage.getAllReceiver().next()).getLocalName());
+        trigger = true;
     }
+
+    @Override public boolean done() { return trigger; }
 }

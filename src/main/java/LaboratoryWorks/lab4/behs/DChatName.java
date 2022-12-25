@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DChatName extends Behaviour {
 
-    private Boolean trigger = false;
     private final Agent myAgent;
 
     public DChatName(Agent myAgent) {
@@ -30,9 +29,8 @@ public class DChatName extends Behaviour {
             myAgent.doWait(50L);
             log.info("\tChat name received");
             myAgent.addBehaviour(new DSecond(myAgent));
-            trigger = true;
         } else block();
     }
 
-    @Override public boolean done() { return trigger; }
+    @Override public boolean done() { return false; }
 }

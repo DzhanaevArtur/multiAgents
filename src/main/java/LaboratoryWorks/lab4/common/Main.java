@@ -32,8 +32,8 @@ public class Main {
      */
     public static void registration(Agent myAgent) {
         ServiceDescription serviceDescription = new ServiceDescription();
-        serviceDescription.setType(CHAT);
-        serviceDescription.setName(CHAT);
+        serviceDescription.setType(CHAT + myAgent.getLocalName().split("_")[1]);
+        serviceDescription.setName(CHAT + myAgent.getLocalName().split("_")[1]);
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription);

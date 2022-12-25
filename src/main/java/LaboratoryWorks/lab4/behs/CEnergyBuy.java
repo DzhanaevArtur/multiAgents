@@ -5,6 +5,7 @@ import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -35,15 +36,14 @@ public class CEnergyBuy extends Behaviour {
         trigger = true;
     }
 
-    private synchronized void aclMessageSending(List<Double> list) {
+    private synchronized void aclMessageSending(@NotNull List<Double> list) {
         for (Double d : list) {
-            myAgent.doWait(50L);
             ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
             aclMessage.addReceiver(lw.getChat());
             aclMessage.setProtocol("EnergyBuy");
             aclMessage.setContent(String.format(Locale.US, "%.3f", d));
+            myAgent.doWait(50L);
             myAgent.send(aclMessage);
-//            log.info("\t\t\"{}\" sent to chat", Double.parseDouble(aclMessage.getContent()));
         }
     }
 

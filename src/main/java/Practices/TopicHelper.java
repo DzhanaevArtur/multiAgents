@@ -5,6 +5,7 @@ import jade.core.Agent;
 import jade.core.ServiceException;
 import jade.core.messaging.TopicManagementHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Artur Dzhanaev
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TopicHelper {
 
-    public static AID createTopic(Agent agent, String topicName){
+    public static AID createTopic(@NotNull Agent agent, @NotNull String topicName){
         AID jadeTopic = null;
         try {
             TopicManagementHelper topicHelper = (TopicManagementHelper) agent.getHelper(TopicManagementHelper.SERVICE_NAME);

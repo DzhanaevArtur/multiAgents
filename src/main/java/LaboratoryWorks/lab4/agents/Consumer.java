@@ -18,7 +18,7 @@ import java.io.File;
  * на заключение контракта на снабжение агенту-поставщику исходя из своих нужд на текущий час
  */
 @Slf4j
-@AutoRunnableAgent(name = "Consumer", copy = 1)
+@AutoRunnableAgent(name = "Consumer", copy = 3)
 public class Consumer extends Agent {
 
     @Override protected void setup() {

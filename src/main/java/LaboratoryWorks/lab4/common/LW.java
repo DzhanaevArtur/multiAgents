@@ -6,7 +6,9 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Artur Dzhanaev
@@ -16,7 +18,7 @@ import java.util.List;
 public class LW {
 
     @Getter @Setter private AID chat;
-    @Getter @Setter private List<AID> pChatUsers = new ArrayList<>();
+    @Getter @Setter private Set<AID> pChatUsers = new HashSet<>();
     @Getter @Setter private List<Double> cPowerPerHour1 = new ArrayList<>();
     @Getter @Setter private List<Double> cPowerPerHour2 = new ArrayList<>();
     @Getter @Setter private List<Double> cPowerPerHour3 = new ArrayList<>();
