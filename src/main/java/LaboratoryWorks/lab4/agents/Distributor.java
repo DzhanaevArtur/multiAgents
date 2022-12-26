@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @AutoRunnableAgent(name = "Distributor", copy = 3)
 public class Distributor extends Agent {
 
-    @Override protected void setup() {
-        addBehaviour(new DFSM(this, LW4Info.getLW()));
-    }
+    /** Определение поведения поставщиков */
+    @Override protected void setup() { addBehaviour(new DFSM(this, LW4Info.getLW())); }
 }

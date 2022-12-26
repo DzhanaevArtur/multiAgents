@@ -1,8 +1,6 @@
 package LaboratoryWorks.lab4.common;
 
-import LaboratoryWorks.lab4.agents.Consumer;
-import LaboratoryWorks.lab4.agents.Producer;
-import LaboratoryWorks.lab4.agents.Distributor;
+import LaboratoryWorks.lab4.agents.*;
 import Practices.AgentFounder;
 import jade.core.Agent;
 import jade.core.Runtime;
@@ -11,6 +9,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
@@ -22,26 +21,23 @@ import java.util.Date;
 @Slf4j
 public class Main {
 
+    /** "Нетривиальное" название для чата торгов */
     public static final String CHAT = "LW4";
 
+    /** Текущее время, от которого калибруется таймер */
+    public static final Long CURRENT_TIME = new Date().getTime();
+
+    /** Частота таймера. При TIMER_FREQUENCY = 500L обновление раз в полсекунды */
+    public static final Long TIMER_FREQUENCY = 500L;
+
+    /** Запуск энергосистемы */
     public static void main(String[] args) {
         Runtime instance = Runtime.instance();
         instance.setCloseVM(true);
         instance.createMainContainer(AgentFounder.founder(Consumer.class, Distributor.class, Producer.class));
-
-
-        final long start = new Date().getTime();
-        while (true) {
-            long out = (((new Date().getTime() - start) % 100_000) / 1_000) % 24;
-            log.info("{}", out);
-            try { Thread.sleep(1_000L); }
-            catch (InterruptedException e) { throw new RuntimeException(e); }
-        }
     }
 
-    /**
-     * Регистрация всех агентов, участвующих в работе
-     */
+    /** Регистрация производителей ЭЭ, участвующих в аукционах */
     public static void registration(@NotNull Agent myAgent) {
         ServiceDescription serviceDescription = new ServiceDescription();
         serviceDescription.setType(CHAT + myAgent.getLocalName().split("_")[1]);
@@ -51,5 +47,14 @@ public class Main {
         dfAgentDescription.addServices(serviceDescription);
         try { DFService.register(myAgent, dfAgentDescription); }
         catch (FIPAException e) { e.printStackTrace(); }
+    }
+
+    /** Таймер */
+    @Contract(pure = true) public static int timer(Long currentTime, Long TIMER_FREQUENCY) {
+        while (true) {
+            try { Thread.sleep(TIMER_FREQUENCY); }
+            catch (InterruptedException e) { throw new RuntimeException(e); }
+            return (int) ((((new Date().getTime() - currentTime) % (100 * TIMER_FREQUENCY)) / TIMER_FREQUENCY) % 24);
+        }
     }
 }

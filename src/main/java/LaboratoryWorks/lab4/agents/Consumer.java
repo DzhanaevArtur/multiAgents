@@ -21,19 +21,11 @@ import java.io.File;
 @AutoRunnableAgent(name = "Consumer", copy = 3)
 public class Consumer extends Agent {
 
+    /** Определение поведения потребителей */
     @Override protected void setup() {
-        try {
-            addBehaviour(new CFSM(
-                    this,
-                    (CParser) JAXBContext.newInstance(CParser.class)
-                            .createUnmarshaller()
-                            .unmarshal(new File(String.format(
-                                    "src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml",
-                                    Thread.currentThread().getName()
-                            ))),
-                    LW4Info.getLW()
-            ));
-        }
+        try { addBehaviour(new CFSM(this, (CParser) JAXBContext.newInstance(CParser.class).createUnmarshaller()
+                .unmarshal(new File(String.format("src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml",
+                        Thread.currentThread().getName()))), LW4Info.getLW())); }
         catch (JAXBException e) { throw new RuntimeException(e); }
     }
 }

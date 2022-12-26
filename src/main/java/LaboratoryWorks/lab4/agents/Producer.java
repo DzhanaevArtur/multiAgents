@@ -21,12 +21,10 @@ import java.io.File;
 @AutoRunnableAgent(name = "Producer", copy = 3)
 public class Producer extends Agent {
 
+    /** Определение поведения производителей ЭЭ */
     @Override protected void setup() {
-        try { addBehaviour(new PFSM(
-                this,
-                (PParser) JAXBContext.newInstance(PParser.class)
-                        .createUnmarshaller()
-                        .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")),
+        try { addBehaviour(new PFSM(this, (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()
+                .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")),
                 LW4Info.getLW())); }
         catch (JAXBException e) { throw new RuntimeException(e); }
     }

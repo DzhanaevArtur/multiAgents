@@ -20,4 +20,8 @@ import java.util.List;
 @Setter
 @XmlRootElement(name = "Coefficients")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CParser { @XmlElement(name="P") private List<Double> powerCoefficients; }
+public class CParser {
+
+    /** Коэффициент, характеризующий потребляемую в данный час ЭЭ определённого потребителя */
+    @XmlElement(name="P") private List<Double> powerCoefficients;
+}

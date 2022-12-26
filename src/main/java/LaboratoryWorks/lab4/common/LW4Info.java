@@ -17,7 +17,7 @@ import java.util.Set;
 @Slf4j
 public class LW4Info {
 
-    /** OpenChat ID */
+    /** Идентификатор чата аукциона */
     @Getter @Setter private AID chat;
 
     /** Участники чата */
@@ -32,24 +32,18 @@ public class LW4Info {
     /** Нагрузка: обувная фабрика */
     @Getter @Setter private List<Double> shoeFactory = new ArrayList<>();
 
-    /** Электростанция: тепловая */
+    /** Суточная совокупность генерируемой ЭЭ ТЭС */
     @Getter @Setter private List<Double> TPP = new ArrayList<>();
 
-    /** Электростанция: ветряная */
+    /** Суточная совокупность генерируемой ЭЭ ВЭС */
     @Getter @Setter private List<Double> WPS = new ArrayList<>();
 
-    /** Электростанция: солнечная */
+    /** Суточная совокупность генерируемой ЭЭ СЭС */
     @Getter @Setter private List<Double> SPS = new ArrayList<>();
 
-    /** Счётчик часов */
-    @Getter @Setter private static Integer hours = 0;
-
-    /** Алгоритм часов */
-    public synchronized Integer getTime() { if (getHours() >= 23 ) setHours(0); return getHours(); }
-
-    /** Class instance */
+    /** Экземпляр класса для синглтон */
     @Getter @Setter private static LW4Info lw4Info;
 
-    /** SingleTon realisation */
+    /** Синглтон */
     public static synchronized LW4Info getLW() { if (getLw4Info() == null) setLw4Info(new LW4Info()); return getLw4Info(); }
 }
