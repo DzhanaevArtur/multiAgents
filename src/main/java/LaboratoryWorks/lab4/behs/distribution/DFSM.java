@@ -1,5 +1,6 @@
-package LaboratoryWorks.lab4.behs;
+package LaboratoryWorks.lab4.behs.distribution;
 
+import LaboratoryWorks.lab4.behs.consumption.CEnergyBuy;
 import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.Agent;
 import jade.core.behaviours.FSMBehaviour;

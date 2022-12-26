@@ -1,4 +1,4 @@
-package LaboratoryWorks.lab4.behs;
+package LaboratoryWorks.lab4.behs.production;
 
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
  * @created 20.12.2022
  */
 @Slf4j
-public class PFirst extends Behaviour {
+public class PSecond extends Behaviour {
 
     private final Agent myAgent;
 
-    public PFirst(Agent myAgent) {
+    public PSecond(Agent myAgent) {
         super(myAgent);
         this.myAgent = myAgent;
     }

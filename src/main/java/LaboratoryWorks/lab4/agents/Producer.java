@@ -2,7 +2,7 @@ package LaboratoryWorks.lab4.agents;
 
 import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
-import LaboratoryWorks.lab4.behs.PFSM;
+import LaboratoryWorks.lab4.behs.production.PFSM;
 import LaboratoryWorks.lab4.common.PParser;
 import jade.core.Agent;
 import lombok.extern.slf4j.Slf4j;

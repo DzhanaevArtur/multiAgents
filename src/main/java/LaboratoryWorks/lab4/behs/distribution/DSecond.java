@@ -1,4 +1,4 @@
-package LaboratoryWorks.lab4.behs;
+package LaboratoryWorks.lab4.behs.distribution;
 
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;

@@ -1,6 +1,6 @@
 package LaboratoryWorks.lab4.agents;
 
-import LaboratoryWorks.lab4.behs.DFSM;
+import LaboratoryWorks.lab4.behs.distribution.DFSM;
 import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
 import jade.core.Agent;

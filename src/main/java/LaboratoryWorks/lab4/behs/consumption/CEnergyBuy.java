@@ -1,4 +1,4 @@
-package LaboratoryWorks.lab4.behs;
+package LaboratoryWorks.lab4.behs.consumption;
 
 import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.Agent;

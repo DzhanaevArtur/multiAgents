@@ -13,6 +13,8 @@ import jade.domain.FIPAException;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
+
 /**
  * @author Artur Dzhanaev
  * @created 20.12.2022
@@ -26,6 +28,15 @@ public class Main {
         Runtime instance = Runtime.instance();
         instance.setCloseVM(true);
         instance.createMainContainer(AgentFounder.founder(Consumer.class, Distributor.class, Producer.class));
+
+
+        final long start = new Date().getTime();
+        while (true) {
+            long out = (((new Date().getTime() - start) % 100_000) / 1_000) % 24;
+            log.info("{}", out);
+            try { Thread.sleep(1_000L); }
+            catch (InterruptedException e) { throw new RuntimeException(e); }
+        }
     }
 
     /**

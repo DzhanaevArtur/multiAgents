@@ -1,4 +1,4 @@
-package LaboratoryWorks.lab4.behs;
+package LaboratoryWorks.lab4.behs.production;
 
 import LaboratoryWorks.lab4.common.LW4Info;
 import LaboratoryWorks.lab4.common.Main;
