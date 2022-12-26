@@ -2,15 +2,12 @@ package LaboratoryWorks.lab4.behs.distribution;
 
 import LaboratoryWorks.lab4.common.LW4Info;
 import LaboratoryWorks.lab4.common.Main;
-import Practices.TopicHelper;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
-import jade.lang.acl.ACLMessage;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -48,15 +45,15 @@ public class DChatName extends Behaviour {
      * Отправляем название чата
      */
     @Override public void action() {
-        lw4Info.setChat(TopicHelper.createTopic(myAgent, Main.CHAT + myAgent.getLocalName().split("_")[1]));
-        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
-        aclMessage.setProtocol(Main.CHAT);
-        for (AID agent : lw4Info.getChatUsers()) aclMessage.addReceiver(agent);
-        aclMessage.setContent(Main.CHAT);
-        myAgent.send(aclMessage);
-        lw4Info.getChatUsers().clear();
-        log.info("\tChat name sent to {}", ((AID) aclMessage.getAllReceiver().next()).getLocalName());
-        trigger = true;
+//        lw4Info.setChat(TopicHelper.createTopic(myAgent, Main.CHAT + myAgent.getLocalName().split("_")[1]));
+//        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
+//        aclMessage.setProtocol(Main.CHAT);
+//        for (AID agent : lw4Info.getChatUsers()) aclMessage.addReceiver(agent);
+//        aclMessage.setContent(Main.CHAT);
+//        myAgent.send(aclMessage);
+//        lw4Info.getChatUsers().clear();
+//        log.info("\tChat name sent to {}", ((AID) aclMessage.getAllReceiver().next()).getLocalName());
+//        trigger = true;
     }
 
     @Override public boolean done() { return trigger; }

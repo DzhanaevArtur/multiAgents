@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Artur Dzhanaev
@@ -25,16 +26,18 @@ public class Main {
     public static final String CHAT = "LW4";
 
     /** Текущее время, от которого калибруется таймер */
-    public static final Long CURRENT_TIME = new Date().getTime();
+    public static final Long START = new Date().getTime();
 
-    /** Частота таймера. При TIMER_FREQUENCY = 500L обновление раз в полсекунды */
-    public static final Long TIMER_FREQUENCY = 500L;
+    /** Частота таймера (количество тактов в секунду) */
+    public static final int F = 2;
+
 
     /** Запуск энергосистемы */
     public static void main(String[] args) {
         Runtime instance = Runtime.instance();
         instance.setCloseVM(true);
-        instance.createMainContainer(AgentFounder.founder(Consumer.class, Distributor.class, Producer.class));
+//        instance.createMainContainer(AgentFounder.founder(Consumer.class, Distributor.class, Producer.class));
+        instance.createMainContainer(AgentFounder.founder(Consumer.class, Distributor.class));
     }
 
     /** Регистрация производителей ЭЭ, участвующих в аукционах */
@@ -50,11 +53,14 @@ public class Main {
     }
 
     /** Таймер */
-    @Contract(pure = true) public static int timer(Long currentTime, Long TIMER_FREQUENCY) {
+    @Contract(pure = true) public static int timer(Long currentTime, int f) {
         while (true) {
-            try { Thread.sleep(TIMER_FREQUENCY); }
+            try { Thread.sleep(1000 / f); }
             catch (InterruptedException e) { throw new RuntimeException(e); }
-            return (int) ((((new Date().getTime() - currentTime) % (100 * TIMER_FREQUENCY)) / TIMER_FREQUENCY) % 24);
+            return (int) ((((new Date().getTime() - currentTime) % (100_000 * f)) / (1000 / f)) % 24);
         }
     }
+
+    /** Получение текущего значения потребления / выработки ЭЭ в час */
+    @Contract(pure = true) public static synchronized double value(@NotNull List<Double> l, int i) { return l.get(i); }
 }

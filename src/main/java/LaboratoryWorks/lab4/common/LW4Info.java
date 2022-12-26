@@ -15,35 +15,37 @@ import java.util.Set;
  * @created 24.12.2022
  */
 @Slf4j
+@Getter
+@Setter
 public class LW4Info {
 
     /** Идентификатор чата аукциона */
-    @Getter @Setter private AID chat;
+    private AID chat;
 
     /** Участники чата */
-    @Getter @Setter private Set<AID> chatUsers = new HashSet<>();
+    private Set<AID> chatUsers = new HashSet<>();
 
     /** Нагрузка: МЭИ */
-    @Getter @Setter private List<Double> MPEI = new ArrayList<>();
+    private List<Double> MPEI = new ArrayList<>();
 
     /** Нагрузка: пищевое производство */
-    @Getter @Setter private List<Double> foodIndustryFactory = new ArrayList<>();
+    private List<Double> foodIndustryFactory = new ArrayList<>();
 
     /** Нагрузка: обувная фабрика */
-    @Getter @Setter private List<Double> shoeFactory = new ArrayList<>();
+    private List<Double> shoeFactory = new ArrayList<>();
 
     /** Суточная совокупность генерируемой ЭЭ ТЭС */
-    @Getter @Setter private List<Double> TPP = new ArrayList<>();
+    private List<Double> TPP = new ArrayList<>();
 
     /** Суточная совокупность генерируемой ЭЭ ВЭС */
-    @Getter @Setter private List<Double> WPS = new ArrayList<>();
+    private List<Double> WPS = new ArrayList<>();
 
     /** Суточная совокупность генерируемой ЭЭ СЭС */
-    @Getter @Setter private List<Double> SPS = new ArrayList<>();
+    private List<Double> SPS = new ArrayList<>();
 
     /** Экземпляр класса для синглтон */
-    @Getter @Setter private static LW4Info lw4Info;
+    private static LW4Info lw4;
 
     /** Синглтон */
-    public static synchronized LW4Info getLW() { if (getLw4Info() == null) setLw4Info(new LW4Info()); return getLw4Info(); }
+    public static synchronized LW4Info getLW() { if (lw4 == null) lw4 = new LW4Info(); return lw4; }
 }

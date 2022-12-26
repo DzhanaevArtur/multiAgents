@@ -1,5 +1,6 @@
 package LaboratoryWorks.lab4.behs.distribution;
 
+import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -11,13 +12,15 @@ import lombok.extern.slf4j.Slf4j;
  * @created 24.12.2022
  */
 @Slf4j
-public class DSecond extends Behaviour {
+public class DFirst extends Behaviour {
 
+    private final LW4Info lw4Info;
     private final Agent myAgent;
 
-    public DSecond(Agent myAgent) {
+    public DFirst(Agent myAgent, LW4Info lw4Info) {
         super(myAgent);
         this.myAgent = myAgent;
+        this.lw4Info = lw4Info;
     }
 
     @Override public void action() {
@@ -25,9 +28,8 @@ public class DSecond extends Behaviour {
                 MessageTemplate.MatchProtocol("EnergyBuy"),
                 MessageTemplate.MatchPerformative(ACLMessage.INFORM)));
         if (aclMessage != null) {
-            myAgent.doWait(50L);
             double value = Double.parseDouble(aclMessage.getContent());
-            log.info("\t\t\"{}\" received", value);
+            log.info("\t\"{}\" received", value);
         } else block();
     }
 

@@ -23,9 +23,11 @@ public class Producer extends Agent {
 
     /** Определение поведения производителей ЭЭ */
     @Override protected void setup() {
-        try { addBehaviour(new PFSM(this, (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()
-                .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")),
-                LW4Info.getLW())); }
+        try { addBehaviour(new PFSM(
+                this,
+                LW4Info.getLW(),
+                (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()
+                        .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")))); }
         catch (JAXBException e) { throw new RuntimeException(e); }
     }
 }

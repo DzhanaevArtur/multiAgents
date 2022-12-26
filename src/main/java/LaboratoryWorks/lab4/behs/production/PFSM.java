@@ -18,7 +18,7 @@ import java.util.Random;
 @Slf4j
 public class PFSM extends FSMBehaviour {
 
-    public PFSM(Agent myAgent, PParser pParser, LW4Info lw4Info) {
+    public PFSM(Agent myAgent, LW4Info lw4Info, PParser pParser) {
         super(myAgent);
         Main.registration(myAgent);
         addingToProductionList(lw4Info, pParser);
