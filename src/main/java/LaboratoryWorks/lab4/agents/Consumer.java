@@ -21,6 +21,7 @@ import java.io.File;
 @AutoRunnableAgent(name = "Consumer", copy = 1)
 public class Consumer extends Agent {
 
+
     /** Определение поведения потребителей */
     @Override protected void setup() {
         try { addBehaviour(new CBuyRequest(

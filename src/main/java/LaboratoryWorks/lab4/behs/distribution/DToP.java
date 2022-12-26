@@ -15,13 +15,13 @@ import lombok.extern.slf4j.Slf4j;
  * @created 20.12.2022
  */
 @Slf4j
-public class DChatName extends Behaviour {
+public class DToP extends Behaviour {
 
     private Boolean trigger = false;
     private final LW4Info lw4Info;
     private final Agent myAgent;
 
-    public DChatName(Agent myAgent, LW4Info lw4Info) {
+    public DToP(Agent myAgent, LW4Info lw4Info) {
         super(myAgent);
         this.myAgent = myAgent;
         this.lw4Info = lw4Info;

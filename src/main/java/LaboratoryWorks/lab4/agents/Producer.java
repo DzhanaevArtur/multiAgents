@@ -21,6 +21,7 @@ import java.io.File;
 @AutoRunnableAgent(name = "Producer", copy = 3)
 public class Producer extends Agent {
 
+
     /** Определение поведения производителей ЭЭ */
     @Override protected void setup() {
         try { addBehaviour(new PFSM(

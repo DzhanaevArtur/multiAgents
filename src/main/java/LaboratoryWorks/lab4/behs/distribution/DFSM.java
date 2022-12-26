@@ -12,12 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DFSM  extends FSMBehaviour {
 
+
     public DFSM(Agent myAgent, LW4Info lw4Info) {
         super(myAgent);
 
-        registerFirstState(new DFirst(myAgent, lw4Info), "one");
-        registerLastState(new DChatName(myAgent, lw4Info), "two");
-
+        registerFirstState(new DFromC(myAgent), "one");
+        registerLastState(new DToP(myAgent, lw4Info), "two");
         registerDefaultTransition("one", "two");
     }
 }

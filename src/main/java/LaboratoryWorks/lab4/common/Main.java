@@ -22,6 +22,7 @@ import java.util.List;
 @Slf4j
 public class Main {
 
+
     /** "Нетривиальное" название для чата торгов */
     public static final String CHAT = "LW4";
 
@@ -36,7 +37,6 @@ public class Main {
     public static void main(String[] args) {
         Runtime instance = Runtime.instance();
         instance.setCloseVM(true);
-//        instance.createMainContainer(AgentFounder.founder(Consumer.class, Distributor.class, Producer.class));
         instance.createMainContainer(AgentFounder.founder(Consumer.class, Distributor.class));
     }
 

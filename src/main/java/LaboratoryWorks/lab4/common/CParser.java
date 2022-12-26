@@ -22,6 +22,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CParser {
 
+
     /** Потребляемая ЭЭ в текущий час */
     @XmlElement(name="P") private List<Double> powerCoefficients;
 }

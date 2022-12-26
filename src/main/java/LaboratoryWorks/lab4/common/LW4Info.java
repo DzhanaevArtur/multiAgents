@@ -2,7 +2,6 @@ package LaboratoryWorks.lab4.common;
 
 import jade.core.AID;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -16,35 +15,42 @@ import java.util.Set;
  */
 @Slf4j
 @Getter
-@Setter
 public class LW4Info {
 
+
     /** Идентификатор чата аукциона */
-    private AID chat;
+    private  AID chat;
 
     /** Участники чата */
-    private Set<AID> chatUsers = new HashSet<>();
+    private final Set<AID> chatUsers = new HashSet<>();
+
+
+    /** Максимальная цена, по которой i-ый потребитель может купить ЭЭ */
+    private final List<Integer> buyPrices = List.of(1_000, 500, 250);
+
 
     /** Нагрузка: МЭИ */
-    private List<Double> MPEI = new ArrayList<>();
+    private final List<Double> MPEI = new ArrayList<>();
 
     /** Нагрузка: пищевое производство */
-    private List<Double> foodIndustryFactory = new ArrayList<>();
+    private final List<Double> foodIndustryFactory = new ArrayList<>();
 
     /** Нагрузка: обувная фабрика */
-    private List<Double> shoeFactory = new ArrayList<>();
+    private final List<Double> shoeFactory = new ArrayList<>();
+
 
     /** Суточная совокупность генерируемой ЭЭ ТЭС */
-    private List<Double> TPP = new ArrayList<>();
+    private final List<Double> TPP = new ArrayList<>();
 
     /** Суточная совокупность генерируемой ЭЭ ВЭС */
-    private List<Double> WPS = new ArrayList<>();
+    private final List<Double> WPS = new ArrayList<>();
 
     /** Суточная совокупность генерируемой ЭЭ СЭС */
-    private List<Double> SPS = new ArrayList<>();
+    private final List<Double> SPS = new ArrayList<>();
 
     /** Экземпляр класса для синглтон */
     private static LW4Info lw4;
+
 
     /** Синглтон */
     public static synchronized LW4Info getLW() { if (lw4 == null) lw4 = new LW4Info(); return lw4; }

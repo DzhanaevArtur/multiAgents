@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PParser {
 
+
     /** Коэффициент, характеризующий генерацию ТЭС в текущий час */
     @XmlElement(name="A") private Double A;
 
