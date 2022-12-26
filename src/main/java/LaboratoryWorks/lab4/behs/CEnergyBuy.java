@@ -1,6 +1,6 @@
 package LaboratoryWorks.lab4.behs;
 
-import LaboratoryWorks.lab4.common.LW;
+import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -18,20 +18,20 @@ import java.util.Locale;
 public class CEnergyBuy extends Behaviour {
 
     private Boolean trigger = false;
-    private final LW lw;
+    private final LW4Info lw4Info;
     private final Agent myAgent;
 
-    public CEnergyBuy(Agent myAgent, LW lw) {
+    public CEnergyBuy(Agent myAgent, LW4Info lw4Info) {
         super(myAgent);
         this.myAgent = myAgent;
-        this.lw = lw;
+        this.lw4Info = lw4Info;
     }
 
     @Override public void action() {
         switch (myAgent.getLocalName()) {
-            case "Consumer_1" -> aclMessageSending(lw.getCPowerPerHour1());
-            case "Consumer_2" -> aclMessageSending(lw.getCPowerPerHour2());
-            case "Consumer_3" -> aclMessageSending(lw.getCPowerPerHour3());
+            case "Consumer_1" -> aclMessageSending(lw4Info.getMPEI());
+            case "Consumer_2" -> aclMessageSending(lw4Info.getFoodIndustryFactory());
+            case "Consumer_3" -> aclMessageSending(lw4Info.getShoeFactory());
         }
         trigger = true;
     }
@@ -39,7 +39,7 @@ public class CEnergyBuy extends Behaviour {
     private synchronized void aclMessageSending(@NotNull List<Double> list) {
         for (Double d : list) {
             ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
-            aclMessage.addReceiver(lw.getChat());
+            aclMessage.addReceiver(lw4Info.getChat());
             aclMessage.setProtocol("EnergyBuy");
             aclMessage.setContent(String.format(Locale.US, "%.3f", d));
             myAgent.doWait(50L);

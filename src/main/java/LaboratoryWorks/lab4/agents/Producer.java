@@ -1,5 +1,6 @@
 package LaboratoryWorks.lab4.agents;
 
+import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
 import LaboratoryWorks.lab4.behs.PFSM;
 import LaboratoryWorks.lab4.common.PParser;
@@ -21,10 +22,12 @@ import java.io.File;
 public class Producer extends Agent {
 
     @Override protected void setup() {
-//        Main.registration(this);
-//        TopicHelper.createTopic(this, Main.CHAT);
-        try { addBehaviour(new PFSM(this, (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()
-                .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")))); }
+        try { addBehaviour(new PFSM(
+                this,
+                (PParser) JAXBContext.newInstance(PParser.class)
+                        .createUnmarshaller()
+                        .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")),
+                LW4Info.getLW())); }
         catch (JAXBException e) { throw new RuntimeException(e); }
     }
 }

@@ -11,6 +11,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Artur Dzhanaev
@@ -30,7 +31,7 @@ public class Main {
     /**
      * Регистрация всех агентов, участвующих в работе
      */
-    public static void registration(Agent myAgent) {
+    public static void registration(@NotNull Agent myAgent) {
         ServiceDescription serviceDescription = new ServiceDescription();
         serviceDescription.setType(CHAT + myAgent.getLocalName().split("_")[1]);
         serviceDescription.setName(CHAT + myAgent.getLocalName().split("_")[1]);

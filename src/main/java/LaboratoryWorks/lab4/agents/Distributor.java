@@ -1,9 +1,8 @@
 package LaboratoryWorks.lab4.agents;
 
+import LaboratoryWorks.lab4.behs.DFSM;
+import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
-import LaboratoryWorks.lab4.behs.DChatName;
-import LaboratoryWorks.lab4.common.Main;
-import Practices.TopicHelper;
 import jade.core.Agent;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,8 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 public class Distributor extends Agent {
 
     @Override protected void setup() {
-        Main.registration(this);
-        TopicHelper.createTopic(this, Main.CHAT + this.getLocalName().split("_")[1]);
-        addBehaviour(new DChatName(this));
+        addBehaviour(new DFSM(this, LW4Info.getLW()));
     }
 }

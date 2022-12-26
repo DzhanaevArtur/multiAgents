@@ -1,6 +1,6 @@
 package LaboratoryWorks.lab4.agents;
 
-import LaboratoryWorks.lab4.common.LW;
+import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
 import LaboratoryWorks.lab4.behs.CFSM;
 import LaboratoryWorks.lab4.common.CParser;
@@ -25,8 +25,13 @@ public class Consumer extends Agent {
         try {
             addBehaviour(new CFSM(
                     this,
-                    (CParser) JAXBContext.newInstance(CParser.class).createUnmarshaller().unmarshal(new File(String.format("src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml", Thread.currentThread().getName()))),
-                    LW.getLW()
+                    (CParser) JAXBContext.newInstance(CParser.class)
+                            .createUnmarshaller()
+                            .unmarshal(new File(String.format(
+                                    "src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml",
+                                    Thread.currentThread().getName()
+                            ))),
+                    LW4Info.getLW()
             ));
         }
         catch (JAXBException e) { throw new RuntimeException(e); }
