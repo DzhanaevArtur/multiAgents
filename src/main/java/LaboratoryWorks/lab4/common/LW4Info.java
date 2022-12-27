@@ -2,6 +2,7 @@ package LaboratoryWorks.lab4.common;
 
 import jade.core.AID;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -17,16 +18,10 @@ public class LW4Info {
 
 
     /** Идентификатор чата аукциона */
-    private  AID chat;
+    @Setter private AID chat;
 
     /** Участники чата */
     private final Set<AID> users = new HashSet<>();
-
-
-    /** Максимальные цены, по которой потребители могут купить ЭЭ */
-    private final List<Integer> maxPrices = List.of(
-            new Random().nextInt(1_000), new Random().nextInt(1_000), new Random().nextInt(1_000)
-    );
 
 
     /** Нагрузка: МЭИ */

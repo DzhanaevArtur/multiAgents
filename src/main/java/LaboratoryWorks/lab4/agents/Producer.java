@@ -1,6 +1,6 @@
 package LaboratoryWorks.lab4.agents;
 
-import LaboratoryWorks.lab4.behs.PFirst;
+import LaboratoryWorks.lab4.behs.PConnToChat;
 import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
 import LaboratoryWorks.lab4.common.PParser;
@@ -24,7 +24,7 @@ public class Producer extends Agent {
 
     /** Определение поведения производителей ЭЭ */
     @Override protected void setup() {
-        try { addBehaviour(new PFirst(
+        try { addBehaviour(new PConnToChat(
                 this,
                 LW4Info.getLW(),
                 (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()

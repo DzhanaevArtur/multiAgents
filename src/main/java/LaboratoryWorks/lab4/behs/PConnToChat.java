@@ -3,20 +3,24 @@ package LaboratoryWorks.lab4.behs;
 import LaboratoryWorks.lab4.common.LW4Info;
 import LaboratoryWorks.lab4.common.Main;
 import LaboratoryWorks.lab4.common.PParser;
+import Practices.TopicHelper;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.lang.acl.ACLMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
+import static jade.lang.acl.MessageTemplate.*;
+
 /**
  * @author Artur Dzhanaev
  * @created 20.12.2022
  */
 @Slf4j
-public class PFirst extends Behaviour {
+public class PConnToChat extends Behaviour {
 
 
     /** Конфигурационные данные выработки ЭЭ */
@@ -29,7 +33,7 @@ public class PFirst extends Behaviour {
     private final Integer agentIndex;
 
 
-    public PFirst(Agent myAgent, LW4Info lw4Info, PParser p) {
+    public PConnToChat(Agent myAgent, LW4Info lw4Info, PParser p) {
         super(myAgent);
         this.myAgent = myAgent;
         this.lw4Info = lw4Info;
@@ -44,8 +48,11 @@ public class PFirst extends Behaviour {
         Main.registration(myAgent);
     }
 
-    /** Основная логика */
+    /** Отклик на поиск и создание чата */
     @Override public void action() {
+        ACLMessage aclMessage = myAgent.receive(and(MatchPerformative(ACLMessage.INFORM), MatchProtocol("Chat")));
+        if (aclMessage != null) lw4Info.setChat(TopicHelper.createTopic(myAgent, "Auction"));
+        else block();
 
     }
 

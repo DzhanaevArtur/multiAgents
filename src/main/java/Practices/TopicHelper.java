@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 @Slf4j
 public class TopicHelper {
 
-    public static AID createTopic(@NotNull Agent a, @NotNull String topicName){
+    public static AID createTopic(@NotNull Agent a, @NotNull String topicName) {
         AID topic = null;
         try {
             TopicManagementHelper topicHelper = (TopicManagementHelper) a.getHelper(TopicManagementHelper.SERVICE_NAME);

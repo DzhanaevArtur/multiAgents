@@ -27,14 +27,14 @@ public class CBuyRequest extends Behaviour {
     /** Номер текущего потребителя */
     private final Integer agentIndex;
 
+    /** Максимальная цена, за которую потребитель может купить ЭЭ */
+    private final Integer max;
+
     /** Совокупность потребляемой ЭЭ в час каждой нагрузкой */
     private final List<Double> one, two, thr;
 
     /** Данные из конфигурационного файла */
     private final CParser cParser;
-
-    /** Общие данные */
-    private final LW4Info lw4Info;
 
     /** Агент исполняющий поведение */
     private final Agent myAgent;
@@ -44,9 +44,9 @@ public class CBuyRequest extends Behaviour {
         super(myAgent);
         this.myAgent = myAgent;
         this.cParser = cParser;
-        this.lw4Info = lw4Info;
 
         agentIndex = Integer.parseInt(myAgent.getLocalName().split("_")[1]);
+        max = agentIndex * 300;
         one = lw4Info.getMPEI(); two = lw4Info.getFoodIndustryFactory(); thr = lw4Info.getShoeFactory();
     }
 
@@ -78,16 +78,11 @@ public class CBuyRequest extends Behaviour {
 
     /** Отправка определённому поставщику запроса о покупке ЭЭ */
     private synchronized void aclMessageSending(@NotNull List<Double> l) {
-        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
-        aclMessage.addReceiver(new AID(String.format("Distributor_%d", agentIndex), false));
-        aclMessage.setProtocol("Start");
-        aclMessage.setContent(String.format(
-                Locale.US,
-                "%.3f;%d",
-                Main.value(l, Main.timer(Main.START, Main.F)),
-                lw4Info.getMaxPrices().get(agentIndex - 1)
-        ));
-        myAgent.send(aclMessage);
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        msg.addReceiver(new AID(String.format("Distributor_%d", agentIndex), false));
+        msg.setProtocol("Start");
+        msg.setContent(String.format(Locale.US, "%.3f;%d", Main.value(l, Main.timer(Main.START, Main.F)), max));
+        myAgent.send(msg);
     }
 
     /** Завершение работы поведения, для исключения возникновения коллизий */

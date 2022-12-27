@@ -23,7 +23,7 @@ import java.util.List;
 public class Main {
 
 
-    /** "Нетривиальное" название для чата торгов */
+    /** Название чата */
     public static final String CHAT = "LW4";
 
     /** Текущее время, от которого отстраивается таймер */
@@ -49,11 +49,10 @@ public class Main {
     }
 
     /** Поиск производителей ЭЭ, участвующих в аукционах */
-    public static void search(@NotNull Agent a, LW4Info l) {
+    public static DFAgentDescription[] search(@NotNull Agent myAgent) throws FIPAException {
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.addServices(serviceDescription());
-        try { for (DFAgentDescription x : DFService.search(a, dfAgentDescription)) l.getUsers().add(x.getName()); }
-        catch (FIPAException e) { e.printStackTrace(); }
+        return DFService.search(myAgent, dfAgentDescription);
     }
 
     /** Поиск производителей ЭЭ, участвующих в аукционах */

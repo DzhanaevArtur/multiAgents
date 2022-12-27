@@ -1,6 +1,5 @@
-package LaboratoryWorks.lab4.behs.distribution;
+package LaboratoryWorks.lab4.behs;
 
-import LaboratoryWorks.lab4.behs.Auction;
 import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -36,7 +35,7 @@ public class DFromC extends Behaviour {
         if (aclMessage != null) {
             String[] split = aclMessage.getContent().split(";");
             double value = Double.parseDouble(split[0]); int maxPrice = Integer.parseInt(split[1]);
-            log.info("\tValue of EE: {}\t\t MaxPrice is: {}", value, maxPrice);
+            log.info("\tValue of EE: {}", value);
             myAgent.addBehaviour(new Auction(myAgent, lw4Info));
         } else block();
     }
