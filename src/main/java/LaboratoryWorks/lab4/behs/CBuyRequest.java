@@ -1,4 +1,4 @@
-package LaboratoryWorks.lab4.behs.consumption;
+package LaboratoryWorks.lab4.behs;
 
 import LaboratoryWorks.lab4.common.CParser;
 import LaboratoryWorks.lab4.common.LW4Info;
@@ -85,7 +85,7 @@ public class CBuyRequest extends Behaviour {
                 Locale.US,
                 "%.3f;%d",
                 Main.value(l, Main.timer(Main.START, Main.F)),
-                lw4Info.getBuyPrices().get(agentIndex - 1)
+                lw4Info.getMaxPrices().get(agentIndex - 1)
         ));
         myAgent.send(aclMessage);
     }

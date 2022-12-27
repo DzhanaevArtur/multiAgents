@@ -1,8 +1,8 @@
 package LaboratoryWorks.lab4.agents;
 
+import LaboratoryWorks.lab4.behs.PFirst;
 import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
-import LaboratoryWorks.lab4.behs.production.PFSM;
 import LaboratoryWorks.lab4.common.PParser;
 import jade.core.Agent;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class Producer extends Agent {
 
     /** Определение поведения производителей ЭЭ */
     @Override protected void setup() {
-        try { addBehaviour(new PFSM(
+        try { addBehaviour(new PFirst(
                 this,
                 LW4Info.getLW(),
                 (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()

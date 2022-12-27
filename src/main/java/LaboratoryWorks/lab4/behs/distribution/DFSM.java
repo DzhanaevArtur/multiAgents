@@ -16,8 +16,8 @@ public class DFSM  extends FSMBehaviour {
     public DFSM(Agent myAgent, LW4Info lw4Info) {
         super(myAgent);
 
-        registerFirstState(new DFromC(myAgent), "one");
-        registerLastState(new DToP(myAgent, lw4Info), "two");
+        registerFirstState(new DFromC(myAgent, lw4Info), "one");
+        registerLastState(new DToC(myAgent, lw4Info), "two");
         registerDefaultTransition("one", "two");
     }
 }

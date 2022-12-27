@@ -1,5 +1,7 @@
 package LaboratoryWorks.lab4.behs.distribution;
 
+import LaboratoryWorks.lab4.behs.Auction;
+import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -15,11 +17,18 @@ import static jade.lang.acl.MessageTemplate.*;
 public class DFromC extends Behaviour {
 
 
+    /** Общие данные */
+    private final LW4Info lw4Info;
+
     /** Агент исполняющий поведение */
     private final Agent myAgent;
 
 
-    public DFromC(Agent myAgent) { super(myAgent); this.myAgent = myAgent; }
+    public DFromC(Agent myAgent, LW4Info lw4Info) {
+        super(myAgent);
+        this.myAgent = myAgent;
+        this.lw4Info = lw4Info;
+    }
 
     /** Приём запросов на покупку ЭЭ от потребителя */
     @Override public void action() {
@@ -28,6 +37,7 @@ public class DFromC extends Behaviour {
             String[] split = aclMessage.getContent().split(";");
             double value = Double.parseDouble(split[0]); int maxPrice = Integer.parseInt(split[1]);
             log.info("\tValue of EE: {}\t\t MaxPrice is: {}", value, maxPrice);
+            myAgent.addBehaviour(new Auction(myAgent, lw4Info));
         } else block();
     }
 

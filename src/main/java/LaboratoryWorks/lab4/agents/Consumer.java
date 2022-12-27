@@ -1,6 +1,6 @@
 package LaboratoryWorks.lab4.agents;
 
-import LaboratoryWorks.lab4.behs.consumption.CBuyRequest;
+import LaboratoryWorks.lab4.behs.CBuyRequest;
 import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
 import LaboratoryWorks.lab4.common.CParser;

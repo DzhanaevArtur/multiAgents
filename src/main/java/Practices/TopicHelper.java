@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 @Slf4j
 public class TopicHelper {
 
-    public static AID createTopic(@NotNull Agent agent, @NotNull String topicName){
-        AID jadeTopic = null;
+    public static AID createTopic(@NotNull Agent a, @NotNull String topicName){
+        AID topic = null;
         try {
-            TopicManagementHelper topicHelper = (TopicManagementHelper) agent.getHelper(TopicManagementHelper.SERVICE_NAME);
-            jadeTopic = topicHelper.createTopic(topicName);
-            topicHelper.register(jadeTopic);
+            TopicManagementHelper topicHelper = (TopicManagementHelper) a.getHelper(TopicManagementHelper.SERVICE_NAME);
+            topic = topicHelper.createTopic(topicName);
+            topicHelper.register(topic);
         } catch (ServiceException e) { e.printStackTrace(); }
-        return jadeTopic;
+        return topic;
     }
 }

@@ -4,14 +4,12 @@ import jade.core.AID;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Artur Dzhanaev
  * @created 24.12.2022
+ * @description Модель данных для данной работы
  */
 @Slf4j
 @Getter
@@ -22,11 +20,13 @@ public class LW4Info {
     private  AID chat;
 
     /** Участники чата */
-    private final Set<AID> chatUsers = new HashSet<>();
+    private final Set<AID> users = new HashSet<>();
 
 
-    /** Максимальная цена, по которой i-ый потребитель может купить ЭЭ */
-    private final List<Integer> buyPrices = List.of(1_000, 500, 250);
+    /** Максимальные цены, по которой потребители могут купить ЭЭ */
+    private final List<Integer> maxPrices = List.of(
+            new Random().nextInt(1_000), new Random().nextInt(1_000), new Random().nextInt(1_000)
+    );
 
 
     /** Нагрузка: МЭИ */
