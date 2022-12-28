@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Random;
 
 import static jade.lang.acl.MessageTemplate.*;
@@ -23,14 +24,26 @@ import static jade.lang.acl.MessageTemplate.*;
 public class PConnToChat extends Behaviour {
 
 
+    /** Стартовая цена */
+    private final Double startPrice;
+
+    /** Минимальная цена */
+    private final Double minPrice;
+
+    /** Минимальная цена */
+    private Double currentPrice;
+
+    /** Номер текущего потребителя */
+    private final Integer agentIndex;
+
     /** Конфигурационные данные выработки ЭЭ */
     private final PParser p;
 
     /** Общие данные */
     private final LW4Info lw4Info;
 
-    /** Номер текущего потребителя */
-    private final Integer agentIndex;
+    /** Текущий производитель */
+    private final Agent myAgent;
 
 
     public PConnToChat(Agent myAgent, LW4Info lw4Info, PParser p) {
@@ -38,6 +51,8 @@ public class PConnToChat extends Behaviour {
         this.myAgent = myAgent;
         this.lw4Info = lw4Info;
         this.p = p;
+        this.minPrice = 1D;
+        this.startPrice = 2 * this.minPrice;
 
         agentIndex = Integer.parseInt(myAgent.getLocalName().split("_")[1]);
     }
@@ -51,9 +66,16 @@ public class PConnToChat extends Behaviour {
     /** Отклик на поиск и создание чата */
     @Override public void action() {
         ACLMessage aclMessage = myAgent.receive(and(MatchPerformative(ACLMessage.INFORM), MatchProtocol("Chat")));
-        if (aclMessage != null) lw4Info.setChat(TopicHelper.createTopic(myAgent, "Auction"));
+        if (aclMessage != null) {
+            lw4Info.setChat(TopicHelper.createTopic(myAgent, "Auction"));
+            ACLMessage reply = aclMessage.createReply();
+            reply.clearAllReceiver();
+            reply.addReceiver(lw4Info.getChat());
+            reply.setProtocol("Decision");
+            reply.setContent(String.format("", 5));
+            myAgent.send(reply);
+        }
         else block();
-
     }
 
     /** Обработка данных из конфигурационного файла */
@@ -73,5 +95,11 @@ public class PConnToChat extends Behaviour {
         return output;
     }
 
+    /** Ценообразование у производителей ЭЭ */
+    private double actualPrice(@NotNull List<Double> l, int i) {
+        return (l.stream().filter(x -> x >= 0).max(Double::compareTo).orElse(0D) - l.get(i) + 0.001);
+    }
+
+    /** Останов поведения */
     @Override public boolean done() { return false; }
 }

@@ -2,7 +2,6 @@ package LaboratoryWorks.lab4.behs;
 
 import LaboratoryWorks.lab4.common.CParser;
 import LaboratoryWorks.lab4.common.LW4Info;
-import LaboratoryWorks.lab4.common.Main;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -12,6 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+
+import static LaboratoryWorks.lab4.common.Main.*;
 
 /**
  * @author Artur Dzhanaev
@@ -27,16 +29,13 @@ public class CBuyRequest extends Behaviour {
     /** Номер текущего потребителя */
     private final Integer agentIndex;
 
-    /** Максимальная цена, за которую потребитель может купить ЭЭ */
-    private final Integer max;
-
     /** Совокупность потребляемой ЭЭ в час каждой нагрузкой */
     private final List<Double> one, two, thr;
 
     /** Данные из конфигурационного файла */
     private final CParser cParser;
 
-    /** Агент исполняющий поведение */
+    /** Агент, исполняющий поведение */
     private final Agent myAgent;
 
 
@@ -46,7 +45,6 @@ public class CBuyRequest extends Behaviour {
         this.cParser = cParser;
 
         agentIndex = Integer.parseInt(myAgent.getLocalName().split("_")[1]);
-        max = agentIndex * 300;
         one = lw4Info.getMPEI(); two = lw4Info.getFoodIndustryFactory(); thr = lw4Info.getShoeFactory();
     }
 
@@ -60,7 +58,7 @@ public class CBuyRequest extends Behaviour {
     }
 
     /** Отправка запроса поставщику на приобретение ЭЭ */
-    @Override public void action() {
+    @SuppressWarnings("InfiniteLoopStatement") @Override public void action() {
         switch (agentIndex) {
             case 1 -> { while (true) aclMessageSending(one); }
             case 2 -> { while (true) aclMessageSending(two); }
@@ -77,12 +75,14 @@ public class CBuyRequest extends Behaviour {
     }
 
     /** Отправка определённому поставщику запроса о покупке ЭЭ */
-    private synchronized void aclMessageSending(@NotNull List<Double> l) {
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.addReceiver(new AID(String.format("Distributor_%d", agentIndex), false));
-        msg.setProtocol("Start");
-        msg.setContent(String.format(Locale.US, "%.3f;%d", Main.value(l, Main.timer(Main.START, Main.F)), max));
-        myAgent.send(msg);
+    private synchronized void aclMessageSending(@NotNull List<Double> list) {
+        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
+        aclMessage.addReceiver(new AID(String.format("Distributor_%d", agentIndex), false));
+        aclMessage.setProtocol("START");
+        int timer = timer(START, FREQ);
+        aclMessage.setContent(String.format(Locale.US, "%.3f;%d;%d",
+                list.get(timer), agentIndex * new Random().nextInt(1000), timer));
+        myAgent.send(aclMessage);
     }
 
     /** Завершение работы поведения, для исключения возникновения коллизий */

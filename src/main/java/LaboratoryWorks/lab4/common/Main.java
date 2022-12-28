@@ -13,7 +13,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Artur Dzhanaev
@@ -30,7 +29,7 @@ public class Main {
     public static final Long START = new Date().getTime();
 
     /** Частота таймера (количество тактов в секунду) */
-    public static final int F = 2;
+    public static final int FREQ = 2;
 
 
     /** Запуск энергосистемы */
@@ -69,7 +68,4 @@ public class Main {
         catch (InterruptedException e) { throw new RuntimeException(e); }
         return (int) ((((new Date().getTime() - currentTime) % (100_000 * f)) / (1000 / f)) % 24);
     }
-
-    /** Получение текущего значения потребления / выработки ЭЭ в час */
-    @Contract(pure = true) public static synchronized double value(@NotNull List<Double> l, int i) { return l.get(i); }
 }

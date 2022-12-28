@@ -2,6 +2,7 @@ package LaboratoryWorks.lab4.behs;
 
 import LaboratoryWorks.lab4.common.LW4Info;
 import LaboratoryWorks.lab4.common.Main;
+import Practices.TopicHelper;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -24,6 +25,9 @@ public class DSearchP extends Behaviour {
     /** Триггер */
     private Boolean trigger = false;
 
+    /** Чат */
+    private final AID chat;
+
     /** Участники чата */
     private final Set<AID> users;
 
@@ -35,6 +39,8 @@ public class DSearchP extends Behaviour {
         super(myAgent);
         this.myAgent = myAgent;
         users = lw4Info.getUsers();
+        chat = lw4Info.getChat();
+        lw4Info.setChat(TopicHelper.createTopic(myAgent, "Auction"));
     }
 
     /** Предварительно ищем производителей */
@@ -42,7 +48,7 @@ public class DSearchP extends Behaviour {
         DFAgentDescription[] search;
         try { search = Main.search(myAgent); }
         catch (FIPAException e) { throw new RuntimeException(e); }
-        for (DFAgentDescription d : search) users.add(d.getName());
+        for (DFAgentDescription dfAgentDescription : search) users.add(dfAgentDescription.getName());
     }
 
     /** Основная часть */

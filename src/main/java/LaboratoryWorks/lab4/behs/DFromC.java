@@ -29,15 +29,11 @@ public class DFromC extends Behaviour {
         this.lw4Info = lw4Info;
     }
 
-    /** Приём запросов на покупку ЭЭ от потребителя */
+    /** Приём запросов на покупку ЭЭ от потребителя и последующее открытие аукциона */
     @Override public void action() {
-        ACLMessage aclMessage = myAgent.receive(and(MatchProtocol("Start"), MatchPerformative(ACLMessage.INFORM)));
-        if (aclMessage != null) {
-            String[] split = aclMessage.getContent().split(";");
-            double value = Double.parseDouble(split[0]); int maxPrice = Integer.parseInt(split[1]);
-            log.info("\tValue of EE: {}", value);
-            myAgent.addBehaviour(new Auction(myAgent, lw4Info));
-        } else block();
+        ACLMessage aclMessage = myAgent.receive(and(MatchProtocol("START"), MatchPerformative(ACLMessage.INFORM)));
+        if (aclMessage != null) myAgent.addBehaviour(new Auction(myAgent, lw4Info, aclMessage.getContent()));
+        else block();
     }
 
     /** Завершение работы поведения, для исключения возникновения коллизий */
