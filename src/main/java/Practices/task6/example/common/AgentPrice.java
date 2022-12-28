@@ -3,6 +3,7 @@ package Practices.task6.example.common;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Contract;
 
 /**
  * @author Artur Dzhanaev
@@ -16,7 +17,7 @@ public class AgentPrice {
     private int price;
     private String agentName;
 
-    public AgentPrice(int price, String agentName) {
+    @Contract(pure = true) public AgentPrice(int price, String agentName) {
         this.price = price;
         this.agentName = agentName;
     }

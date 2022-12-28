@@ -4,7 +4,6 @@ import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.Agent;
 import jade.core.behaviours.FSMBehaviour;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Artur Dzhanaev
@@ -14,15 +13,27 @@ import org.jetbrains.annotations.NotNull;
 public class Auction extends FSMBehaviour {
 
 
-    public Auction(Agent myAgent, LW4Info lw4Info, @NotNull String incomingMessageFromConsumer) {
+    /**
+     * @description
+     * 1) Принимаем сообщение от потребителя;
+     * 2) Создаём чат (аукцион) со всеми потребителями и одним поставщиком;
+     * 3) Полученные из сообщения данные закидываем в аукцион;
+     * 4) Потребитель, получив сообщение в чате, смотрит, есть ли у него достаточное количество ЭЭ,
+     * если есть, отправляет в чат свою цену (на сей процесс выделяется 2 (предположение) секунды);
+     * 5) Если производители ответили, поставщик выбирает минимальную среди отправленных цен. В противном случае
+     * поставщик должен поделить один раз (!!!) количество ЭЭ (на 3 (предположение) части) и пытаться получить ЭЭ
+     * от нескольких поставщиков;
+     * 6) После успешного проведения торгов и победы на аукционе производитель должен резервировать мощность,
+     * запрошенную агентом-поставщиком и учитывать эту зарезервированную мощность при следующих торговых сессиях;
+     * 7) Постфактум м поставщик отправляет своему потребителю отчёт с ценой и количеством приобретённой ЭЭ.
+     */
+    public Auction(Agent myAgent, LW4Info lw4Info) {
         super(myAgent);
 
-        String[] split = incomingMessageFromConsumer.split(";");
-        double value = Double.parseDouble(split[0]);
-        int maxPrice = Integer.parseInt(split[1]);
-        int counter = Integer.parseInt(split[2]);
-        registerFirstState(new DSearchP(myAgent, lw4Info), "one");
-//        registerLastState(new DToC(myAgent, lw4Info, value, maxPrice), "two");
+        registerFirstState(new AFirst(myAgent, lw4Info), "one");
+        registerState(new ASecond(myAgent, lw4Info), "two");
+//        registerLastState(new AThird(), "thr");
+
         registerDefaultTransition("one", "two");
     }
 }

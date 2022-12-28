@@ -2,6 +2,7 @@ package LaboratoryWorks.lab4.agents;
 
 import LaboratoryWorks.lab4.behs.PConnToChat;
 import LaboratoryWorks.lab4.common.LW4Info;
+import LaboratoryWorks.lab4.common.Main;
 import Practices.AutoRunnableAgent;
 import LaboratoryWorks.lab4.common.PParser;
 import jade.core.Agent;
@@ -24,6 +25,7 @@ public class Producer extends Agent {
 
     /** Определение поведения производителей ЭЭ */
     @Override protected void setup() {
+        Main.registration(this);
         try { addBehaviour(new PConnToChat(
                 this,
                 LW4Info.getLW(),

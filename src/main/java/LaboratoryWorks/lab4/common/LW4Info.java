@@ -17,6 +17,10 @@ import java.util.*;
 public class LW4Info {
 
 
+    /** Начинка сообщения от потребителя */
+    @Setter private CMessageInside cMessageInside;
+
+
     /** Идентификатор чата аукциона */
     @Setter private AID chat;
 
@@ -43,9 +47,9 @@ public class LW4Info {
     /** Суточная совокупность генерируемой ЭЭ СЭС */
     private final List<Double> SPS = new ArrayList<>();
 
+
     /** Экземпляр класса для синглтон */
     private static LW4Info lw4;
-
 
     /** Синглтон */
     public static synchronized LW4Info getLW() { if (lw4 == null) lw4 = new LW4Info(); return lw4; }

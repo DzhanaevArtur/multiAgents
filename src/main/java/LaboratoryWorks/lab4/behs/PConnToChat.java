@@ -1,9 +1,9 @@
 package LaboratoryWorks.lab4.behs;
 
 import LaboratoryWorks.lab4.common.LW4Info;
-import LaboratoryWorks.lab4.common.Main;
 import LaboratoryWorks.lab4.common.PParser;
 import Practices.TopicHelper;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -51,7 +51,7 @@ public class PConnToChat extends Behaviour {
         this.myAgent = myAgent;
         this.lw4Info = lw4Info;
         this.p = p;
-        this.minPrice = 1D;
+        this.minPrice = 500d;
         this.startPrice = 2 * this.minPrice;
 
         agentIndex = Integer.parseInt(myAgent.getLocalName().split("_")[1]);
@@ -60,20 +60,14 @@ public class PConnToChat extends Behaviour {
     /** Предварительное заполнение класса данными и регистрация производителей */
     @Override public void onStart() {
         addingToProductionList(lw4Info);
-        Main.registration(myAgent);
     }
 
     /** Отклик на поиск и создание чата */
     @Override public void action() {
         ACLMessage aclMessage = myAgent.receive(and(MatchPerformative(ACLMessage.INFORM), MatchProtocol("Chat")));
         if (aclMessage != null) {
-            lw4Info.setChat(TopicHelper.createTopic(myAgent, "Auction"));
-            ACLMessage reply = aclMessage.createReply();
-            reply.clearAllReceiver();
-            reply.addReceiver(lw4Info.getChat());
-            reply.setProtocol("Decision");
-            reply.setContent(String.format("", 5));
-            myAgent.send(reply);
+            AID auction = TopicHelper.createTopic(myAgent, "Auction");
+            log.info("{} created", auction.getLocalName());
         }
         else block();
     }
