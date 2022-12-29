@@ -1,25 +1,27 @@
 package LaboratoryWorks.lab4.behs;
 
 import LaboratoryWorks.lab4.common.LW4Info;
+import LaboratoryWorks.lab4.common.Main;
+import Practices.TopicHelper;
+import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import lombok.extern.slf4j.Slf4j;
 
-import static jade.lang.acl.MessageTemplate.*;
-
 /**
  * @author Artur Dzhanaev
- * @created 24.12.2022
+ * @created 29.12.2022
+ * @description Начало аукциона. Поиск зарегистрированных производителей ЭЭ
  */
 @Slf4j
-public class AFirst extends Behaviour {
+public class AFirst extends OneShotBehaviour {
 
 
-    /** Общие данные */
     private final LW4Info lw4Info;
 
-    /** Агент исполняющий поведение */
     private final Agent myAgent;
 
 
@@ -29,21 +31,19 @@ public class AFirst extends Behaviour {
         this.lw4Info = lw4Info;
     }
 
-    /** Приём запросов на покупку ЭЭ от потребителя и последующее открытие аукциона */
-    @Override public void action() {
-        ACLMessage aclMessage = myAgent.receive(and(MatchProtocol("START"), MatchPerformative(ACLMessage.INFORM)));
-        if (aclMessage != null) {
-            ACLMessage energyBuy = new ACLMessage(ACLMessage.INFORM);
-            energyBuy.addReceiver(lw4Info.getChat());
-            energyBuy.setProtocol("Auction");
-            energyBuy.setContent(aclMessage.getContent());
-            myAgent.send(energyBuy);
-//            log.info("{} sent to {}", energyBuy.getContent(), ((AID) energyBuy.getAllReceiver().next()).getLocalName());
-        }
-        else block();
+    @Override public void onStart() {
+        DFAgentDescription[] search;
+        try { search = Main.search(myAgent); }
+        catch (FIPAException e) { throw new RuntimeException(e); }
+        for (DFAgentDescription dfAgentDescription : search) lw4Info.getUsers().add(dfAgentDescription.getName());
     }
 
-    /** Останов поведения */
-    @Override public boolean done() { return false; }
+    @Override public void action() {
+        ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
+        for (AID aid : lw4Info.getUsers()) aclMessage.addReceiver(aid);
+        aclMessage.setProtocol("XXX");
+        aclMessage.setContent("Chat name sent");
+        myAgent.send(aclMessage);
+        lw4Info.setChat(TopicHelper.createTopic(myAgent, "Auction"));
+    }
 }
-

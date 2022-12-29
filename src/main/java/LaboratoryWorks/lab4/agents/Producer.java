@@ -23,7 +23,7 @@ import java.io.File;
 public class Producer extends Agent {
 
 
-    /** Определение поведения производителей ЭЭ */
+    /** Определение поведения производителей ЭЭ, а также их предварительная регистрация для поиска поставщиком */
     @Override protected void setup() {
         Main.registration(this);
         try { addBehaviour(new PFirst(

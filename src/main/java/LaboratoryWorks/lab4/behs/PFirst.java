@@ -23,9 +23,6 @@ import static jade.lang.acl.MessageTemplate.MatchProtocol;
 public class PFirst extends Behaviour {
 
 
-    /** Триггер останова */
-    private Boolean trigger = false;
-
     /** Номер текущего потребителя */
     private final Integer agentIndex;
 
@@ -48,7 +45,7 @@ public class PFirst extends Behaviour {
         agentIndex = Integer.parseInt(myAgent.getLocalName().split("_")[1]);
     }
 
-    /** Предварительное заполнение класса данными и регистрация производителей */
+    /** Предварительное заполнение класса данными */
     @Override public void onStart() {
         switch (agentIndex) {
             case 1 -> { for (int i = 0; i < 24; i++) info.getT().add(p.getA()); }
@@ -57,7 +54,7 @@ public class PFirst extends Behaviour {
         }
     }
 
-    /** Отклик на поиск и создание чата */
+    /** Отклик на поиск поставщиком и добавление в чат */
     @Override public void action() {
         ACLMessage aclMessage = myAgent.receive(and(MatchPerformative(ACLMessage.INFORM), MatchProtocol("XXX")));
         if (aclMessage != null) {
@@ -65,7 +62,6 @@ public class PFirst extends Behaviour {
             myAgent.addBehaviour(new PSecond(myAgent, info));
         }
         else block();
-        trigger = true;
     }
 
     /** Математическое описание выработки ЭЭ на СЭС */

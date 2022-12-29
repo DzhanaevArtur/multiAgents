@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @author Artur Dzhanaev
  * @created 26.12.2022
+ * @description Аукцион
  */
 @Slf4j
 public class Auction extends FSMBehaviour {
@@ -31,8 +32,8 @@ public class Auction extends FSMBehaviour {
         super(myAgent);
         log.info("{} started!!!", getClass().getSimpleName());
 
-        registerFirstState(new AZero(myAgent, lw4Info), "one");
-        registerLastState(new AFirst(myAgent, lw4Info), "two");
+        registerFirstState(new AFirst(myAgent, lw4Info), "one");
+        registerLastState(new ASecond(myAgent, lw4Info), "two");
 
         registerDefaultTransition("one", "two");
     }

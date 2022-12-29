@@ -20,15 +20,21 @@ public class PThird extends Behaviour {
 
 
     /** Триггер останова */
-    private Boolean trigger = false;
-    private double value;
-    private int maxPrice;
-    private int timeCounter;
+    private static int count = 0;
 
-    /** Номер текущего потребителя */
+    /** Номер текущего производителя */
     private final Integer agentIndex;
 
-    /** Сообщение */
+    /** Текущее значение мощности от поставщика */
+    private double value;
+
+    /** Максимально допустимая цена от потребителя */
+    private int maxPrice;
+
+    /** Счётчик времени */
+    private int timeCounter;
+
+    /** Состав сообщения (мощность; максимальная ставка; счётчик времени) */
     private final String content;
 
     /** Общие данные */
@@ -47,6 +53,7 @@ public class PThird extends Behaviour {
         agentIndex = Integer.parseInt(myAgent.getLocalName().split("_")[1]);
     }
 
+    /** Предварительная обработка входящего запроса */
     @Override public void onStart() {
         String[] split = content.split(";");
         this.value       = Double.parseDouble(split[0]);
@@ -54,6 +61,7 @@ public class PThird extends Behaviour {
         this.timeCounter = Integer.parseInt  (split[2]);
     }
 
+    /** Логика формирования цены и её последующая отправка в чат */
     @Override public void action() {
         double price = 0;
         switch (agentIndex) {
@@ -79,9 +87,9 @@ public class PThird extends Behaviour {
             aclMessage.setProtocol("PriceSend");
             aclMessage.setContent(String.format(Locale.US, "%.3f", price));
             myAgent.send(aclMessage);
-            log.debug("{} sent to {}", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
+            log.info("{} sent to {}\t\t It's {} o'clock", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName(), timeCounter);
         }
-        trigger = true;
+        count++;
     }
 
     /** Ценообразование у производителей ЭЭ */
@@ -90,5 +98,5 @@ public class PThird extends Behaviour {
     }
 
     /** Останов поведения */
-    @Override public boolean done() { return false; }
+    @Override public boolean done() { return count >= 3; }
 }

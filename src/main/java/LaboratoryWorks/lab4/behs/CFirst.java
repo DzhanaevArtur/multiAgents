@@ -19,6 +19,7 @@ import static LaboratoryWorks.lab4.common.Main.*;
 /**
  * @author Artur Dzhanaev
  * @created 20.12.2022
+ * @description Поведение потребителя ЭЭ. Периодическая отправка непосредственному поставщику запроса о покупке ЭЭ
  */
 @Slf4j
 public class CFirst extends Behaviour {
@@ -30,7 +31,7 @@ public class CFirst extends Behaviour {
     /** Номер текущего потребителя */
     private final Integer agentIndex;
 
-    /** Совокупность потребляемой ЭЭ в час каждой нагрузкой */
+    /** Совокупность потребляемой ЭЭ i-ой нагрузкой */
     private final List<Double> one, two, thr;
 
     /** Данные из конфигурационного файла */
@@ -58,7 +59,7 @@ public class CFirst extends Behaviour {
         }
     }
 
-    /** Отправка запроса поставщику на приобретение ЭЭ */
+    /** Периодическая отправка запроса поставщику на приобретение ЭЭ */
     @SuppressWarnings("InfiniteLoopStatement") @Override public void action() {
         myAgent.addBehaviour(new TickerBehaviour(myAgent, 1_000 / FREQ) {
             @Override protected void onTick() {
@@ -78,7 +79,7 @@ public class CFirst extends Behaviour {
         for (int i = 1; i < size; i++) list.add((coefficients.get(0) * coefficients.get(i)) / 100);
     }
 
-    /** Отправка определённому поставщику запроса о покупке ЭЭ */
+    /** Формирование запроса о покупке ЭЭ */
     private synchronized void aclMessageSending(@NotNull List<Double> list) {
         ACLMessage aclMessage = new ACLMessage(ACLMessage.INFORM);
         aclMessage.addReceiver(new AID(String.format("Distributor_%d", agentIndex), false));
@@ -87,10 +88,9 @@ public class CFirst extends Behaviour {
         aclMessage.setContent(String.format(Locale.US, "%.3f;%d;%d",
                 list.get(timer), agentIndex * new Random().nextInt(1000), timer));
         myAgent.send(aclMessage);
-//        log.info("{} sent to {}", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
         trigger = true;
     }
 
-    /** Завершение работы поведения, для исключения возникновения коллизий */
+    /** Останов поведения */
     @Override public boolean done() { return trigger; }
 }

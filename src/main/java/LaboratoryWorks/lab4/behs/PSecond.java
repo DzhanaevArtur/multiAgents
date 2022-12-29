@@ -16,9 +16,6 @@ import static jade.lang.acl.MessageTemplate.*;
 public class PSecond extends Behaviour {
 
 
-    /** Триггер останова */
-    private Boolean trigger = false;
-
     /** Общие данные */
     private final LW4Info lw4Info;
 
@@ -32,15 +29,13 @@ public class PSecond extends Behaviour {
         this.lw4Info = lw4Info;
     }
 
-    /** Отклик на поиск и создание чата */
+    /** Принятие сообщения от поставщика */
     @Override public void action() {
         ACLMessage msg = myAgent.receive(and(MatchPerformative(ACLMessage.INFORM), MatchProtocol("Auction")));
         if (msg != null) {
-            log.info("{} received", msg.getContent());
             myAgent.addBehaviour(new PThird(myAgent, lw4Info ,msg.getContent()));
         }
         else block();
-        trigger = true;
     }
 
     @Override public boolean done() { return false; }
