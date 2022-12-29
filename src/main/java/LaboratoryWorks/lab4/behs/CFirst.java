@@ -87,7 +87,7 @@ public class CFirst extends Behaviour {
         aclMessage.setContent(String.format(Locale.US, "%.3f;%d;%d",
                 list.get(timer), agentIndex * new Random().nextInt(1000), timer));
         myAgent.send(aclMessage);
-        log.info("{} sent to \t{}", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
+//        log.info("{} sent to {}", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
         trigger = true;
     }
 

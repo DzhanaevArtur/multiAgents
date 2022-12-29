@@ -9,7 +9,6 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
-import jade.util.leap.Iterator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -45,7 +44,7 @@ public class AZero extends OneShotBehaviour {
         aclMessage.setContent("Chat name sent");
         myAgent.send(aclMessage);
         lw4Info.setChat(TopicHelper.createTopic(myAgent, "Auction"));
-        Iterator iter = aclMessage.getAllReceiver();
-        while (iter.hasNext()) log.info("{} sent to {}", aclMessage.getContent(), ((AID) iter.next()).getLocalName());
+//        Iterator iter = aclMessage.getAllReceiver();
+//        while (iter.hasNext()) log.info("{} sent to {}", aclMessage.getContent(), ((AID) iter.next()).getLocalName());
     }
 }

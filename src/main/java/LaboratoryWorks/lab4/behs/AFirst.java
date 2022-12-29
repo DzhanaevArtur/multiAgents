@@ -1,7 +1,6 @@
 package LaboratoryWorks.lab4.behs;
 
 import LaboratoryWorks.lab4.common.LW4Info;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -39,7 +38,7 @@ public class AFirst extends Behaviour {
             energyBuy.setProtocol("Auction");
             energyBuy.setContent(aclMessage.getContent());
             myAgent.send(energyBuy);
-            log.info("{} sent to {}", energyBuy.getContent(), ((AID) energyBuy.getAllReceiver().next()).getLocalName());
+//            log.info("{} sent to {}", energyBuy.getContent(), ((AID) energyBuy.getAllReceiver().next()).getLocalName());
         }
         else block();
     }

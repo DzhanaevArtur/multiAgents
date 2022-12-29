@@ -23,14 +23,20 @@ import java.io.File;
 public class Producer extends Agent {
 
 
+    private static int count = 0;
+
+
     /** Определение поведения производителей ЭЭ */
     @Override protected void setup() {
         Main.registration(this);
-        try { addBehaviour(new PFirst(
-                this,
-                LW4Info.getLW(),
-                (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()
-                        .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")))); }
-        catch (JAXBException e) { throw new RuntimeException(e); }
+        count++;
+        if (count == 3) {
+            try { addBehaviour(new PFirst(
+                    this,
+                    LW4Info.getLW(),
+                    (PParser) JAXBContext.newInstance(PParser.class).createUnmarshaller()
+                            .unmarshal(new File("src/main/resources/dtdAndXml/LaboratoryWorks/4/Producer.xml")))); }
+            catch (JAXBException e) { throw new RuntimeException(e); }
+        }
     }
 }
