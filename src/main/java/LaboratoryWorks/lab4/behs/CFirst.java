@@ -5,6 +5,7 @@ import LaboratoryWorks.lab4.common.LW4Info;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +21,7 @@ import static LaboratoryWorks.lab4.common.Main.*;
  * @created 20.12.2022
  */
 @Slf4j
-public class CBuyRequest extends Behaviour {
+public class CFirst extends Behaviour {
 
 
     /** Триггер на прерывание поведения */
@@ -39,7 +40,7 @@ public class CBuyRequest extends Behaviour {
     private final Agent myAgent;
 
 
-    public CBuyRequest(Agent myAgent, @NotNull LW4Info lw4Info, CParser cParser) {
+    public CFirst(Agent myAgent, @NotNull LW4Info lw4Info, CParser cParser) {
         super(myAgent);
         this.myAgent = myAgent;
         this.cParser = cParser;
@@ -59,12 +60,15 @@ public class CBuyRequest extends Behaviour {
 
     /** Отправка запроса поставщику на приобретение ЭЭ */
     @SuppressWarnings("InfiniteLoopStatement") @Override public void action() {
-        switch (agentIndex) {
-            case 1 -> { while (true) aclMessageSending(one); }
-            case 2 -> { while (true) aclMessageSending(two); }
-            case 3 -> { while (true) aclMessageSending(thr); }
-        }
-        trigger = true;
+        myAgent.addBehaviour(new TickerBehaviour(myAgent, 1_000 / FREQ) {
+            @Override protected void onTick() {
+                switch (agentIndex) {
+                    case 1 -> { while (true) aclMessageSending(one); }
+                    case 2 -> { while (true) aclMessageSending(two); }
+                    case 3 -> { while (true) aclMessageSending(thr); }
+                }
+            }
+        });
     }
 
     /** Обработка данных из конфигурационного файла */
@@ -83,6 +87,8 @@ public class CBuyRequest extends Behaviour {
         aclMessage.setContent(String.format(Locale.US, "%.3f;%d;%d",
                 list.get(timer), agentIndex * new Random().nextInt(1000), timer));
         myAgent.send(aclMessage);
+        log.info("{} sent to \t{}", aclMessage.getContent(), ((AID) aclMessage.getAllReceiver().next()).getLocalName());
+        trigger = true;
     }
 
     /** Завершение работы поведения, для исключения возникновения коллизий */

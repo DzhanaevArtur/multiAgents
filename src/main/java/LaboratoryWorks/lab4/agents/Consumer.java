@@ -1,6 +1,6 @@
 package LaboratoryWorks.lab4.agents;
 
-import LaboratoryWorks.lab4.behs.CBuyRequest;
+import LaboratoryWorks.lab4.behs.CFirst;
 import LaboratoryWorks.lab4.common.LW4Info;
 import Practices.AutoRunnableAgent;
 import LaboratoryWorks.lab4.common.CParser;
@@ -24,11 +24,15 @@ public class Consumer extends Agent {
 
     /** Определение поведения потребителей */
     @Override protected void setup() {
-        try { addBehaviour(new CBuyRequest(
+        try {
+            addBehaviour(new CFirst(
                 this,
                 LW4Info.getLW(),
                 (CParser) JAXBContext.newInstance(CParser.class).createUnmarshaller().unmarshal(new File(String.format(
-                        "src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml", this.getLocalName()))))); }
-        catch (JAXBException e) { throw new RuntimeException(e); }
+                        "src/main/resources/dtdAndXml/LaboratoryWorks/4/%s.xml",
+                        this.getLocalName()
+                )))
+            ));
+        } catch (JAXBException e) { throw new RuntimeException(e); }
     }
 }

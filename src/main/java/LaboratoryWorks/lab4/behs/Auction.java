@@ -29,10 +29,10 @@ public class Auction extends FSMBehaviour {
      */
     public Auction(Agent myAgent, LW4Info lw4Info) {
         super(myAgent);
+        log.info("{} started!!!", getClass().getSimpleName());
 
-        registerFirstState(new AFirst(myAgent, lw4Info), "one");
-        registerState(new ASecond(myAgent, lw4Info), "two");
-//        registerLastState(new AThird(), "thr");
+        registerFirstState(new AZero(myAgent, lw4Info), "one");
+        registerLastState(new AFirst(myAgent, lw4Info), "two");
 
         registerDefaultTransition("one", "two");
     }
