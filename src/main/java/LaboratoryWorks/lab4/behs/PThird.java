@@ -90,5 +90,5 @@ public class PThird extends Behaviour {
     }
 
     /** Останов поведения */
-    @Override public boolean done() { return trigger; }
+    @Override public boolean done() { return false; }
 }

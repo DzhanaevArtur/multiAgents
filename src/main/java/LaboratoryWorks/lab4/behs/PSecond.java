@@ -43,5 +43,5 @@ public class PSecond extends Behaviour {
         trigger = true;
     }
 
-    @Override public boolean done() { return trigger; }
+    @Override public boolean done() { return false; }
 }
