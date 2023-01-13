@@ -12,11 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConsumerFSM extends FSMBehaviour {
 
-    public final Data data = new Data();
-    public final WinnerBeh winnerBeh = new WinnerBeh(myAgent, data);
+    Data data = new Data();
+    public WinnerBeh winnerBeh;
 
     public ConsumerFSM(Agent myAgent) {
         super(myAgent);
+        winnerBeh = new WinnerBeh(myAgent, data);
 
         registerFirstState(new SendTopicName(myAgent, data), "first");
         registerState(new SendQuantity      (myAgent, data, 1_000L), "second");

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 /**
@@ -20,28 +21,30 @@ import java.io.File;
 @Slf4j
 public class TestProducer extends Agent {
 
+
+    Agent myAgent;
+
     @Override protected void setup() {
         registration();
+        CfgClass cfg = null;
         try {
-            CfgClass cfg = (CfgClass) JAXBContext.newInstance(CfgClass.class)
-                    .createUnmarshaller()
-//                    .unmarshal(new File(String.format("src/main/resources/dtdAndXml/Practices/7/example/%s.xml", this.getLocalName())));
-                    .unmarshal(new File("src/main/resources/dtdAndXml/Practices/7/example/Producer_1.xml"));
-            addBehaviour(new ReceiveTopicName(this, cfg));
+            JAXBContext context = JAXBContext.newInstance(CfgClass.class);
+            Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
+            cfg = (CfgClass) jaxbUnmarshaller.unmarshal(new
+                    File("target/cfg_files/" + getLocalName()));
         }
         catch (JAXBException e) { e.printStackTrace(); }
+        addBehaviour(new ReceiveTopicName(myAgent, cfg));
     }
 
     public void registration() {
-        ServiceDescription serviceDescription = new ServiceDescription();
-        serviceDescription.setType("Production");
-        serviceDescription.setName(getLocalName());
-
-        DFAgentDescription dfAgentDescription = new DFAgentDescription();
-        dfAgentDescription.setName(this.getAID());
-        dfAgentDescription.addServices(serviceDescription);
-        try { DFService.register(this, dfAgentDescription); }
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(getAID());
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType("Production");
+        sd.setName(getLocalName());
+        dfd.addServices(sd);
+        try { DFService.register(this, dfd); }
         catch (FIPAException e) { e.printStackTrace(); }
     }
-
 }

@@ -24,7 +24,6 @@ public class Receive extends Behaviour {
                 MessageTemplate.MatchPerformative(ACLMessage.INFORM)));
         if (aclMessage != null) {
             String content = aclMessage.getContent();
-            myAgent.doWait(50L);
             if (name.equals("Node_12")) log.error("Total length is: {}", content);
             else myAgent.addBehaviour(new Send(myAgent, Main.res(name), Integer.parseInt(content)));
         } else block();

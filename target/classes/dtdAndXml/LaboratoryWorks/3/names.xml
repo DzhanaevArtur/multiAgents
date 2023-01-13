@@ -54,7 +54,7 @@
         <Neighbor id="Node_5" length = "24"/>
         <Neighbor id="Node_6" length = "1"/>
         <Neighbor id="Node_8" length = "12"/>
-        <Neighbor id="Node_9" length = "1"/>
+        <Neighbor id="Node_9" length = "100"/>
     </Bro>
 
     <Bro id="Node_8" initiator="Node_1" dest="Node_12">
@@ -67,7 +67,7 @@
 
     <Bro id="Node_9" initiator="Node_1" dest="Node_12">
         <Neighbor id="Node_6" length = "23"/>
-        <Neighbor id="Node_7" length = "1"/>
+        <Neighbor id="Node_7" length = "100"/>
         <Neighbor id="Node_8" length = "18"/>
         <Neighbor id="Node_10" length = "24"/>
         <Neighbor id="Node_11" length = "17"/>
