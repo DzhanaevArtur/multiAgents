@@ -8,7 +8,7 @@ import java.util.List;
 class HWTest {
 
 
-    HW<Integer> list = new HW<>();
+    HW<Object> list = new HW<>();
 
 
     @Test
@@ -31,7 +31,7 @@ class HWTest {
     }
 
     @Test
-    public void IsEmptyTest() {
+    public void isEmptyTest() {
         list.addAll(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         list.removeAll(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         Assertions.assertTrue(list.isEmpty());
@@ -50,24 +50,23 @@ class HWTest {
     }
 
     @Test
-    public void IteratorTest() {
+    public void iteratorTest() {
         int i = 0;
         list.addAll(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-        for (Integer integer : list) { Assertions.assertEquals(i, integer); i++; }
+        for (Object object : list) { Assertions.assertEquals(i, object); i++; }
     }
 
     @Test
     public void clearTest() {
         list.addAll(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         list.clear();
-        Assertions.assertEquals(0, 0);
+        Assertions.assertEquals(0, list.size);
     }
 
     @Test
     public void getTest() {
         list.addAll(List.of(6, 5, 5, 1, 3, 8, 9, 7, 8, 2));
-        int k = list.get(4);
-        Assertions.assertEquals(3, k);
+        Assertions.assertEquals(3, list.get(4));
     }
 
     @Test
@@ -75,7 +74,7 @@ class HWTest {
         list.addAll(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         list.remove(0);
         list.remove(2);
-        Assertions.assertArrayEquals(new Integer[]{1, 2, 4, 5, 6, 7, 8, 9}, list.toArray());
+        Assertions.assertArrayEquals(new Integer[] {1, 2, 4, 5, 6, 7, 8, 9}, list.toArray());
     }
 
     @Test
@@ -83,14 +82,14 @@ class HWTest {
         list.addAll(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         list.add(0, 7);
         list.add(2, 3);
-        Assertions.assertArrayEquals(new Integer[]{7, 0, 3, 1, 2, 3, 4, 5, 6, 7, 8, 9}, list.toArray());
+        Assertions.assertArrayEquals(new Integer[] {7, 0, 3, 1, 2, 3, 4, 5, 6, 7, 8, 9}, list.toArray());
     }
 
     @Test
     public void removeByValueTest() {
         list.addAll(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         list.remove(2);
-        Assertions.assertArrayEquals(new Integer[]{0, 1, 3, 4, 5, 6, 7, 8, 9}, list.toArray());
+        Assertions.assertArrayEquals(new Integer[] {0, 1, 3, 4, 5, 6, 7, 8, 9}, list.toArray());
     }
 
     @Test
@@ -103,6 +102,87 @@ class HWTest {
     public void retainTest() {
         list.addAll(List.of(22, 33, 42, 55, 46, 524, 6, 77, 89, 9));
         list.retainAll(List.of(11, 44, 22, 33, 42, 55));
-        Assertions.assertArrayEquals(new Integer[]{22, 33, 42, 55}, list.toArray());
+        Assertions.assertArrayEquals(new Integer[] {22, 33, 42, 55}, list.toArray());
+    }
+
+
+    @Test
+    public void sSizeTest() {
+        list.addAll(List.of("a", "b", "c"));
+        Assertions.assertEquals(3, list.size());
+    }
+
+    @Test
+    public void sAddTest() {
+        list.addAll(List.of("a", "b", "c"));
+        list.addFirst("d");
+        list.addFirst("e");
+        list.addFirst("f");
+        list.addFirst("g");
+        list.addFirst("h");
+        Assertions.assertArrayEquals(new String[] {"h", "g", "f", "e", "d", "a", "b", "c", }, list.toArray());
+    }
+
+    @Test
+    public void sIsEmptyTest() {
+        list.addAll(List.of("a", "b", "c"));
+        list.removeAll(List.of("a", "b", "c"));
+        Assertions.assertTrue(list.isEmpty());
+    }
+
+    @Test
+    public void sContainsTest() {
+        list.addAll(List.of("a", "b", "c"));
+        Assertions.assertTrue(list.contains("b"));
+    }
+
+    @Test
+    public void sContainsAll() {
+        list.addAll(List.of("a", "b", "c"));
+        Assertions.assertTrue(list.containsAll(List.of("a", "b", "c")));
+    }
+
+    @Test
+    public void sIteratorTest() {
+        list.addAll(List.of("a", "b", "c"));
+        Assertions.assertEquals(list.get(0), "a");
+        Assertions.assertEquals(list.get(1), "b");
+        Assertions.assertEquals(list.get(2), "c");
+    }
+
+    @Test
+    public void sClearTest() {
+        list.addAll(List.of("a", "b", "c"));
+        list.clear();
+        Assertions.assertEquals(0, list.size);
+    }
+
+    @Test
+    public void sGetTest() {
+        list.addAll(List.of("a", "b", "c"));
+        Assertions.assertEquals("a", list.get(0));
+    }
+
+    @Test
+    public void sRemoveByIndexTest() {
+        list.addAll(List.of("a", "b", "c"));
+        list.remove(0);
+        list.remove(1);
+        Assertions.assertArrayEquals(new String[] {"b"}, list.toArray());
+    }
+
+    @Test
+    public void sAddByIndexTest() {
+        list.addAll(List.of("a", "b", "c"));
+        list.add(0, "a");
+        list.add(1, "c");
+        Assertions.assertArrayEquals(new String[] {"a", "c", "a", "b", "c"}, list.toArray());
+    }
+
+    @Test
+    public void sRemoveByValueTest() {
+        list.addAll(List.of("a", "b", "c"));
+        list.remove("b");
+        Assertions.assertArrayEquals(new String[] {"a", "c"}, list.toArray());
     }
 }

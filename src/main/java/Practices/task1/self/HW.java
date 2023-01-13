@@ -27,7 +27,7 @@ public class HW<E> implements Collection<E> {
     }
 
     @Override
-    public Iterator<E> iterator() { return new LinkedArrayListIterator(); }
+    public Iterator<E> iterator() { return new HWIter(); }
 
     @Override
     public <T> T[] toArray(T @NotNull [] a) {
@@ -203,7 +203,7 @@ public class HW<E> implements Collection<E> {
 
     public boolean containsAll(@NotNull Collection<?> c) { return c.stream().allMatch(this::contains); }
 
-    class LinkedArrayListIterator implements Iterator<E> {
+    private class HWIter implements Iterator<E> {
 
 
         private Triplet<E> thisTr = first;
@@ -212,7 +212,7 @@ public class HW<E> implements Collection<E> {
 
 
         @Contract(pure = true)
-        public LinkedArrayListIterator() {
+        public HWIter() {
             for (int i = 0; i < thisTr.item.length; i++) { if (thisTr.item[i] != null) { lastReturned = i; break; } }
         }
 
