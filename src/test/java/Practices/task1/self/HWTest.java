@@ -185,4 +185,17 @@ class HWTest {
         list.remove("b");
         Assertions.assertArrayEquals(new String[] {"a", "c"}, list.toArray());
     }
+
+    @Test
+    public void sIndexOfTest() {
+        list.addAll(List.of("a", "b", "c"));
+        Assertions.assertEquals(2, list.indexOf("c"));
+    }
+
+    @Test
+    public void sRetainTest() {
+        list.addAll(List.of("a", "b", "c"));
+        list.retainAll(List.of("c"));
+        Assertions.assertArrayEquals(new String[] {"c"}, list.toArray());
+    }
 }
